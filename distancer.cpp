@@ -48,7 +48,7 @@ void do_simulation()
       for (const auto individual: p) { std::cout << individual << " "; }
       std::cout << "\n";
 
-      if (max_species_observed == 7) return;
+      if (max_species_observed == 6) return;
     }
   }
 }
