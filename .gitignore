@@ -27,3 +27,13 @@
 *.out
 *.app
 *.pro.user
+Makefile
+Makefile.Debug
+Makefile.Release
+distancer_exe
+distancer_test
+exe_debug
+exe_debug.txt
+exe_release.txt
+test_release.txt
+test_debug.txt

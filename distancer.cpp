@@ -47,6 +47,8 @@ void do_simulation()
       std::cout << i << ": " << count_species(p,max_genetic_distance) << '\n';
       for (const auto individual: p) { std::cout << individual << " "; }
       std::cout << "\n";
+
+      if (max_species_observed == 7) return;
     }
   }
 }
