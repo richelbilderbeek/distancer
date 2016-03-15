@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE(detect_by_travis)
 
 BOOST_AUTO_TEST_CASE(get_genetic_distance)
 {
-  const int n_loci{3};
+  const size_t n_loci{3};
   std::bitset<n_loci> a("000");
   std::bitset<n_loci> b("001");
   std::bitset<n_loci> c("011");
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(count_species)
 BOOST_AUTO_TEST_CASE(bitset)
 {
   {
-    const int n_loci{3};
+    const size_t n_loci{3};
     std::bitset<n_loci> p("001");
     BOOST_CHECK(p.count() == 1);
     std::bitset<n_loci> q("100");
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(bitset)
     BOOST_CHECK(kid == kid_should_be);
   }
   {
-    const int n_loci{4};
+    const size_t n_loci{4};
     std::bitset<n_loci> p("0000");
     std::bitset<n_loci> q("1111");
     std::bitset<n_loci> inherit_from_p("0101");
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE(bitset)
     BOOST_CHECK(kid == kid_should_be);
   }
   {
-    const int n_loci{4};
+    const size_t n_loci{4};
     std::bitset<n_loci> p("1111");
     std::bitset<n_loci> q("0000");
     std::bitset<n_loci> inherit_from_p("0101");
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(bitset)
 
   }
   {
-    const int n_loci{4};
+    const size_t n_loci{4};
     std::bitset<n_loci> p("1111");
     p.flip(2); //From right
     std::bitset<n_loci> p_should_be("1011");
@@ -122,20 +122,20 @@ BOOST_AUTO_TEST_CASE(bitset)
 
   }
   {
-    const int n_loci{4};
+    const size_t n_loci{4};
     std::bitset<n_loci> p("0000");
     p.flip(2); //From right
     std::bitset<n_loci> p_should_be("0100");
     BOOST_CHECK(p == p_should_be);
   }
   {
-    const int n_loci{4};
+    const size_t n_loci{4};
     std::bitset<n_loci> p(15);
     std::bitset<n_loci> p_should_be("1111");
     BOOST_CHECK(p == p_should_be);
   }
   {
-    const int n_loci{4};
+    const size_t n_loci{4};
     std::bitset<n_loci> p(7);
     std::bitset<n_loci> p_should_be("0111");
     BOOST_CHECK(p == p_should_be);
