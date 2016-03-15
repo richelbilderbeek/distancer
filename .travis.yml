@@ -20,3 +20,5 @@ install:
 script: 
  - ./build.sh
  - ./create_pdf.sh
+ - ls *.pdf
+ - ls
