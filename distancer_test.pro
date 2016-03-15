@@ -12,7 +12,8 @@ QMAKE_LINK = g++-5
 QMAKE_CC = gcc-5
 QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++14
 
-HEADERS += distancer.h
-SOURCES += distancer.cpp distancer_test.cpp
 
 LIBS += -lboost_unit_test_framework
+
+include(distancer.pri)
+SOURCES += distancer_test.cpp
