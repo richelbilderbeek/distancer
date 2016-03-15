@@ -16,4 +16,6 @@ install:
   - sudo apt-get install -qq lyx
   - sudo apt-get install -qq texlive
 
-script: ./build.sh
+script: 
+ - ./build.sh
+ - ./create_pdf.sh

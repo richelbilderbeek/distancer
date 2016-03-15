@@ -34,5 +34,3 @@ then
   echo "ERROR: Cannot find test_release.txt"
   exit 1
 fi
-
-lyx --export pdf2 distancer.lyx
