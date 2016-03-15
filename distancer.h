@@ -1,6 +1,7 @@
 #ifndef DISTANCER_H
 #define DISTANCER_H
 
+#include <bitset>
 #include <iostream>
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>

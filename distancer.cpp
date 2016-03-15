@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <bitset>
 #include <random>
 #include <boost/graph/isomorphism.hpp>
 
