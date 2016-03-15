@@ -30,7 +30,7 @@ int count_connected_components(
 }
 
 ///Counts the number of loci that are different
-template <unsigned int n_loci>
+template <size_t n_loci>
 int get_genetic_distance(
   const std::bitset<n_loci>& a,
   const std::bitset<n_loci>& b
@@ -46,7 +46,7 @@ void do_simulation();
 
 ///Count the number of ring species, where two individuals must have at most 'max_genetic_distance'
 ///genetic difference to be called the same species
-template <unsigned int n_loci>
+template <size_t n_loci>
 int count_species(std::vector<std::bitset<n_loci>> p, const int max_genetic_distance) noexcept
 {
   const bool debug{false};
