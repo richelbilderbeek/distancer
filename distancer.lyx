@@ -98,6 +98,241 @@ status open
 
 
 \backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Tree
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (0,0) -- (2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (2,1) -- (2,-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[dashed] (2,1) -- (5,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (4,1) -- (6,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (2,-1) -- (2,-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[dashed] (2,-1) -- (5,-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (4,-1) -- (6,-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Time labels
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[] at (0,-1.5) {$t_0$};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[] at (2,-1.5) {$t_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[] at (4,-1.5) {$t_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[] at (6,-1.5) {$T$};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Genotypes
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[align=left] at (1, 2) {$00$ 
+\backslash
+
+\backslash
+ $01$ 
+\backslash
+
+\backslash
+ };
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[align=left] at (3, 2) {$00$ 
+\backslash
+
+\backslash
+ $01$ 
+\backslash
+
+\backslash
+ $11$};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[align=left] at (5, 2) {$00$ 
+\backslash
+
+\backslash
+ 
+\backslash
+
+\backslash
+ $11$ };
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Row labels
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[] at (-2,-1.5) {Time};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[] at (-2,   2) {Genotypes};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+An incipient species phylogeny can be linked to population genetic processes:
+ at time 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ there were two genotypes present in the population (
+\begin_inset Formula $00$
+\end_inset
+
+ and 
+\begin_inset Formula $01$
+\end_inset
+
+).
+ Branching starts at 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ at the moment a genotype is introduced that allows a population with one
+ extra species (
+\begin_inset Formula $11$
+\end_inset
+
+).
+ At 
+\begin_inset Formula $t_{2}$
+\end_inset
+
+ speciation is completed the linking genotype (
+\begin_inset Formula $01$
+\end_inset
+
+) has gone extinct
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
 begin{tikzpicture}[<->, >=stealth', shorten >=1pt, auto, node distance=2.8cm,
  semithick]
 \end_layout
@@ -204,7 +439,7 @@ name "fig:one_species"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -410,7 +645,21 @@ Individuals are sexual and haploid.
 
 \begin_layout Standard
 Species Identity Genes (SIGs) are modeled like Melian et al., 2012 and allow
- for reproductive isolation and thus speciation.
+ for reproductive isolation and thus speciation (figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:one_species"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:two_species"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard

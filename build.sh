@@ -35,4 +35,4 @@ then
   exit 1
 fi
 
-lyx --export pdf2 travis_cpp_tutorial.lyx
+lyx --export pdf2 distancer.lyx
