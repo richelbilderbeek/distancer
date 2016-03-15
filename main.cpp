@@ -11,7 +11,7 @@ int main() {
   #endif
   try
   {
-    do_simulation();
+    do_simulation(16);
   }
   catch (std::exception& e)
   {

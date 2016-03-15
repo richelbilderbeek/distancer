@@ -2,6 +2,7 @@
 #define DISTANCER_H
 
 #include <bitset>
+#include <boost/dynamic_bitset.hpp>
 #include <iostream>
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
@@ -30,6 +31,13 @@ int count_connected_components(
   return n;
 }
 
+///Count the number of ring species, where two individuals must have at most 'max_genetic_distance'
+///genetic difference to be called the same species
+int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_distance) noexcept;
+
+///The function that does a simulation
+void do_simulation(const size_t n_loci);
+
 ///Counts the number of loci that are different
 template <size_t n_loci>
 int get_genetic_distance(
@@ -41,9 +49,12 @@ int get_genetic_distance(
   return d.count();
 }
 
+///Counts the number of loci that are different
+int get_genetic_distance(
+  const boost::dynamic_bitset<>& a,
+  const boost::dynamic_bitset<>& b
+) noexcept;
 
-///The function that does a simulation
-void do_simulation();
 
 ///Count the number of ring species, where two individuals must have at most 'max_genetic_distance'
 ///genetic difference to be called the same species
