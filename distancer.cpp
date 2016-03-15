@@ -46,23 +46,23 @@ int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_
   return count_connected_components(g);
 }
 
-void do_simulation(const size_t n_loci)
+void do_simulation(const parameters& my_parameters)
 {
-  //const int n_loci{16};
-  const int rng_seed{42};
-  const int n_generations{1000000000};
-  const int population_size{8};
-  const int max_genetic_distance{1};
-  const double mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
+  const auto n_loci{my_parameters.get_n_loci()};
+  const int rng_seed{my_parameters.get_rng_seed()};
+  const int n_generations{my_parameters.get_n_generations()};
+  const int population_size{my_parameters.get_population_size()};
+  const int max_genetic_distance{my_parameters.get_max_genetic_distance()};
+  const double mutation_rate{my_parameters.get_mutation_rate()};
 
   std::mt19937 rng_engine{rng_seed};
   std::uniform_int_distribution<int> population_indices(0,population_size-1);
   std::uniform_int_distribution<int> locus_index(0,n_loci-1);
   std::uniform_int_distribution<long long unsigned int> inherits_from_mother(0,(1 << n_loci) - 1);
   std::uniform_real_distribution<double> chance(0.0, 1.0);
-  std::vector<boost::dynamic_bitset<>> p(population_size, boost::dynamic_bitset<>(n_loci));
+  std::vector<boost::dynamic_bitset<>> population(population_size, boost::dynamic_bitset<>(n_loci));
 
-  assert(count_species(p,2) == 1);
+  assert(count_species(population,2) == 1);
   int max_species_observed = 1;
 
   //Overlapping generations
@@ -70,24 +70,24 @@ void do_simulation(const size_t n_loci)
   {
     const int random_father_index{population_indices(rng_engine)};
     const int random_mother_index{population_indices(rng_engine)};
-    if (get_genetic_distance(p[random_mother_index], p[random_father_index]) > max_genetic_distance)
+    if (get_genetic_distance(population[random_mother_index], population[random_father_index]) > max_genetic_distance)
     {
       --i;
       continue;
     }
     const boost::dynamic_bitset<> inheritance{n_loci, inherits_from_mother(rng_engine)};
     const int random_kid_index{population_indices(rng_engine)};
-    assert(p[random_mother_index].size() == p[random_father_index].size());
-    p[random_kid_index] = (inheritance & p[random_mother_index]) | (~inheritance & p[random_father_index]);
+    assert(population[random_mother_index].size() == population[random_father_index].size());
+    population[random_kid_index] = (inheritance & population[random_mother_index]) | (~inheritance & population[random_father_index]);
     if (chance(rng_engine) < mutation_rate) {
-      p[random_kid_index].flip(locus_index(rng_engine));
+      population[random_kid_index].flip(locus_index(rng_engine));
     }
 
-    if (count_species(p,max_genetic_distance) > max_species_observed)
+    if (count_species(population,max_genetic_distance) > max_species_observed)
     {
-      max_species_observed = count_species(p,max_genetic_distance);
-      std::cout << i << ": " << count_species(p,max_genetic_distance) << '\n';
-      for (const auto individual: p) { std::cout << individual << " "; }
+      max_species_observed = count_species(population,max_genetic_distance);
+      std::cout << i << ": " << count_species(population,max_genetic_distance) << '\n';
+      for (const auto individual: population) { std::cout << individual << " "; }
       std::cout << "\n";
 
       if (max_species_observed == 6) return;

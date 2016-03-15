@@ -7,6 +7,7 @@
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/connected_components.hpp>
+#include "parameters.h"
 
 ///Counts the number of components in a graph
 ///For example: A-B C-D would a graph of two edges, four vertices and two connected component
@@ -36,7 +37,7 @@ int count_connected_components(
 int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_distance) noexcept;
 
 ///The function that does a simulation
-void do_simulation(const size_t n_loci);
+void do_simulation(const parameters& p);
 
 ///Counts the number of loci that are different
 template <size_t n_loci>

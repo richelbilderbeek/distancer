@@ -12,6 +12,8 @@ QMAKE_LINK = g++-5
 QMAKE_CC = gcc-5
 QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++14
 
-SOURCES += distancer.cpp main.cpp
+SOURCES += distancer.cpp main.cpp \
+    parameters.cpp
 HEADERS += distancer.h \
-    distancer.h
+    distancer.h \
+    parameters.h
