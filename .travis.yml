@@ -15,6 +15,7 @@ install:
   - sudo apt-get install -qq g++-5
   - sudo apt-get install -qq lyx
   - sudo apt-get install -qq texlive
+  - sudo apt-get install -qq pgf
 
 script: 
  - ./build.sh
