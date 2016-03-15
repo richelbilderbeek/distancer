@@ -84,13 +84,6 @@ Richèl J.C.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
@@ -649,7 +642,10 @@ All PBD papers state that speciation is complex and do not single out a
 \end_layout
 
 \begin_layout Standard
-This model mimics Etienne & Rosindell 2012 at the level of the individual.
+This model mimics Etienne & Rosindell 2012 at the level of the individual,
+ where multiple individuals form one or more species.
+ The models offers a biological representation of all processes happening
+ in a phylogeny, which are branching, speciation-completion and extinction)
 \end_layout
 
 \begin_layout Standard
