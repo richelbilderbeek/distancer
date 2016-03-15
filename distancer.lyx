@@ -84,6 +84,13 @@ Richèl J.C.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
@@ -117,7 +124,7 @@ draw (0,0) -- (2,0);
 
   
 \backslash
-draw (2,1) -- (2,-1);
+draw[dashed] (2,1) -- (2,-1);
 \end_layout
 
 \begin_layout Plain Layout
@@ -301,11 +308,14 @@ An incipient species phylogeny can be linked to population genetic processes:
 \begin_inset Formula $t_{2}$
 \end_inset
 
- speciation is completed the linking genotype (
+ speciation is completed.
+ when the linking genotype (
 \begin_inset Formula $01$
 \end_inset
 
-) has gone extinct
+) has gone extinct.
+ This example assumes a maximum genetic distance of 1 different allele for
+ genotypes being able to produce viable offspring.
 \end_layout
 
 \end_inset
@@ -323,7 +333,7 @@ An incipient species phylogeny can be linked to population genetic processes:
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -407,7 +417,11 @@ One species.
  If the genetic distance exceeds a certain threshold, set to 1 in this example,
  these individual cannot produce viable offspring.
  These three individuals are considered one species.
- Would genotype '01' become absent, these would be two species (figure 
+ Would genotype '
+\begin_inset Formula $01$
+\end_inset
+
+' be absent, these would be two species (figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:two_species"
@@ -439,7 +453,7 @@ name "fig:one_species"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -505,8 +519,15 @@ Two species.
  If the edge is solid, these different geneotypes can produce viable offspring.
  If the genetic distance exceeds a certain threshold, set to 1 in this example,
  these individual cannot produce viable offspring.
- Would genetype '01' be introduced, these would become one species (figure
- 
+ Would genotype '
+\begin_inset Formula $01$
+\end_inset
+
+' (or '
+\begin_inset Formula $10$
+\end_inset
+
+') be introduced, these would become one species (figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:one_species"
@@ -629,6 +650,18 @@ All PBD papers state that speciation is complex and do not single out a
 
 \begin_layout Standard
 This model mimics Etienne & Rosindell 2012 at the level of the individual.
+\end_layout
+
+\begin_layout Standard
+It shares these features:
+\end_layout
+
+\begin_layout Itemize
+similar LTT
+\end_layout
+
+\begin_layout Itemize
+possibly periphyly
 \end_layout
 
 \begin_layout Section
