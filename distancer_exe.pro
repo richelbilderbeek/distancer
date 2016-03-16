@@ -10,7 +10,7 @@ CONFIG(release, debug|release) {
 QMAKE_CXX = g++-5
 QMAKE_LINK = g++-5
 QMAKE_CC = gcc-5
-QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++14
+QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++11
 
 include(distancer.pri)
-SOURCES += main.cpp
+SOURCES += src/main.cpp

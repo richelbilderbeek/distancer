@@ -1,7 +1,7 @@
 SOURCES += \
-    distancer.cpp \
-    parameters.cpp
+    src/distancer.cpp \
+    src/parameters.cpp
 
 HEADERS += \
-    distancer.h \
-    parameters.h
+    src/distancer.h \
+    src/parameters.h

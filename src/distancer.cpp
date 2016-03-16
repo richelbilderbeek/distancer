@@ -11,7 +11,7 @@ int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_
 {
   const bool debug{false};
   if (p.empty()) return 0;
-  std::sort(std::begin(p),std::end(p), [](const auto& lhs, const auto& rhs) { return lhs.to_ulong() < rhs.to_ulong(); } );
+  std::sort(std::begin(p),std::end(p), [](const boost::dynamic_bitset<>& lhs, const boost::dynamic_bitset<>& rhs) { return lhs.to_ulong() < rhs.to_ulong(); } );
   typename std::vector<boost::dynamic_bitset<>>::iterator new_end = std::unique(std::begin(p),std::end(p));
   p.erase(new_end,std::end(p));
 
@@ -58,7 +58,7 @@ void do_simulation(const parameters& my_parameters)
   std::mt19937 rng_engine{rng_seed};
   std::uniform_int_distribution<int> population_indices(0,population_size-1);
   std::uniform_int_distribution<int> locus_index(0,n_loci-1);
-  std::uniform_int_distribution<long long unsigned int> inherits_from_mother(0,(1 << n_loci) - 1);
+  std::uniform_int_distribution<unsigned long> inherits_from_mother(0,(1 << n_loci) - 1); //Must be of same data type as boost::dynamic_bitset second constructor argument
   std::uniform_real_distribution<double> chance(0.0, 1.0);
   std::vector<boost::dynamic_bitset<>> population(population_size, boost::dynamic_bitset<>(n_loci));
 
