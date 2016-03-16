@@ -39,3 +39,4 @@ test_release.txt
 test_debug.txt
 *.lyx~
 *.lyx#
+.Rproj.user

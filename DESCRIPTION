@@ -1,0 +1,11 @@
+Package: distancer
+Type: Package
+Title: a simulation
+Version: 1.0
+Date: 2016-03-16
+Author: Richel Bilderbeek
+Maintainer: Richel Bilderbeek <richel@richelbilderbeek.nl>
+Description: A simulation. In C++. And R. Combined.
+License: file: LICENSE
+LinkingTo: Rcpp11
+Imports: Rcpp11
