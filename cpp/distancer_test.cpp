@@ -5,6 +5,10 @@
 #define BOOST_TEST_MODULE distancer
 #include <boost/test/unit_test.hpp>
 
+// Boost.Test does not play well with -Weffc++
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
+
 BOOST_AUTO_TEST_SUITE(distancer_functions)
 
 BOOST_AUTO_TEST_CASE(detect_by_travis)
@@ -265,3 +269,6 @@ BOOST_AUTO_TEST_CASE(std_bitset)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+//Your code
+#pragma GCC diagnostic pop

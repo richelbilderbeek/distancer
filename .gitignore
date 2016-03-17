@@ -40,3 +40,4 @@ test_debug.txt
 *.lyx~
 *.lyx#
 .Rproj.user
+.Rhistory

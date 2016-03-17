@@ -3,7 +3,7 @@
 
 #include <bitset>
 #include <boost/dynamic_bitset.hpp>
-#include <iostream>
+//#include <iostream>
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/connected_components.hpp>
@@ -16,7 +16,7 @@ int count_connected_components(
   const graph& g
 ) noexcept
 {
-  const bool debug{false};
+  //const bool debug{false};
   std::vector<int> c(boost::num_vertices(g));
   const int n = boost::connected_components(g,
     boost::make_iterator_property_map(
@@ -25,10 +25,10 @@ int count_connected_components(
     )
   );
 
-  if (debug) {
-    std::copy(std::begin(c),std::end(c),std::ostream_iterator<int>(std::cout, ", "));
-    std::cout << '\n';
-  }
+  //if (debug) {
+  //  std::copy(std::begin(c),std::end(c),std::ostream_iterator<int>(std::cout, ", "));
+  //  std::cout << '\n';
+  //}
   return n;
 }
 
@@ -36,8 +36,11 @@ int count_connected_components(
 ///genetic difference to be called the same species
 int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_distance) noexcept;
 
-///The function that does a simulation
 void do_simulation(const parameters& p);
+
+//Do not define this here: R will get confused
+//void do_simulation_cpp(...)
+
 
 ///Counts the number of loci that are different
 template <size_t n_loci>
@@ -62,7 +65,7 @@ int get_genetic_distance(
 template <size_t n_loci>
 int count_species(std::vector<std::bitset<n_loci>> p, const int max_genetic_distance) noexcept
 {
-  const bool debug{false};
+  //const bool debug{false};
   if (p.empty()) return 0;
   std::sort(std::begin(p),std::end(p), [](const std::bitset<n_loci>& lhs, const std::bitset<n_loci>& rhs) { return lhs.to_ulong() < rhs.to_ulong(); } );
   typename std::vector<std::bitset<n_loci>>::iterator new_end = std::unique(std::begin(p),std::end(p));
@@ -72,19 +75,19 @@ int count_species(std::vector<std::bitset<n_loci>> p, const int max_genetic_dist
   if (sz == 1) return 1;
 
   boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g(sz);
-  assert(sz == static_cast<int>(boost::num_vertices(g)));
+  //assert(sz == static_cast<int>(boost::num_vertices(g)));
 
   for (int i=0; i!=sz; ++i)
   {
-    if (debug) { std::cout << "i (" << i << ") has genome " << p[i] << '\n'; }
+    //if (debug) { std::cout << "i (" << i << ") has genome " << p[i] << '\n'; }
     for (int j=i+1; j!=sz; ++j)
     {
       assert(j < sz);
       const int genetic_distance{get_genetic_distance(p[i],p[j])};
-      if (debug) { std::cout << "j (" << j << ") has genome " << p[j] << " and genetic distance " << genetic_distance << '\n'; }
+      //if (debug) { std::cout << "j (" << j << ") has genome " << p[j] << " and genetic distance " << genetic_distance << '\n'; }
       if (genetic_distance <= max_genetic_distance)
       {
-        if (debug) { std::cout << "MATCH\n"; }
+        //if (debug) { std::cout << "MATCH\n"; }
         const auto vip = vertices(g);
         auto from_iter = vip.first + i;
         auto to_iter = vip.first + j;
@@ -92,7 +95,7 @@ int count_species(std::vector<std::bitset<n_loci>> p, const int max_genetic_dist
       }
       else
       {
-        if (debug) { std::cout << "No match\n"; }
+        //if (debug) { std::cout << "No match\n"; }
       }
     }
   }
