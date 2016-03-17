@@ -1,5 +1,6 @@
 #include <fstream>
 #include "distancer.h"
+#include "helper.h"
 
 #define BOOST_TEST_DYN_LINK // Defines a main function
 #define BOOST_TEST_MODULE distancer
@@ -27,8 +28,15 @@ BOOST_AUTO_TEST_CASE(test_do_simulation)
     population_size,
     rng_seed
   );
-  const auto v = do_simulation(p);
-  BOOST_CHECK(v.size() == 1);
+  do_simulation(p);
+  const std::string filename{"results.csv"};
+  BOOST_CHECK(is_regular_file(filename));
+  const auto v = file_to_vector(filename);
+
+  // 0: header
+  // 1: data
+  // 2: empty line
+  BOOST_CHECK(v.size() == 3);
 
 }
 

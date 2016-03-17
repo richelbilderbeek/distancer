@@ -1,9 +1,10 @@
 #include "distancer.h"
 
 #include <algorithm>
-//#include <cassert>
+#include <fstream>
 #include <random>
 #include <boost/graph/isomorphism.hpp>
+#include "results.h"
 
 ///Count the number of ring species, where two individuals must have at most 'max_genetic_distance'
 ///genetic difference to be called the same species
@@ -46,9 +47,10 @@ int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_
   return count_connected_components(g);
 }
 
-std::vector<double> do_simulation(const parameters& my_parameters)
+void do_simulation(const parameters& my_parameters)
 {
-  std::vector<double> results(1,0); //There is one species at t is zero
+  results my_results;
+  my_results.add_row(results_row(1,0)); //There is one species at t is zero
   const size_t n_loci{my_parameters.get_n_loci()};
   const int rng_seed{my_parameters.get_rng_seed()};
   const int n_generations{my_parameters.get_n_generations()};
@@ -90,11 +92,13 @@ std::vector<double> do_simulation(const parameters& my_parameters)
       //std::cout << i << ": " << count_species(population,max_genetic_distance) << '\n';
       //for (const auto individual: population) { std::cout << individual << " "; }
       //std::cout << "\n";
-      results.push_back(static_cast<double>(i));
+      my_results.add_row(results_row(max_species_observed, i));
       if (max_species_observed == 6) break;
     }
   }
-  return results;
+
+  std::ofstream f("results.csv");
+  f << my_results;
 }
 
 //' The function that does a simulation.
@@ -104,10 +108,10 @@ std::vector<double> do_simulation(const parameters& my_parameters)
 //' @param n_loci number of loci
 //' @param population_size population size
 //' @param rng_seed random number generator seed
-//' @return Timepoints when new number of species was found
+//' @return Nothing
 //' @export
 // [[Rcpp::export]]
-std::vector<double> do_simulation_cpp(
+void do_simulation_cpp(
   const int max_genetic_distance,
   const double mutation_rate,
   const int n_generations,
@@ -124,7 +128,7 @@ std::vector<double> do_simulation_cpp(
     population_size,
     rng_seed
   );
-  return do_simulation(p);
+  do_simulation(p);
 }
 
 ///Counts the number of loci that are different

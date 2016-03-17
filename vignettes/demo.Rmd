@@ -22,5 +22,5 @@ df <- do_simulation_r(
   population_size = 10,
   rng_seed= 42
 )
-qplot(ts, ns, data = df, geom = "line")
+qplot(t, n, data = df, geom = "line")
 ```

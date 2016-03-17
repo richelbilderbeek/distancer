@@ -6,10 +6,9 @@
 using namespace Rcpp;
 
 // do_simulation_cpp
-std::vector<double> do_simulation_cpp(const int max_genetic_distance, const double mutation_rate, const int n_generations, const int n_loci, const int population_size, const int rng_seed);
+void do_simulation_cpp(const int max_genetic_distance, const double mutation_rate, const int n_generations, const int n_loci, const int population_size, const int rng_seed);
 RcppExport SEXP distancer_do_simulation_cpp(SEXP max_genetic_distanceSEXP, SEXP mutation_rateSEXP, SEXP n_generationsSEXP, SEXP n_lociSEXP, SEXP population_sizeSEXP, SEXP rng_seedSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const int >::type max_genetic_distance(max_genetic_distanceSEXP);
     Rcpp::traits::input_parameter< const double >::type mutation_rate(mutation_rateSEXP);
@@ -17,7 +16,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const int >::type n_loci(n_lociSEXP);
     Rcpp::traits::input_parameter< const int >::type population_size(population_sizeSEXP);
     Rcpp::traits::input_parameter< const int >::type rng_seed(rng_seedSEXP);
-    __result = Rcpp::wrap(do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed));
-    return __result;
+    do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed);
+    return R_NilValue;
 END_RCPP
 }

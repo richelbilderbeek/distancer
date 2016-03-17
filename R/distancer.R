@@ -20,7 +20,7 @@ do_simulation_r <- function(
   rng_seed
   ) {
 
-  ts <- do_simulation_cpp(
+  do_simulation_cpp(
     max_genetic_distance,
     mutation_rate,
     n_generations,
@@ -28,8 +28,9 @@ do_simulation_r <- function(
     population_size,
     rng_seed
   )
-
-  ns <- seq(1,length(ts))
-  df <- data.frame(ns = ns, ts = ts)
+  df <- read.table("results.csv", header = TRUE, sep = ",")
+  #df <- read.table("~/GitHubs/distancer/vignettes/results.csv", header = TRUE, sep = ",")
+  #colnames(df)
+  #print(df)
   df
 }

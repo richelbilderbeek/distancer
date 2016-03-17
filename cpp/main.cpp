@@ -2,6 +2,7 @@
 #include <exception>
 #include <iostream>
 #include <fstream>
+#include "helper.h"
 
 int main() {
   #ifndef NDEBUG
@@ -25,9 +26,20 @@ int main() {
       population_size,
       rng_seed
     );
-    const auto v = do_simulation(p);
-    std::copy(std::begin(v), std::end(v),
-      std::ostream_iterator<double>(std::cout, "\n")
+    do_simulation(p);
+    std::fstream f;
+    const std::string filename{"results.csv"};
+    if (!is_regular_file(filename))
+    {
+      std::cerr << "Error: file '" << filename
+        << "' not found" <<'\n';
+      return 1;
+    }
+    const auto v = file_to_vector(filename);
+    std::copy(
+      std::begin(v),
+      std::end(v),
+      std::ostream_iterator<std::string>(std::cout, "\n")
     );
   }
   catch (std::exception& e)
