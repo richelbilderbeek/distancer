@@ -66,7 +66,7 @@ void do_simulation(const parameters& my_parameters)
   std::vector<boost::dynamic_bitset<>> population(population_size, boost::dynamic_bitset<>(n_loci));
 
   //assert(count_species(population,2) == 1);
-  int max_species_observed = 1;
+  int last_species_observed = 1;
 
   //Overlapping generations
   for (int i=0; i!=n_generations; ++i)
@@ -86,14 +86,13 @@ void do_simulation(const parameters& my_parameters)
       population[random_kid_index].flip(locus_index(rng_engine));
     }
 
-    if (count_species(population,max_genetic_distance) > max_species_observed)
+    if (count_species(population,max_genetic_distance) != last_species_observed)
     {
-      max_species_observed = count_species(population,max_genetic_distance);
+      last_species_observed = count_species(population,max_genetic_distance);
       //std::cout << i << ": " << count_species(population,max_genetic_distance) << '\n';
       //for (const auto individual: population) { std::cout << individual << " "; }
       //std::cout << "\n";
-      my_results.add_row(results_row(max_species_observed, i));
-      if (max_species_observed == 6) break;
+      my_results.add_row(results_row(last_species_observed, i));
     }
   }
 

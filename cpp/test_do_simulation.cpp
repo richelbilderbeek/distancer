@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE(test_do_simulation)
 {
   const int max_genetic_distance{1};
   const double mutation_rate{0.1};
-  const int n_generations{1};
+  const int n_generations{0};
   const std::size_t n_loci{1};
   const int population_size{1};
   const int rng_seed{42};

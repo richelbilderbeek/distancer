@@ -14,7 +14,7 @@ int main() {
   {
     const int max_genetic_distance{1};
     const double mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
-    const int n_generations{1000000000};
+    const int n_generations{1000000};
     const int n_loci{16};
     const int population_size{8};
     const int rng_seed{42};
