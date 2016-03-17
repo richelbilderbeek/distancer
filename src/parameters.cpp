@@ -53,15 +53,6 @@ parameters::parameters(
     ;
     throw std::invalid_argument(msg.str());
   }
-//  if (m_n_loci < 0)
-//  {
-//    std::stringstream msg;
-//    msg << __func__ << ": "
-//      << "n_loci must be >= 0, "
-//      << "supplied value was " << m_n_loci
-//    ;
-//    throw std::invalid_argument(msg.str());
-//  }
   if (m_population_size < 0)
   {
     std::stringstream msg;

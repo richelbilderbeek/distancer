@@ -6,12 +6,42 @@
 #include <boost/graph/isomorphism.hpp>
 #include "results.h"
 
-///Count the number of ring species, where two individuals must have at most 'max_genetic_distance'
-///genetic difference to be called the same species
+std::vector<int> count_abundances(
+  std::vector<boost::dynamic_bitset<>> p,
+  const int max_genetic_distance
+) noexcept
+{
+  if (p.empty()) return {};
+
+  const int sz{static_cast<int>(p.size())};
+  if (sz == 1) return { static_cast<int>(p.size()) };
+
+  boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g(sz);
+
+  for (int i=0; i!=sz; ++i)
+  {
+    for (int j=i+1; j!=sz; ++j)
+    {
+      const int genetic_distance{get_genetic_distance(p[i],p[j])};
+      if (genetic_distance <= max_genetic_distance)
+      {
+        const auto vip = vertices(g);
+        auto from_iter = vip.first + i;
+        auto to_iter = vip.first + j;
+        boost::add_edge(*from_iter, *to_iter, g);
+      }
+    }
+  }
+  const auto ids = get_connected_components_ids(g);
+  return create_tally(ids);
+}
+
 int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_distance) noexcept
 {
   //const bool debug{false};
   if (p.empty()) return 0;
+
+  //Ditch the duplicates to speed up the calculation
   std::sort(std::begin(p),std::end(p), [](const boost::dynamic_bitset<>& lhs, const boost::dynamic_bitset<>& rhs) { return lhs.to_ulong() < rhs.to_ulong(); } );
   typename std::vector<boost::dynamic_bitset<>>::iterator new_end = std::unique(std::begin(p),std::end(p));
   p.erase(new_end,std::end(p));
@@ -20,37 +50,48 @@ int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_
   if (sz == 1) return 1;
 
   boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g(sz);
-  //assert(sz == static_cast<int>(boost::num_vertices(g)));
 
   for (int i=0; i!=sz; ++i)
   {
-    //if (debug) { std::cout << "i (" << i << ") has genome " << p[i] << '\n'; }
     for (int j=i+1; j!=sz; ++j)
     {
-      //assert(j < sz);
       const int genetic_distance{get_genetic_distance(p[i],p[j])};
-      //if (debug) { std::cout << "j (" << j << ") has genome " << p[j] << " and genetic distance " << genetic_distance << '\n'; }
       if (genetic_distance <= max_genetic_distance)
       {
-        //if (debug) { std::cout << "MATCH\n"; }
         const auto vip = vertices(g);
         auto from_iter = vip.first + i;
         auto to_iter = vip.first + j;
         boost::add_edge(*from_iter, *to_iter, g);
-      }
-      else
-      {
-        //if (debug) { std::cout << "No match\n"; }
       }
     }
   }
   return count_connected_components(g);
 }
 
+std::vector<int> create_tally(const std::vector<int>& v) noexcept
+{
+  std::map<int, int> m;
+  for (const auto i: v)
+  {
+    const auto iter = m.find(i);
+    if (iter == std::end(m))
+    {
+      m.insert(std::make_pair(i, 1));
+    }
+    else { ++m[i]; }
+  }
+
+  std::vector<int> t;
+  t.reserve(m.size());
+  for (const auto p: m) {
+    t.push_back(p.second);
+  }
+  return t;
+}
+
 void do_simulation(const parameters& my_parameters)
 {
   results my_results;
-  my_results.add_row(results_row(1,0)); //There is one species at t is zero
   const size_t n_loci{my_parameters.get_n_loci()};
   const int rng_seed{my_parameters.get_rng_seed()};
   const int n_generations{my_parameters.get_n_generations()};
@@ -65,34 +106,40 @@ void do_simulation(const parameters& my_parameters)
   std::uniform_real_distribution<double> chance(0.0, 1.0);
   std::vector<boost::dynamic_bitset<>> population(population_size, boost::dynamic_bitset<>(n_loci));
 
-  //assert(count_species(population,2) == 1);
-  int last_species_observed = 1;
+  my_results.add_abundances(
+    abundances(
+      count_abundances(population, max_genetic_distance), //Only one species
+      0 //time
+    )
+  ); //There is one species at t is zero
+  int last_n_species_observed{1};
 
   //Overlapping generations
-  for (int i=0; i!=n_generations; ++i)
+  for (int t{0}; t!=n_generations; ++t)
   {
     const int random_father_index{population_indices(rng_engine)};
     const int random_mother_index{population_indices(rng_engine)};
     if (get_genetic_distance(population[random_mother_index], population[random_father_index]) > max_genetic_distance)
     {
-      --i;
+      --t;
       continue;
     }
     const boost::dynamic_bitset<> inheritance{n_loci, inherits_from_mother(rng_engine)};
     const int random_kid_index{population_indices(rng_engine)};
-    //assert(population[random_mother_index].size() == population[random_father_index].size());
     population[random_kid_index] = (inheritance & population[random_mother_index]) | (~inheritance & population[random_father_index]);
     if (chance(rng_engine) < mutation_rate) {
       population[random_kid_index].flip(locus_index(rng_engine));
     }
 
-    if (count_species(population,max_genetic_distance) != last_species_observed)
+    if (count_species(population,max_genetic_distance) != last_n_species_observed)
     {
-      last_species_observed = count_species(population,max_genetic_distance);
-      //std::cout << i << ": " << count_species(population,max_genetic_distance) << '\n';
-      //for (const auto individual: population) { std::cout << individual << " "; }
-      //std::cout << "\n";
-      my_results.add_row(results_row(last_species_observed, i));
+      last_n_species_observed = count_species(population,max_genetic_distance);
+      my_results.add_abundances(
+        abundances(
+          count_abundances(population, max_genetic_distance),
+          t
+        )
+      );
     }
   }
 

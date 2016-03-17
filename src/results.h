@@ -3,16 +3,17 @@
 
 #include <iosfwd>
 #include <vector>
-#include "results_row.h"
+#include "abundances.h"
 
 class results
 {
 public:
   results();
-  void add_row(const results_row& row) noexcept;
+  void add_abundances(const abundances& row) noexcept;
 
 private:
-  std::vector<results_row> m_rows;
+  int m_max_n_species;
+  std::vector<abundances> m_rows;
 
   friend std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
 };

@@ -40,3 +40,5 @@ test_debug.txt
 inst/doc
 build-*
 vignettes/results.csv
+vignettes/results.csv
+build-distancer_test-Desktop-Debug/

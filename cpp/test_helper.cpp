@@ -77,6 +77,84 @@ BOOST_AUTO_TEST_CASE(boost_dynamic_bitset)
   }
 }
 
+BOOST_AUTO_TEST_CASE(test_count_abundances)
+{
+  {
+    std::vector<boost::dynamic_bitset<>> p {
+      boost::dynamic_bitset<>(3,0b000)
+    };
+    const std::vector<int> expected = { 1 };
+    const auto result = ::count_abundances(p,1);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<boost::dynamic_bitset<>> p {
+      boost::dynamic_bitset<>(3,0b001),
+      boost::dynamic_bitset<>(3,0b001)
+    };
+    const std::vector<int> expected = { 2 };
+    const auto n_species = ::count_species(p,1);
+    const auto result = ::count_abundances(p,1);
+    BOOST_CHECK(n_species == 1);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<boost::dynamic_bitset<>> p {
+      boost::dynamic_bitset<>(3,0b010),
+      boost::dynamic_bitset<>(3,0b010),
+      boost::dynamic_bitset<>(3,0b010)
+    };
+    const std::vector<int> expected = { 3 };
+    const auto n_species = ::count_species(p,1);
+    const auto result = ::count_abundances(p,1);
+    BOOST_CHECK(n_species == 1);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<boost::dynamic_bitset<>> p {
+      boost::dynamic_bitset<>(3,0b100),
+      boost::dynamic_bitset<>(3,0b110),
+      boost::dynamic_bitset<>(3,0b010),
+      boost::dynamic_bitset<>(3,0b011),
+      boost::dynamic_bitset<>(3,0b001)
+    };
+    const std::vector<int> expected = { 5 };
+    const auto result = ::count_abundances(p,1);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<boost::dynamic_bitset<>> p {
+      boost::dynamic_bitset<>(3,0b100),
+      boost::dynamic_bitset<>(3,0b001)
+    };
+    const std::vector<int> expected = { 1, 1 };
+    const auto result = ::count_abundances(p,1);
+    BOOST_CHECK(result == expected);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(test_count_connected_components)
+{
+  {
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g;
+    boost::add_vertex(g);
+    BOOST_CHECK(::count_connected_components(g) == 1);
+  }
+  {
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g;
+    boost::add_vertex(g);
+    boost::add_vertex(g);
+    BOOST_CHECK(::count_connected_components(g) == 2);
+  }
+  {
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g;
+    const auto vd_a = boost::add_vertex(g);
+    const auto vd_b = boost::add_vertex(g);
+    boost::add_edge(vd_a, vd_b, g);
+    BOOST_CHECK(::count_connected_components(g) == 1);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(count_species_boost)
 {
   {
@@ -119,6 +197,34 @@ BOOST_AUTO_TEST_CASE(count_species_boost)
   }
 }
 
+BOOST_AUTO_TEST_CASE(test_create_tally)
+{
+  {
+    std::vector<int> v = {};
+    std::vector<int> expected = {};
+    const auto result = ::create_tally(v);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<int> v = {0};
+    std::vector<int> expected = {1};
+    const auto result = ::create_tally(v);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<int> v = {0,1,1,2,2,2};
+    std::vector<int> expected = {1,2,3};
+    const auto result = ::create_tally(v);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    std::vector<int> v = {0,0,0};
+    std::vector<int> expected = {3};
+    const auto result = ::create_tally(v);
+    BOOST_CHECK(result == expected);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(detect_by_travis)
 {
   #ifndef NDEBUG
@@ -128,6 +234,36 @@ BOOST_AUTO_TEST_CASE(detect_by_travis)
   #endif
   f << "OK\n";
 }
+
+
+BOOST_AUTO_TEST_CASE(test_get_connected_components_ids)
+{
+  {
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g;
+    boost::add_vertex(g);
+    const std::vector<int> expected = { 0 };
+    const auto result = ::get_connected_components_ids(g);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g;
+    boost::add_vertex(g);
+    boost::add_vertex(g);
+    const std::vector<int> expected = { 0, 1 };
+    const auto result = ::get_connected_components_ids(g);
+    BOOST_CHECK(result == expected);
+  }
+  {
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g;
+    const auto vd_a = boost::add_vertex(g);
+    const auto vd_b = boost::add_vertex(g);
+    boost::add_edge(vd_a, vd_b, g);
+    const std::vector<int> expected = { 0, 0 };
+    const auto result = ::get_connected_components_ids(g);
+    BOOST_CHECK(result == expected);
+  }
+}
+
 
 BOOST_AUTO_TEST_CASE(get_genetic_distance_boost)
 {
