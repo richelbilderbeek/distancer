@@ -16,5 +16,5 @@ install:
 #  - sudo apt-get install -qq lyx texlive pgf
 
 script: 
- - ./build.sh
+ - ./build_cpp.sh
 # - ./create_pdf.sh
