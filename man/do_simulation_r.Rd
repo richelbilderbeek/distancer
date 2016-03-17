@@ -21,7 +21,7 @@ do_simulation_r(max_genetic_distance, mutation_rate, n_generations, n_loci,
 \item{rng_seed}{random number generator seed}
 }
 \value{
-Nothing
+Timepoints when there were new species
 }
 \description{
 The function that does a simulation.

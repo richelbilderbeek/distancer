@@ -1,6 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 .travis.yml
+.travis_cpp.yml
+.travis_lyx.yml
+.travis_r.yml
 build-distancer_exe-Desktop-Debug/
 build-distancer_exe-Desktop-Release/
 build-distancer_test-Desktop-Debug/
@@ -9,6 +12,7 @@ cpp/
 debug/
 release/
 build.sh
+build_cpp.sh
 TravisCI.png
 clean.sh
 create_pdf.sh

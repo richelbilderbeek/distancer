@@ -17,4 +17,6 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++11
 LIBS += -lboost_unit_test_framework
 
 include(distancer.pri)
-SOURCES += distancer_test.cpp
+SOURCES += \
+    test_helper.cpp \
+    test_do_simulation.cpp

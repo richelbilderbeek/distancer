@@ -46,8 +46,9 @@ int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_
   return count_connected_components(g);
 }
 
-void do_simulation(const parameters& my_parameters)
+std::vector<double> do_simulation(const parameters& my_parameters)
 {
+  std::vector<double> results(1,0); //There is one species at t is zero
   const size_t n_loci{my_parameters.get_n_loci()};
   const int rng_seed{my_parameters.get_rng_seed()};
   const int n_generations{my_parameters.get_n_generations()};
@@ -89,10 +90,11 @@ void do_simulation(const parameters& my_parameters)
       //std::cout << i << ": " << count_species(population,max_genetic_distance) << '\n';
       //for (const auto individual: population) { std::cout << individual << " "; }
       //std::cout << "\n";
-
-      if (max_species_observed == 6) return;
+      results.push_back(static_cast<double>(i));
+      if (max_species_observed == 6) break;
     }
   }
+  return results;
 }
 
 //' The function that does a simulation.
@@ -102,10 +104,10 @@ void do_simulation(const parameters& my_parameters)
 //' @param n_loci number of loci
 //' @param population_size population size
 //' @param rng_seed random number generator seed
-//' @return Nothing
+//' @return Timepoints when new number of species was found
 //' @export
 // [[Rcpp::export]]
-void do_simulation_cpp(
+std::vector<double> do_simulation_cpp(
   const int max_genetic_distance,
   const double mutation_rate,
   const int n_generations,
@@ -122,7 +124,7 @@ void do_simulation_cpp(
     population_size,
     rng_seed
   );
-  do_simulation(p);
+  return do_simulation(p);
 }
 
 ///Counts the number of loci that are different

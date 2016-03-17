@@ -1,0 +1,26 @@
+---
+title: "Demo"
+author: "Richel Bilderbeek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Demo:
+
+```{r}
+library(distancer)
+library(ggplot2)
+df <- do_simulation_r(
+  max_genetic_distance = 1,
+  mutation_rate = 0.1,
+  n_generations = 1000000,
+  n_loci = 4,
+  population_size = 10,
+  rng_seed= 42
+)
+qplot(ts, ns, data = df, geom = "line")
+```

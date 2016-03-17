@@ -36,7 +36,8 @@ int count_connected_components(
 ///genetic difference to be called the same species
 int count_species(std::vector<boost::dynamic_bitset<>> p, const int max_genetic_distance) noexcept;
 
-void do_simulation(const parameters& p);
+///Return something
+std::vector<double> do_simulation(const parameters& p);
 
 //Do not define this here: R will get confused
 //void do_simulation_cpp(...)

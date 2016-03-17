@@ -9,7 +9,7 @@ NULL
 #' @param n_loci number of loci
 #' @param population_size population size
 #' @param rng_seed random number generator seed
-#' @return Nothing
+#' @return Timepoints when there were new species
 #' @export
 do_simulation_r <- function(
   max_genetic_distance,
@@ -19,7 +19,8 @@ do_simulation_r <- function(
   population_size,
   rng_seed
   ) {
-    do_simulation_cpp(
+
+  ts <- do_simulation_cpp(
     max_genetic_distance,
     mutation_rate,
     n_generations,
@@ -27,4 +28,8 @@ do_simulation_r <- function(
     population_size,
     rng_seed
   )
+
+  ns <- seq(1,length(ts))
+  df <- data.frame(ns = ns, ts = ts)
+  df
 }

@@ -25,7 +25,10 @@ int main() {
       population_size,
       rng_seed
     );
-    do_simulation(p);
+    const auto v = do_simulation(p);
+    std::copy(std::begin(v), std::end(v),
+      std::ostream_iterator<double>(std::cout, "\n")
+    );
   }
   catch (std::exception& e)
   {

@@ -21,7 +21,7 @@ do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci,
 \item{rng_seed}{random number generator seed}
 }
 \value{
-Nothing
+Timepoints when new number of species was found
 }
 \description{
 The function that does a simulation.

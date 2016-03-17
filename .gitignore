@@ -7,21 +7,17 @@
 # Precompiled Headers
 *.gch
 *.pch
-
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
-
 # Fortran module files
 *.mod
-
 # Compiled Static libraries
 *.lai
 *.la
 *.a
 *.lib
-
 # Executables
 *.exe
 *.out
@@ -41,3 +37,4 @@ test_debug.txt
 *.lyx#
 .Rproj.user
 .Rhistory
+inst/doc
