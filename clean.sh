@@ -1,4 +1,5 @@
 #!/bin/bash
+cd cpp
 rm *.o
 rm Makefile
 rm Makefile.Debug
@@ -10,3 +11,5 @@ rm exe_debug.txt
 rm exe_release.txt
 rm test_debug.txt
 rm test_release.txt
+rm -rf debug
+rm -rf release
