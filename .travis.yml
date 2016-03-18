@@ -16,5 +16,5 @@ install:
 
 script: 
  - ./build_cpp.sh
- - Rscript install_r_packages.R
+ - sudo Rscript install_r_packages.R
  - R CMD check .
