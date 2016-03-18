@@ -31,6 +31,9 @@ script:
  # Now R is ready to go
  - R CMD check .
 
+after_script:
+ - cat /home/travis/build/richelbilderbeek/distancer/..Rcheck/00install.out
+
 
 #  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 
 #  - deb http://cran.r-project.org/bin/linux/ubuntu precise/ 
