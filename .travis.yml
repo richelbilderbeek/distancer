@@ -18,6 +18,16 @@ install:
 script: 
  - ./build_cpp.sh
  - ./clean.sh
+ # R wants all hidden files gone...
+ - rm .gitignore
+ - rm src/.gitignore
+ - rm .travis_cpp_and_r.yml
+ - rm .travis_lyx.yml
+ - rm .travis_r.yml
+ - rm .travis.yml
+ - rm .git
+ - rm ..Rcheck
+ # Now R is ready to go
  - sudo Rscript install_r_packages.R
  - R CMD check .
 
