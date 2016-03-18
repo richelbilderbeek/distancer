@@ -41,8 +41,16 @@ std::ostream& operator<<(std::ostream& os, const abundances& r) noexcept
   }
   std::string t{s.str()};
   //Remove trailing comma and space
-  if (!t.empty()) { t.pop_back(); }
-  if (!t.empty()) { t.pop_back(); }
+  if (!t.empty())
+  {
+    //t.pop_back(); //Does not work under Travis
+    t.resize(t.size() - 1);
+  }
+  if (!t.empty())
+  {
+    //t.pop_back(); //Does not work under Travis
+    t.resize(t.size() - 1);
+  }
   os << t;
   return os;
 }
