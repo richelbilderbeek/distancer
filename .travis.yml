@@ -18,6 +18,7 @@ install:
 script: 
  - ./build_cpp.sh
  - ./clean.sh
+ - sudo Rscript install_r_packages.R
  # R wants all hidden files gone...
  - rm .gitignore
  - rm src/.gitignore
@@ -28,7 +29,6 @@ script:
  - rm -rf .git
  - rm -rf ..Rcheck
  # Now R is ready to go
- - sudo Rscript install_r_packages.R
  - R CMD check .
 
 
