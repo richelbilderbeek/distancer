@@ -25,8 +25,8 @@ script:
  - rm .travis_lyx.yml
  - rm .travis_r.yml
  - rm .travis.yml
- - rm .git
- - rm ..Rcheck
+ - rm -rf .git
+ - rm -rf ..Rcheck
  # Now R is ready to go
  - sudo Rscript install_r_packages.R
  - R CMD check .
