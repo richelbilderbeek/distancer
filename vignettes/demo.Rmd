@@ -16,16 +16,16 @@ library(reshape2)
 library(scales)
 ```
 
-Demo:
+Here is a run that temporarily has four species:
 
 ```{r}
 df <- do_simulation_r(
   max_genetic_distance = 1,
   mutation_rate = 0.1,
-  n_generations = 5000,
+  n_generations = 3000,
   n_loci = 4,
   population_size = 10,
-  rng_seed= 42
+  rng_seed = 30
 )
 m <- melt(data = df, id = c("t"))
 colnames(m) <- c("t", "id", "f")
@@ -39,3 +39,4 @@ satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) +
 
 satt
 ```
+
