@@ -173,7 +173,6 @@ void do_simulation_cpp(
   do_simulation(p);
 }
 
-///Counts the number of loci that are different
 int get_genetic_distance(
   const boost::dynamic_bitset<>& a,
   const boost::dynamic_bitset<>& b

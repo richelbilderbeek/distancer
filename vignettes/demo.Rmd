@@ -25,7 +25,7 @@ Here is a run that temporarily has four species:
 df <- do_simulation_r(
   max_genetic_distance = 1,
   mutation_rate = 0.1,
-  n_generations = 3000,
+  n_generations = 2650,
   n_loci = 4,
   population_size = 10,
   rng_seed = 30,
@@ -36,6 +36,22 @@ colnames(m) <- c("t", "id", "f")
 
 # species abundances through time
 satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) + 
+  geom_line() + 
+  scale_y_discrete() + 
+  theme(legend.position = "bottom") + 
+  labs(title = "species abundances through time")
+
+satt
+
+```
+
+Zooming in on were the action is:
+
+```{r}
+n <- subset(x = m, t > 2500 & t < 2650)
+
+# species abundances through time
+satt <- ggplot(data = n, aes(x = t, y = f, group = id, colour = id)) + 
   geom_line() + 
   scale_y_discrete() + 
   theme(legend.position = "bottom") + 
@@ -61,7 +77,6 @@ df <- do_simulation_r(
 )
 m <- melt(data = df, id = c("t"))
 colnames(m) <- c("t", "id", "f")
-m <- subset(x = m, t > 1000 & t < 1060)
 
 # species abundances through time
 satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) + 
@@ -72,4 +87,20 @@ satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) +
 
 satt
 ```
+
+Zooming in on were the action is:
+
+```{r}
+n <- subset(x = m, t > 1010 & t < 1015)
+
+# species abundances through time
+satt <- ggplot(data = n, aes(x = t, y = f, group = id, colour = id)) + 
+  geom_line() + 
+  scale_y_discrete() + 
+  theme(legend.position = "bottom") + 
+  labs(title = "species abundances through time")
+
+satt
+```
+
 
