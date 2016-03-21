@@ -12,7 +12,7 @@
 
 BOOST_AUTO_TEST_SUITE(distancer_functions)
 
-BOOST_AUTO_TEST_CASE(test_do_simulation)
+BOOST_AUTO_TEST_CASE(test_do_simulation_zero_generations_zero_rows)
 {
   const int max_genetic_distance{1};
   const double mutation_rate{0.1};
@@ -33,11 +33,58 @@ BOOST_AUTO_TEST_CASE(test_do_simulation)
   BOOST_CHECK(is_regular_file(filename));
   const auto v = file_to_vector(filename);
 
-  // 0: header
-  // 1: data
-  // 2: empty line
-  BOOST_CHECK(v.size() == 3);
+  // first line is header, last line must be empty for R
+  BOOST_CHECK(v.size() == n_generations + 2);
+}
 
+BOOST_AUTO_TEST_CASE(test_do_simulation_one_generations_one_rows)
+{
+  const int max_genetic_distance{1};
+  const double mutation_rate{0.1};
+  const int n_generations{1};
+  const std::size_t n_loci{1};
+  const int population_size{1};
+  const int rng_seed{42};
+  const parameters p(
+    max_genetic_distance,
+    mutation_rate,
+    n_generations,
+    n_loci,
+    population_size,
+    rng_seed
+  );
+  do_simulation(p);
+  const std::string filename{"results.csv"};
+  BOOST_CHECK(is_regular_file(filename));
+  const auto v = file_to_vector(filename);
+
+  // first line is header, last line must be empty for R
+  BOOST_CHECK(v.size() == n_generations + 2);
+}
+
+BOOST_AUTO_TEST_CASE(test_do_simulation_ten_generations_ten_rows)
+{
+  const int max_genetic_distance{1};
+  const double mutation_rate{0.1};
+  const int n_generations{10};
+  const std::size_t n_loci{1};
+  const int population_size{1};
+  const int rng_seed{42};
+  const parameters p(
+    max_genetic_distance,
+    mutation_rate,
+    n_generations,
+    n_loci,
+    population_size,
+    rng_seed
+  );
+  do_simulation(p);
+  const std::string filename{"results.csv"};
+  BOOST_CHECK(is_regular_file(filename));
+  const auto v = file_to_vector(filename);
+
+  // first line is header, last line must be empty for R
+  BOOST_CHECK(v.size() == n_generations + 2);
 }
 
 

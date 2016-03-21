@@ -106,17 +106,23 @@ void do_simulation(const parameters& my_parameters)
   std::uniform_real_distribution<double> chance(0.0, 1.0);
   std::vector<boost::dynamic_bitset<>> population(population_size, boost::dynamic_bitset<>(n_loci));
 
-  my_results.add_abundances(
-    abundances(
-      count_abundances(population, max_genetic_distance), //Only one species
-      0 //time
-    )
-  ); //There is one species at t is zero
-  int last_n_species_observed{1};
+//  my_results.add_abundances(
+//    abundances(
+//      count_abundances(population, max_genetic_distance), //Only one species
+//      0 //time
+//    )
+//  ); //There is one species at t is zero
+//  int last_n_species_observed{1};
 
   //Overlapping generations
   for (int t{0}; t!=n_generations; ++t)
   {
+    my_results.add_abundances(
+      abundances(
+        count_abundances(population, max_genetic_distance),
+        t
+      )
+    );
     const int random_father_index{population_indices(rng_engine)};
     const int random_mother_index{population_indices(rng_engine)};
     if (get_genetic_distance(population[random_mother_index], population[random_father_index]) > max_genetic_distance)
@@ -131,16 +137,16 @@ void do_simulation(const parameters& my_parameters)
       population[random_kid_index].flip(locus_index(rng_engine));
     }
 
-    if (count_species(population,max_genetic_distance) != last_n_species_observed)
-    {
-      last_n_species_observed = count_species(population,max_genetic_distance);
-      my_results.add_abundances(
-        abundances(
-          count_abundances(population, max_genetic_distance),
-          t
-        )
-      );
-    }
+//    if (count_species(population,max_genetic_distance) != last_n_species_observed)
+//    {
+//      last_n_species_observed = count_species(population,max_genetic_distance);
+//      my_results.add_abundances(
+//        abundances(
+//          count_abundances(population, max_genetic_distance),
+//          t
+//        )
+//      );
+//    }
   }
 
   std::ofstream f("results.csv");

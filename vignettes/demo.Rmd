@@ -9,23 +9,33 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Demo:
-
 ```{r}
 library(distancer)
 library(ggplot2)
 library(reshape2)
+library(scales)
+```
+
+Demo:
+
+```{r}
 df <- do_simulation_r(
   max_genetic_distance = 1,
   mutation_rate = 0.1,
-  n_generations = 10000,
+  n_generations = 5000,
   n_loci = 4,
   population_size = 10,
   rng_seed= 42
 )
-#df
-qplot(t, n0, data = df)
-#m <- melt(data = df, id = c("t"))
-#print(m)
-#qplot(t, data = m)
+m <- melt(data = df, id = c("t"))
+colnames(m) <- c("t", "id", "f")
+
+# species abundances through time
+satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) + 
+  geom_line() + 
+  scale_y_discrete() + 
+  theme(legend.position = "bottom") + 
+  labs(title = "species abundances through time")
+
+satt
 ```
