@@ -20,13 +20,15 @@ BOOST_AUTO_TEST_CASE(test_do_simulation_zero_generations_zero_rows)
   const std::size_t n_loci{1};
   const int population_size{1};
   const int rng_seed{42};
+  const int sampling_interval{1};
   const parameters p(
     max_genetic_distance,
     mutation_rate,
     n_generations,
     n_loci,
     population_size,
-    rng_seed
+    rng_seed,
+    sampling_interval
   );
   do_simulation(p);
   const std::string filename{"results.csv"};
@@ -45,13 +47,15 @@ BOOST_AUTO_TEST_CASE(test_do_simulation_one_generations_one_rows)
   const std::size_t n_loci{1};
   const int population_size{1};
   const int rng_seed{42};
+  const int sampling_interval{1};
   const parameters p(
     max_genetic_distance,
     mutation_rate,
     n_generations,
     n_loci,
     population_size,
-    rng_seed
+    rng_seed,
+    sampling_interval
   );
   do_simulation(p);
   const std::string filename{"results.csv"};
@@ -70,13 +74,15 @@ BOOST_AUTO_TEST_CASE(test_do_simulation_ten_generations_ten_rows)
   const std::size_t n_loci{1};
   const int population_size{1};
   const int rng_seed{42};
+  const int sampling_interval{1};
   const parameters p(
     max_genetic_distance,
     mutation_rate,
     n_generations,
     n_loci,
     population_size,
-    rng_seed
+    rng_seed,
+    sampling_interval
   );
   do_simulation(p);
   const std::string filename{"results.csv"};

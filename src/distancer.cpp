@@ -93,11 +93,12 @@ void do_simulation(const parameters& my_parameters)
 {
   results my_results;
   const size_t n_loci{my_parameters.get_n_loci()};
-  const int rng_seed{my_parameters.get_rng_seed()};
   const int n_generations{my_parameters.get_n_generations()};
   const int population_size{my_parameters.get_population_size()};
   const int max_genetic_distance{my_parameters.get_max_genetic_distance()};
   const double mutation_rate{my_parameters.get_mutation_rate()};
+  const int rng_seed{my_parameters.get_rng_seed()};
+  const int sampling_interval{my_parameters.get_sampling_interval()};
 
   std::mt19937 rng_engine{rng_seed};
   std::uniform_int_distribution<int> population_indices(0,population_size-1);
@@ -106,23 +107,19 @@ void do_simulation(const parameters& my_parameters)
   std::uniform_real_distribution<double> chance(0.0, 1.0);
   std::vector<boost::dynamic_bitset<>> population(population_size, boost::dynamic_bitset<>(n_loci));
 
-//  my_results.add_abundances(
-//    abundances(
-//      count_abundances(population, max_genetic_distance), //Only one species
-//      0 //time
-//    )
-//  ); //There is one species at t is zero
-//  int last_n_species_observed{1};
-
   //Overlapping generations
   for (int t{0}; t!=n_generations; ++t)
   {
-    my_results.add_abundances(
-      abundances(
-        count_abundances(population, max_genetic_distance),
-        t
-      )
-    );
+    if (t % sampling_interval == 0)
+    {
+      my_results.add_abundances(
+        t,
+        abundances(
+          count_abundances(population, max_genetic_distance),
+          t
+        )
+      );
+    }
     const int random_father_index{population_indices(rng_engine)};
     const int random_mother_index{population_indices(rng_engine)};
     if (get_genetic_distance(population[random_mother_index], population[random_father_index]) > max_genetic_distance)
@@ -137,16 +134,6 @@ void do_simulation(const parameters& my_parameters)
       population[random_kid_index].flip(locus_index(rng_engine));
     }
 
-//    if (count_species(population,max_genetic_distance) != last_n_species_observed)
-//    {
-//      last_n_species_observed = count_species(population,max_genetic_distance);
-//      my_results.add_abundances(
-//        abundances(
-//          count_abundances(population, max_genetic_distance),
-//          t
-//        )
-//      );
-//    }
   }
 
   std::ofstream f("results.csv");
@@ -160,6 +147,7 @@ void do_simulation(const parameters& my_parameters)
 //' @param n_loci number of loci
 //' @param population_size population size
 //' @param rng_seed random number generator seed
+//' @param sampling_interval after how many generations is the population sampled for species abundances
 //' @return Nothing
 //' @export
 // [[Rcpp::export]]
@@ -169,7 +157,8 @@ void do_simulation_cpp(
   const int n_generations,
   const int n_loci, //Use int over std::size_t for r
   const int population_size,
-  const int rng_seed
+  const int rng_seed,
+  const int sampling_interval
 )
 {
   const parameters p(
@@ -178,7 +167,8 @@ void do_simulation_cpp(
     n_generations,
     n_loci,
     population_size,
-    rng_seed
+    rng_seed,
+    sampling_interval
   );
   do_simulation(p);
 }

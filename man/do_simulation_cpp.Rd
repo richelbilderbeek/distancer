@@ -5,7 +5,7 @@
 \title{The function that does a simulation.}
 \usage{
 do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci,
-  population_size, rng_seed)
+  population_size, rng_seed, sampling_interval)
 }
 \arguments{
 \item{max_genetic_distance}{the maximum number of different loci that two individuals can still produce viable offspring with}
@@ -19,6 +19,8 @@ do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci,
 \item{population_size}{population size}
 
 \item{rng_seed}{random number generator seed}
+
+\item{sampling_interval}{after how many generations is the population sampled for species abundances}
 }
 \value{
 Nothing

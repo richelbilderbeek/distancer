@@ -14,17 +14,19 @@ int main() {
   {
     const int max_genetic_distance{1};
     const double mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
-    const int n_generations{1000};
-    const int n_loci{16};
+    const int n_generations{3000};
+    const int n_loci{4};
     const int population_size{8};
-    const int rng_seed{42};
+    const int rng_seed{30};
+    const int sampling_interval{150};
     const parameters p(
       max_genetic_distance,
       mutation_rate,
       n_generations,
       n_loci,
       population_size,
-      rng_seed
+      rng_seed,
+      sampling_interval
     );
     do_simulation(p);
     const std::string filename{"results.csv"};

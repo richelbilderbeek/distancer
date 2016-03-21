@@ -9,10 +9,10 @@ results::results()
 
 }
 
-void results::add_abundances(const abundances& row) noexcept
+void results::add_abundances(const int t, const abundances& row) noexcept
 {
   m_max_n_species = std::max(m_max_n_species, row.get_n_species());
-  m_rows.push_back(row);
+  m_rows.push_back(std::make_pair(t, row));
 }
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept
@@ -29,8 +29,8 @@ std::ostream& operator<<(std::ostream& os, const results& r) noexcept
   const int n_rows = static_cast<int>(r.m_rows.size());
   for (int t{0}; t!=n_rows; ++t)
   {
-    os << t << ", ";
-    const auto row = r.m_rows[t];
+    os << r.m_rows[t].first << ", ";
+    const auto row = r.m_rows[t].second;
     auto abundances = row.get_individuals_per_species();
     abundances.resize(max_n_species, 0);
     for (int i=0; i!=max_n_species; ++i)

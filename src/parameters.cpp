@@ -8,14 +8,16 @@ parameters::parameters(
   const int n_generations,
   const std::size_t n_loci,
   const int population_size,
-  const int rng_seed
+  const int rng_seed,
+  const int sampling_interval
 )
   : m_max_genetic_distance{max_genetic_distance},
     m_mutation_rate{mutation_rate},
     m_n_generations{n_generations},
     m_n_loci{n_loci},
     m_population_size{population_size},
-    m_rng_seed{rng_seed}
+    m_rng_seed{rng_seed},
+    m_sampling_interval{sampling_interval}
 {
   if (m_max_genetic_distance < 0)
   {
@@ -59,6 +61,28 @@ parameters::parameters(
     msg << __func__ << ": "
       << "population_size must be >= 0, "
       << "supplied value was " << m_population_size
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  //Allow a population of zero generations
+  if (m_n_generations > 0 && m_sampling_interval < 1)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "sampling_interval must be >= 1, "
+      << "supplied value was " << m_sampling_interval
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  //Allow a population of zero generations
+  if (m_n_generations > 0 && m_n_generations < m_sampling_interval)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "sampling_interval must be >= n_generations "
+      << "(otherwise only a measurement would be taken at the start), "
+      << "sampling_interval: " << m_sampling_interval
+      << "n_generations: " << m_n_generations
     ;
     throw std::invalid_argument(msg.str());
   }

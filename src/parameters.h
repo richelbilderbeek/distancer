@@ -12,7 +12,8 @@ public:
     const int n_generations,
     const std::size_t n_loci,
     const int population_size,
-    const int rng_seed
+    const int rng_seed,
+    const int sampling_interval
   );
 
   ///Number of loci per individual
@@ -34,6 +35,10 @@ public:
   ///Chance to have 1 locus flipped in a genome
   double get_mutation_rate() const noexcept { return m_mutation_rate; }
 
+  ///After how many generations is the population sampled for species abundances
+  int get_sampling_interval() const noexcept { return m_sampling_interval; }
+
+
 private:
 
   ///The maximum number of alleles two individuals may differ
@@ -54,6 +59,10 @@ private:
 
   ///RNG seed
   int m_rng_seed;
+
+  ///After how many generations is the population sampled for species abundances
+  int m_sampling_interval;
+
 };
 
 #endif // PARAMETERS_H

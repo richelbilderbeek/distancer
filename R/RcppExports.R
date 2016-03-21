@@ -8,9 +8,10 @@
 #' @param n_loci number of loci
 #' @param population_size population size
 #' @param rng_seed random number generator seed
+#' @param sampling_interval after how many generations is the population sampled for species abundances
 #' @return Nothing
 #' @export
-do_simulation_cpp <- function(max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed) {
-    invisible(.Call('distancer_do_simulation_cpp', PACKAGE = 'distancer', max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed))
+do_simulation_cpp <- function(max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed, sampling_interval) {
+    invisible(.Call('distancer_do_simulation_cpp', PACKAGE = 'distancer', max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed, sampling_interval))
 }
 

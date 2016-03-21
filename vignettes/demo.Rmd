@@ -16,6 +16,9 @@ library(reshape2)
 library(scales)
 ```
 
+
+# Four species
+
 Here is a run that temporarily has four species:
 
 ```{r}
@@ -25,10 +28,40 @@ df <- do_simulation_r(
   n_generations = 3000,
   n_loci = 4,
   population_size = 10,
-  rng_seed = 30
+  rng_seed = 30,
+  sampling_interval = 1
 )
 m <- melt(data = df, id = c("t"))
 colnames(m) <- c("t", "id", "f")
+
+# species abundances through time
+satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) + 
+  geom_line() + 
+  scale_y_discrete() + 
+  theme(legend.position = "bottom") + 
+  labs(title = "species abundances through time")
+
+satt
+```
+
+# Species being replaced
+
+Here is an example that a species get replaced, zoomed in on 
+where the action is:
+
+```{r}
+df <- do_simulation_r(
+  max_genetic_distance = 1,
+  mutation_rate = 0.1,
+  n_generations = 1200,
+  n_loci = 4,
+  population_size = 20,
+  rng_seed = 40,
+  sampling_interval = 1
+)
+m <- melt(data = df, id = c("t"))
+colnames(m) <- c("t", "id", "f")
+m <- subset(x = m, t > 1000 & t < 1060)
 
 # species abundances through time
 satt <- ggplot(data = m, aes(x = t, y = f, group = id, colour = id)) + 

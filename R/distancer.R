@@ -9,6 +9,7 @@ NULL
 #' @param n_loci number of loci
 #' @param population_size population size
 #' @param rng_seed random number generator seed
+#' @param sampling_interval how often is the species abundances measured?
 #' @return Timepoints when there were new species
 #' @export
 do_simulation_r <- function(
@@ -17,7 +18,8 @@ do_simulation_r <- function(
   n_generations,
   n_loci,
   population_size,
-  rng_seed
+  rng_seed,
+  sampling_interval
   ) {
 
   do_simulation_cpp(
@@ -26,8 +28,9 @@ do_simulation_r <- function(
     n_generations,
     n_loci,
     population_size,
-    rng_seed
-  )
+    rng_seed,
+    sampling_interval
+)
   df <- read.table("results.csv", header = TRUE, sep = ",")
   #df <- read.table("~/GitHubs/distancer/vignettes/results.csv", header = TRUE, sep = ",")
   #colnames(df)
