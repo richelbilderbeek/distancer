@@ -15,3 +15,6 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++11
 
 include(distancer.pri)
 SOURCES += main.cpp
+
+# Bio++
+LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa

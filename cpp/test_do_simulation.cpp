@@ -2,8 +2,7 @@
 #include "distancer.h"
 #include "helper.h"
 
-#define BOOST_TEST_DYN_LINK // Defines a main function
-#define BOOST_TEST_MODULE distancer
+//#define BOOST_TEST_MODULE distancer
 #include <boost/test/unit_test.hpp>
 
 // Boost.Test does not play well with -Weffc++
