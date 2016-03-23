@@ -13,7 +13,9 @@ SOURCES += \
     test_bpp.cpp \
     main_test.cpp \
     test_simulation.cpp \
-    test_individual.cpp
+    test_individual.cpp \
+    test_abundances.cpp \
+    test_parameters.cpp
 
 # Must use g++-4.8 and C++11 due to compatibility with R
 QMAKE_CXX = g++-4.8
