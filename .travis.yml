@@ -21,6 +21,7 @@ install:
 script: 
  - ./build_cpp_test_debug.sh
  - ./get_code_cov.sh
+ - codecov
  - ./build_cpp_test_release.sh
  - ./clean.sh 
  # The next packages are built with -lgcov

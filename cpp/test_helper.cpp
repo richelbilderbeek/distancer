@@ -36,6 +36,35 @@ BOOST_AUTO_TEST_CASE(test_boost_dynamic_bitset)
     boost::dynamic_bitset<> p_should_be(n_loci, 0b0111);
     BOOST_CHECK(p == p_should_be);
   }
+  //Inheritance
+  {
+    const size_t n_loci{3};
+    const boost::dynamic_bitset<> p(n_loci, 0b001);
+    const boost::dynamic_bitset<> q(n_loci, 0b100);
+    const boost::dynamic_bitset<> r = p ^ q;
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b001);
+    const boost::dynamic_bitset<> kid = (inherit_from_p & p) | (~inherit_from_p & q);
+    const boost::dynamic_bitset<> kid_should_be(n_loci, 0b101);
+    BOOST_CHECK(kid == kid_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    const boost::dynamic_bitset<> p(n_loci, 0b0000);
+    const boost::dynamic_bitset<> q(n_loci, 0b1111);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
+    const boost::dynamic_bitset<> kid = (inherit_from_p & p) | (~inherit_from_p & q);
+    const boost::dynamic_bitset<> kid_should_be(n_loci, 0b1010);
+    BOOST_CHECK(kid == kid_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    const boost::dynamic_bitset<> p(n_loci, 0b1111);
+    const boost::dynamic_bitset<> q(n_loci, 0b0000);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
+    const boost::dynamic_bitset<> kid = (inherit_from_p & p) | (~inherit_from_p & q);
+    const boost::dynamic_bitset<> kid_should_be(n_loci, 0b0101);
+    BOOST_CHECK(kid == kid_should_be);
+  }
 }
 
 
@@ -43,41 +72,30 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_boost_dynamic_bitset)
 {
   {
     const size_t n_loci{3};
-    boost::dynamic_bitset<> p(n_loci, 0b001);
-    BOOST_CHECK(p.count() == 1);
-    boost::dynamic_bitset<> q(n_loci, 0b100);
-    BOOST_CHECK(q.size() == p.size());
-    BOOST_CHECK(q.count() == 1);
-    boost::dynamic_bitset<> r = p ^ q;
-    BOOST_CHECK(r.count() == 2);
+    const boost::dynamic_bitset<> p(n_loci, 0b001);
+    const boost::dynamic_bitset<> q(n_loci, 0b100);
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b001);
-    boost::dynamic_bitset<> kid_1 = (inherit_from_p & p) | (~inherit_from_p & q);
-    boost::dynamic_bitset<> kid_2 = create_offspring(p, q, inherit_from_p);
-    boost::dynamic_bitset<> kid_should_be(n_loci, 0b101);
-    BOOST_CHECK(kid_1 == kid_should_be);
-    BOOST_CHECK(kid_2 == kid_should_be);
+    const boost::dynamic_bitset<> kid = create_offspring(p, q, inherit_from_p);
+    const boost::dynamic_bitset<> kid_should_be(n_loci, 0b101);
+    BOOST_CHECK(kid == kid_should_be);
   }
   {
     const size_t n_loci{4};
-    boost::dynamic_bitset<> p(n_loci, 0b0000);
-    boost::dynamic_bitset<> q(n_loci, 0b1111);
+    const boost::dynamic_bitset<> p(n_loci, 0b0000);
+    const boost::dynamic_bitset<> q(n_loci, 0b1111);
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
-    boost::dynamic_bitset<> kid_1 = (inherit_from_p & p) | (~inherit_from_p & q);
-    boost::dynamic_bitset<> kid_2 = create_offspring(p, q, inherit_from_p);
-    boost::dynamic_bitset<> kid_should_be(n_loci, 0b1010);
-    BOOST_CHECK(kid_1 == kid_should_be);
-    BOOST_CHECK(kid_2 == kid_should_be);
+    const boost::dynamic_bitset<> kid = create_offspring(p, q, inherit_from_p);
+    const boost::dynamic_bitset<> kid_should_be(n_loci, 0b1010);
+    BOOST_CHECK(kid == kid_should_be);
   }
   {
     const size_t n_loci{4};
-    boost::dynamic_bitset<> p(n_loci, 0b1111);
-    boost::dynamic_bitset<> q(n_loci, 0b0000);
+    const boost::dynamic_bitset<> p(n_loci, 0b1111);
+    const boost::dynamic_bitset<> q(n_loci, 0b0000);
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
-    boost::dynamic_bitset<> kid_1 = (inherit_from_p & p) | (~inherit_from_p & q);
-    boost::dynamic_bitset<> kid_2 = create_offspring(p, q, inherit_from_p);
-    boost::dynamic_bitset<> kid_should_be(n_loci, 0b0101);
-    BOOST_CHECK(kid_1 == kid_should_be);
-    BOOST_CHECK(kid_2 == kid_should_be);
+    const boost::dynamic_bitset<> kid = create_offspring(p, q, inherit_from_p);
+    const boost::dynamic_bitset<> kid_should_be(n_loci, 0b0101);
+    BOOST_CHECK(kid == kid_should_be);
   }
 }
 

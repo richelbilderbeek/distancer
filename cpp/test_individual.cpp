@@ -8,6 +8,37 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 
+BOOST_AUTO_TEST_CASE(test_create_offsping_individual)
+{
+  {
+    const size_t n_loci{3};
+    const individual p(n_loci, 0b001);
+    const individual q(n_loci, 0b100);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b001);
+    const individual kid = create_offspring(p, q, inherit_from_p);
+    const individual kid_should_be(n_loci, 0b101);
+    BOOST_CHECK(kid == kid_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    const individual p(n_loci, 0b0000);
+    const individual q(n_loci, 0b1111);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
+    const individual kid = create_offspring(p, q, inherit_from_p);
+    const individual kid_should_be(n_loci, 0b101);
+    BOOST_CHECK(kid == kid_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    const individual p(n_loci, 0b1111);
+    const individual q(n_loci, 0b0000);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
+    const individual kid = create_offspring(p, q, inherit_from_p);
+    const individual kid_should_be(n_loci, 0b101);
+    BOOST_CHECK(kid == kid_should_be);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(test_individual_default_construction_n_loci_and_sil_value)
 {
   const size_t n_loci{8};
