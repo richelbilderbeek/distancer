@@ -151,6 +151,15 @@ BOOST_AUTO_TEST_CASE(test_create_tally)
   }
 }
 
+BOOST_AUTO_TEST_CASE(test_file_to_vector)
+{
+  BOOST_CHECK_THROW(
+    file_to_vector("a_file_that_does_not_exist.nxi"),
+    std::invalid_argument
+  );
+}
+
+
 BOOST_AUTO_TEST_CASE(test_get_connected_components_ids)
 {
   {

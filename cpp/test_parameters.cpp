@@ -58,6 +58,18 @@ BOOST_AUTO_TEST_CASE(test_parameters)
   BOOST_CHECK_THROW(
     parameters(
       max_genetic_distance,
+      1.1, //mutation_rate,
+      n_generations,
+      n_loci,
+      population_size,
+      rng_seed,
+      sampling_interval
+    ),
+    std::invalid_argument
+  );
+  BOOST_CHECK_THROW(
+    parameters(
+      max_genetic_distance,
       mutation_rate,
       -1, //n_generations,
       n_loci,

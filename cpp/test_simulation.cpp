@@ -1,15 +1,11 @@
-#include <fstream>
 #include "simulation.h"
+#include <fstream>
 #include "helper.h"
-
-//#define BOOST_TEST_MODULE distancer
 #include <boost/test/unit_test.hpp>
 
 // Boost.Test does not play well with -Weffc++
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
-
-//BOOST_AUTO_TEST_SUITE(distancer_functions)
 
 BOOST_AUTO_TEST_CASE(test_do_simulation_zero_generations_zero_rows)
 {

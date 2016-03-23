@@ -85,6 +85,15 @@ BOOST_AUTO_TEST_CASE(test_individual_operator_equals)
   BOOST_CHECK(c == c);
 }
 
+BOOST_AUTO_TEST_CASE(test_individual_operator_stream_out)
+{
+  const size_t n_loci{8};
+  const individual a(n_loci, 1);
+  std::stringstream s;
+  s << a;
+  BOOST_CHECK(!s.str().empty());
+}
+
 
 
 BOOST_AUTO_TEST_CASE(test_count_abundances)
