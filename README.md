@@ -1,14 +1,11 @@
 # distancer
 
 [![Travis CI logo](TravisCI.png)](https://travis-ci.org)
+![Whitespace](Whitespace.png)
+[![Codecov logo](Codecov.png)](https://www.codecov.io)
 
 [![Build Status](https://travis-ci.org/richelbilderbeek/distancer.svg?branch=master)](https://travis-ci.org/richelbilderbeek/distancer)
-
-Note that Travis CI either checks the C++ or R code or LyX documentation.
- * `.travis.yml`: What has been checked
- * `.travis_cpp.yml`: The C++ checking version of `.travis.yml`
- * `.travis_r.yml`: The R checking version of `.travis.yml`
- * `.travis_lyx.yml`: The LyX checking version of `.travis.yml`
+[![codecov.io](https://codecov.io/github/richelbilderbeek/distancer/coverage.svg?branch=master)](https://codecov.io/github/richelbilderbeek/distancer?branch=master)
 
 The simulation is written in C++.
 The simulation is analyzed in R.

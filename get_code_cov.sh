@@ -7,7 +7,7 @@ then
   exit 1
 fi
 
-for filename in `find . -name *.cpp`; do gcov -o $OBJ_FILES_PATH $filename; done
+for filename in `find . -name *.cpp`; do gcov-5 -o $OBJ_FILES_PATH $filename; done
 
 # Display gcov files
 for filename in `find . -name *.gcov`; do cat $filename; done
