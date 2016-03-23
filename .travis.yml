@@ -16,6 +16,7 @@ install:
   - sudo apt-get install r-base r-base-dev 
   - sudo apt-get install -qq lyx
   - sudo apt-get install -qq texlive
+  - sudo pip install codecov  # Codecov
 
 script: 
  - ./build_cpp.sh
@@ -37,5 +38,7 @@ after_failure:
  # fatal error: Rcpp.h: No such file or directory
  - find / -name 'Rcpp.h'
  # R logs
- - cat /home/travis/build/richelbilderbeek/travis_qmake_gcc_cpp11_rcpp/..Rcheck/00install.out
+ - cat /home/travis/build/richelbilderbeek/distancer/..Rcheck/00install.out
 
+after_success: 
+  - codecov

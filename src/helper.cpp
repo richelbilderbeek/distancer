@@ -3,6 +3,24 @@
 #include <sstream>
 #include <stdexcept>
 
+///Counts the number of bits that are different
+int count_different_bits(
+  const boost::dynamic_bitset<>& a,
+  const boost::dynamic_bitset<>& b
+) noexcept
+{
+  return (a ^ b).count();
+}
+
+boost::dynamic_bitset<> create_offspring(
+  const boost::dynamic_bitset<>& p,
+  const boost::dynamic_bitset<>& q,
+  const boost::dynamic_bitset<>& inherit_from_p
+)
+{
+  return (inherit_from_p & p) | (~inherit_from_p & q);
+}
+
 std::vector<int> create_tally(const std::vector<int>& v) noexcept
 {
   std::map<int, int> m;

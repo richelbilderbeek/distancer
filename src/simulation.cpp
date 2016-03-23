@@ -47,13 +47,16 @@ void do_simulation(const parameters& my_parameters)
       --t;
       continue;
     }
-    const individual inheritance{n_loci, inherits_from_mother(rng_engine)};
+    const boost::dynamic_bitset<> inheritance{n_loci, inherits_from_mother(rng_engine)};
     const int random_kid_index{population_indices(rng_engine)};
-    population[random_kid_index] = (inheritance & population[random_mother_index]) | (~inheritance & population[random_father_index]);
+    individual::sil_t sil{
+        ( inheritance & population[random_mother_index].get_sil())
+      | (~inheritance & population[random_father_index].get_sil())
+    };
     if (chance(rng_engine) < mutation_rate) {
-      population[random_kid_index].flip(locus_index(rng_engine));
+      sil.flip(locus_index(rng_engine));
     }
-
+    population[random_kid_index] = individual(sil);
   }
 
   std::ofstream f("results.csv");

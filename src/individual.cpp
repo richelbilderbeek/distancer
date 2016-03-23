@@ -3,6 +3,19 @@
 #include <boost/graph/adjacency_list.hpp>
 #include "helper.h"
 
+individual::individual(const size_t n_loci, const size_t sil_value)
+  : m_sil{sil_t(n_loci, sil_value)}
+{
+
+}
+
+individual::individual(const sil_t& sil)
+  : m_sil{sil}
+{
+
+}
+
+
 std::vector<int> count_abundances(
   std::vector<individual> p,
   const int max_genetic_distance
@@ -39,7 +52,12 @@ int count_species(std::vector<individual> p, const int max_genetic_distance) noe
   if (p.empty()) return 0;
 
   //Ditch the duplicates to speed up the calculation
-  std::sort(std::begin(p),std::end(p), [](const individual& lhs, const individual& rhs) { return lhs.to_ulong() < rhs.to_ulong(); } );
+  std::sort(
+    std::begin(p),std::end(p), [](const individual& lhs, const individual& rhs)
+    {
+      return lhs.get_sil().to_ulong() < rhs.get_sil().to_ulong();
+    }
+  );
   typename std::vector<individual>::iterator new_end = std::unique(std::begin(p),std::end(p));
   p.erase(new_end,std::end(p));
 
@@ -70,6 +88,16 @@ int get_genetic_distance(
   const individual& b
 ) noexcept
 {
-  const individual d = a ^ b;
+  const individual::sil_t d = a.get_sil() ^ b.get_sil();
   return d.count();
+}
+
+bool operator==(const individual& lhs, const individual& rhs) noexcept
+{
+  return lhs.get_sil() == rhs.get_sil();
+}
+
+bool operator!=(const individual& lhs, const individual& rhs) noexcept
+{
+  return !(lhs == rhs);
 }

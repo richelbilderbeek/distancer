@@ -9,7 +9,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 
-BOOST_AUTO_TEST_SUITE(distancer_functions)
+//BOOST_AUTO_TEST_SUITE(distancer_functions)
 
 BOOST_AUTO_TEST_CASE(test_do_simulation_zero_generations_zero_rows)
 {
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(test_do_simulation_ten_generations_ten_rows)
 }
 
 
-BOOST_AUTO_TEST_SUITE_END()
+//BOOST_AUTO_TEST_SUITE_END()
 
 //Your code
 #pragma GCC diagnostic pop

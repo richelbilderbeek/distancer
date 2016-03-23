@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
 #include <fstream>
-#include "distancer.h"
+//#include "simulation.h"
 
 //#define BOOST_TEST_MODULE distancer
 

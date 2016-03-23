@@ -10,9 +10,10 @@ CONFIG(release, debug|release) {
 include(distancer.pri)
 SOURCES += \
     test_helper.cpp \
-    test_do_simulation.cpp \
     test_bpp.cpp \
-    main_test.cpp
+    main_test.cpp \
+    test_simulation.cpp \
+    test_individual.cpp
 
 # Must use g++-4.8 and C++11 due to compatibility with R
 QMAKE_CXX = g++-4.8
@@ -25,3 +26,7 @@ LIBS += -lboost_unit_test_framework
 
 # Bio++
 LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa
+
+# gcov
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+LIBS += -lgcov
