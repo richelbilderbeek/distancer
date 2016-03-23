@@ -19,7 +19,11 @@ install:
   - sudo pip install codecov  # Codecov
 
 script: 
- - ./build_cpp.sh
+ - ./build_cpp_test_debug.sh
+ - ./get_code_cov.sh
+ - ./build_cpp_test_release.sh
+ - ./build_cpp_exe_release.sh
+ - ./build_cpp_exe_debug.sh
  - ./clean.sh
  - sudo Rscript install_r_packages.R
  # R wants all hidden files gone...
@@ -39,6 +43,3 @@ after_failure:
  - find / -name 'Rcpp.h'
  # R logs
  - cat /home/travis/build/richelbilderbeek/distancer/..Rcheck/00install.out
-
-after_success: 
-  - codecov

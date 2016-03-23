@@ -1,6 +1,7 @@
 #!/bin/bash
 function clean {
   rm *.o
+  rm *.gcov
   rm Makefile
   rm Makefile.Debug
   rm Makefile.Release
