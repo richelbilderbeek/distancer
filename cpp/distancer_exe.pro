@@ -17,4 +17,4 @@ include(distancer.pri)
 SOURCES += main.cpp
 
 # Bio++
-LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa
+#LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa

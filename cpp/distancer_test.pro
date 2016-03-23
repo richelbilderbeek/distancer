@@ -25,7 +25,7 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++11
 LIBS += -lboost_unit_test_framework
 
 # Bio++
-LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa
+#LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa
 
 # gcov
 QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage

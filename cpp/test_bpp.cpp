@@ -2,7 +2,7 @@
 #include <fstream>
 //#include "simulation.h"
 
-//#define BOOST_TEST_MODULE distancer
+#ifdef USE_BPP
 
 #include <Bpp/Seq/Alphabet.all>
 #include <Bpp/Seq/Sequence.h>
@@ -47,6 +47,8 @@ BOOST_AUTO_TEST_CASE(test_bpp_2)
   BOOST_CHECK("AAAAAAAAAA" != sequence.toString()); //Sequence should have changed
   */
 }
+
+#endif
 
 #pragma GCC diagnostic pop
 
