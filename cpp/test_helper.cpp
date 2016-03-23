@@ -1,17 +1,45 @@
-#include <fstream>
 #include "helper.h"
-#include <boost/dynamic_bitset.hpp>
-//#include "individual.h"
 
+#include <fstream>
+#include <boost/dynamic_bitset.hpp>
 #include <boost/test/unit_test.hpp>
 
 // Boost.Test does not play well with -Weffc++
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 
-//BOOST_AUTO_TEST_SUITE(test_helper_functions)
+BOOST_AUTO_TEST_CASE(test_boost_dynamic_bitset)
+{
+  {
+    const size_t n_loci{4};
+    boost::dynamic_bitset<> p(n_loci, 0b1111);
+    p.flip(2); //From right
+    boost::dynamic_bitset<> p_should_be(n_loci, 0b1011);
+    BOOST_CHECK(p == p_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    boost::dynamic_bitset<> p(n_loci, 0b0000);
+    p.flip(2); //From right
+    boost::dynamic_bitset<> p_should_be(n_loci, 0b0100);
+    BOOST_CHECK(p == p_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    boost::dynamic_bitset<> p(n_loci, 15);
+    boost::dynamic_bitset<> p_should_be(n_loci, 0b1111);
+    BOOST_CHECK(p == p_should_be);
+  }
+  {
+    const size_t n_loci{4};
+    boost::dynamic_bitset<> p(n_loci, 7);
+    boost::dynamic_bitset<> p_should_be(n_loci, 0b0111);
+    BOOST_CHECK(p == p_should_be);
+  }
+}
 
-BOOST_AUTO_TEST_CASE(test_create_offsping)
+
+BOOST_AUTO_TEST_CASE(test_create_offsping_boost_dynamic_bitset)
 {
   {
     const size_t n_loci{3};
@@ -52,40 +80,6 @@ BOOST_AUTO_TEST_CASE(test_create_offsping)
     BOOST_CHECK(kid_2 == kid_should_be);
   }
 }
-
-BOOST_AUTO_TEST_CASE(boost_dynamic_bitset)
-{
-
-  {
-    const size_t n_loci{4};
-    boost::dynamic_bitset<> p(n_loci, 0b1111);
-    p.flip(2); //From right
-    boost::dynamic_bitset<> p_should_be(n_loci, 0b1011);
-    BOOST_CHECK(p == p_should_be);
-
-  }
-  {
-    const size_t n_loci{4};
-    boost::dynamic_bitset<> p(n_loci, 0b0000);
-    p.flip(2); //From right
-    boost::dynamic_bitset<> p_should_be(n_loci, 0b0100);
-    BOOST_CHECK(p == p_should_be);
-  }
-  {
-    const size_t n_loci{4};
-    boost::dynamic_bitset<> p(n_loci, 15);
-    boost::dynamic_bitset<> p_should_be(n_loci, 0b1111);
-    BOOST_CHECK(p == p_should_be);
-  }
-  {
-    const size_t n_loci{4};
-    boost::dynamic_bitset<> p(n_loci, 7);
-    boost::dynamic_bitset<> p_should_be(n_loci, 0b0111);
-    BOOST_CHECK(p == p_should_be);
-  }
-}
-
-
 
 BOOST_AUTO_TEST_CASE(test_count_connected_components)
 {

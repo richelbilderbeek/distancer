@@ -83,6 +83,16 @@ int count_species(std::vector<individual> p, const int max_genetic_distance) noe
   return count_connected_components(g);
 }
 
+individual create_offspring(
+  const individual& p,
+  const individual& q,
+  const boost::dynamic_bitset<>& inherit_from_p
+)
+{
+  const auto sil = create_offspring(p.get_sil(), q.get_sil(), inherit_from_p);
+  return individual(sil);
+}
+
 int get_genetic_distance(
   const individual& a,
   const individual& b

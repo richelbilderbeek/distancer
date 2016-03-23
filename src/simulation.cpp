@@ -6,7 +6,7 @@
 #include <boost/graph/isomorphism.hpp>
 #include "individual.h"
 #include "results.h"
-
+//#include "helper.h"
 
 
 void do_simulation(const parameters& my_parameters)
@@ -49,14 +49,15 @@ void do_simulation(const parameters& my_parameters)
     }
     const boost::dynamic_bitset<> inheritance{n_loci, inherits_from_mother(rng_engine)};
     const int random_kid_index{population_indices(rng_engine)};
-    individual::sil_t sil{
-        ( inheritance & population[random_mother_index].get_sil())
-      | (~inheritance & population[random_father_index].get_sil())
-    };
+    auto kid = create_offspring(
+      population[random_mother_index],
+      population[random_father_index],
+      inheritance
+    );
     if (chance(rng_engine) < mutation_rate) {
-      sil.flip(locus_index(rng_engine));
+      kid.get_sil().flip(locus_index(rng_engine));
     }
-    population[random_kid_index] = individual(sil);
+    population[random_kid_index] = kid;
   }
 
   std::ofstream f("results.csv");

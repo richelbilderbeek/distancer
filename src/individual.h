@@ -29,6 +29,12 @@ std::vector<int> count_abundances(
 ///genetic difference to be called the same species
 int count_species(std::vector<individual> p, const int max_genetic_distance) noexcept;
 
+individual create_offspring(
+  const individual& p,
+  const individual& q,
+  const boost::dynamic_bitset<>& inherit_from_p
+);
+
 ///Counts the number of loci that are different
 int get_genetic_distance(
   const individual& a,
