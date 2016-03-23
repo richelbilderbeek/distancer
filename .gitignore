@@ -44,3 +44,4 @@ vignettes/results.csv
 build-distancer_test-Desktop-Debug/
 vignettes/results.csv
 tests/testthat/results.csv
+*.gcov

@@ -18,3 +18,7 @@ function clean {
 clean
 cd src; clean; cd ..
 cd cpp; clean; cd ..
+rm -rf build-distancer_exe-Desktop-Debug
+rm -rf build-distancer_exe-Desktop-Release
+rm -rf build-distancer_test-Desktop-Debug
+rm -rf build-distancer_test-Desktop-Release
