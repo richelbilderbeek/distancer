@@ -1,7 +1,8 @@
 #include <fstream>
-#include "distancer.h"
+#include "helper.h"
+#include <boost/dynamic_bitset.hpp>
+#include "individual.h"
 
-//#define BOOST_TEST_MODULE distancer
 #include <boost/test/unit_test.hpp>
 
 // Boost.Test does not play well with -Weffc++
@@ -224,17 +225,6 @@ BOOST_AUTO_TEST_CASE(test_create_tally)
     BOOST_CHECK(result == expected);
   }
 }
-
-BOOST_AUTO_TEST_CASE(detect_by_travis)
-{
-  #ifndef NDEBUG
-  std::ofstream f("test_debug.txt");
-  #else
-  std::ofstream f("test_release.txt");
-  #endif
-  f << "OK\n";
-}
-
 
 BOOST_AUTO_TEST_CASE(test_get_connected_components_ids)
 {

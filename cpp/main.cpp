@@ -1,15 +1,10 @@
-#include "distancer.h"
+#include "simulation.h"
 #include <exception>
 #include <iostream>
 #include <fstream>
 #include "helper.h"
 
 int main() {
-  #ifndef NDEBUG
-  std::ofstream f("exe_debug.txt");
-  #else
-  std::ofstream f("exe_release.txt");
-  #endif
   try
   {
     const int max_genetic_distance{1};

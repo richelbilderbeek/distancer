@@ -1,5 +1,5 @@
 #include <fstream>
-#include "distancer.h"
+#include "simulation.h"
 #include "helper.h"
 
 //#define BOOST_TEST_MODULE distancer
