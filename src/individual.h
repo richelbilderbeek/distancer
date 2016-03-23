@@ -1,6 +1,7 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
+#include <iosfwd>
 #include <boost/dynamic_bitset.hpp>
 
 struct individual
@@ -43,5 +44,7 @@ int get_genetic_distance(
 
 bool operator==(const individual& lhs, const individual& rhs) noexcept;
 bool operator!=(const individual& lhs, const individual& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const individual& i) noexcept;
 
 #endif // INDIVIDUAL_H

@@ -1,8 +1,8 @@
-#include <fstream>
 #include "individual.h"
-#include "helper.h"
-
+#include <fstream>
+#include <iostream>
 #include <boost/test/unit_test.hpp>
+#include "helper.h"
 
 // Boost.Test does not play well with -Weffc++
 #pragma GCC diagnostic push
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual)
     const individual q(n_loci, 0b1111);
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
     const individual kid = create_offspring(p, q, inherit_from_p);
-    const individual kid_should_be(n_loci, 0b101);
+    const individual kid_should_be(n_loci, 0b1010);
     BOOST_CHECK(kid == kid_should_be);
   }
   {
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual)
     const individual q(n_loci, 0b0000);
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
     const individual kid = create_offspring(p, q, inherit_from_p);
-    const individual kid_should_be(n_loci, 0b101);
+    const individual kid_should_be(n_loci, 0b0101);
     BOOST_CHECK(kid == kid_should_be);
   }
 }
