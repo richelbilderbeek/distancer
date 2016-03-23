@@ -1,5 +1,5 @@
 #!/bin/bash
-OBJ_FILES_PATH=build-distancer_test-Desktop-Debug/debug
+OBJ_FILES_PATH=cpp/debug
 
 if [ ! -d "$OBJ_FILES_PATH" ]
 then
