@@ -15,7 +15,8 @@ SOURCES += \
     test_simulation.cpp \
     test_individual.cpp \
     test_abundances.cpp \
-    test_parameters.cpp
+    test_parameters.cpp \
+    test_dna.cpp
 
 
 # Must use g++-4.8 and C++11 due to compatibility with R
@@ -32,9 +33,6 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -Werror -std=c++11
 
 # Boost.Test
 LIBS += -lboost_unit_test_framework
-
-# Bio++
-LIBS += -lbpp-core -lbpp-seq -lbpp-phyl -lbpp-popgen -lbpp-qt -lbpp-raa
 
 # gcov
 QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage

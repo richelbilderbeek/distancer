@@ -6,16 +6,6 @@
 #include "helper.h"
 
 individual::individual(
-  const std::string& pin_sequence,
-  const size_t n_loci,
-  const size_t sil_value
-) : m_pin{"", pin_sequence, &bpp::AlphabetTools::DNA_ALPHABET},
-    m_sil{sil_t(n_loci, sil_value)}
-{
-
-}
-
-individual::individual(
   const pin_t& pin,
   const sil_t& sil
 ) : m_pin{pin},
@@ -23,7 +13,6 @@ individual::individual(
 {
 
 }
-
 
 std::vector<int> count_abundances(
   std::vector<individual> p,
@@ -121,7 +110,7 @@ int get_genetic_distance(
 bool operator==(const individual& lhs, const individual& rhs) noexcept
 {
   return
-       lhs.get_pin().toString() == rhs.get_pin().toString()
+       lhs.get_pin() == rhs.get_pin()
     && lhs.get_sil() == rhs.get_sil()
   ;
 }

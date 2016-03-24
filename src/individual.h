@@ -3,20 +3,15 @@
 
 #include <iosfwd>
 #include <boost/dynamic_bitset.hpp>
-#include <Bpp/Seq/Sequence.h>
+#include "dna.h"
 
 struct individual
 {
   /// Species Identity Loci
   using sil_t = boost::dynamic_bitset<>;
   /// Phylogeny Inference Nucleotides
-  using pin_t = bpp::BasicSequence;
+  using pin_t = dna;
 
-  individual(
-    const std::string& pin_sequence,
-    const size_t n_loci,
-    const size_t sil_value
-  );
   individual(
     const pin_t& pin,
     const sil_t& sil

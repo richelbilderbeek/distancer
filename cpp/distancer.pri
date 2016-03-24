@@ -6,7 +6,8 @@ SOURCES += \
     ../src/helper.cpp \
     ../src/abundances.cpp \
     ../src/individual.cpp \
-    ../src/simulation.cpp
+    ../src/simulation.cpp \
+    ../src/dna.cpp
 
 HEADERS += \
     ../src/parameters.h \
@@ -14,4 +15,5 @@ HEADERS += \
     ../src/helper.h \
     ../src/abundances.h \
     ../src/individual.h \
-    ../src/simulation.h
+    ../src/simulation.h \
+    ../src/dna.h

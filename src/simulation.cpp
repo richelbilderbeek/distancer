@@ -32,7 +32,7 @@ void do_simulation(const parameters& my_parameters)
   std::vector<individual> population(
     population_size,
     individual(
-      individual::pin_t("",std::string(n_pin_loci,'A'), &bpp::AlphabetTools::DNA_ALPHABET),
+      individual::pin_t(std::string(n_pin_loci,'A')),
       individual::sil_t(n_sil_loci,0b00000)
     )
   );

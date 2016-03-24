@@ -101,34 +101,34 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_boost_dynamic_bitset)
   }
 }
 
-BOOST_AUTO_TEST_CASE(test_create_offsping_bpp_basic_sequence)
+BOOST_AUTO_TEST_CASE(test_create_offsping_dna)
 {
   {
     const size_t n_loci{3};
-    const bpp::BasicSequence p("mom", "AAA", &bpp::AlphabetTools::DNA_ALPHABET);
-    const bpp::BasicSequence q("dad", "CCC", &bpp::AlphabetTools::DNA_ALPHABET);
+    const dna p("AAA");
+    const dna q("CCC");
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b001);
-    const bpp::BasicSequence kid = create_offspring(p, q, inherit_from_p);
-    const bpp::BasicSequence kid_should_be("","CCA", &bpp::AlphabetTools::DNA_ALPHABET);
-    BOOST_CHECK(kid.toString() == kid_should_be.toString());
+    const dna kid = create_offspring(p, q, inherit_from_p);
+    const dna kid_should_be("CCA");
+    BOOST_CHECK(kid == kid_should_be);
   }
   {
     const size_t n_loci{4};
-    const bpp::BasicSequence p("mom", "GGGG", &bpp::AlphabetTools::DNA_ALPHABET);
-    const bpp::BasicSequence q("dad", "TTTT", &bpp::AlphabetTools::DNA_ALPHABET);
+    const dna p("GGGG");
+    const dna q("TTTT");
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
-    const bpp::BasicSequence kid = create_offspring(p, q, inherit_from_p);
-    const bpp::BasicSequence kid_should_be("","TGTG", &bpp::AlphabetTools::DNA_ALPHABET);
-    BOOST_CHECK(kid.toString() == kid_should_be.toString());
+    const dna kid = create_offspring(p, q, inherit_from_p);
+    const dna kid_should_be("TGTG");
+    BOOST_CHECK(kid == kid_should_be);
   }
   {
     const size_t n_loci{4};
-    const bpp::BasicSequence p("mom", "GGGG", &bpp::AlphabetTools::DNA_ALPHABET);
-    const bpp::BasicSequence q("dad", "TTTT", &bpp::AlphabetTools::DNA_ALPHABET);
+    const dna p("GGGG");
+    const dna q("TTTT");
     const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b1010);
-    const bpp::BasicSequence kid = create_offspring(p, q, inherit_from_p);
-    const bpp::BasicSequence kid_should_be("","GTGT", &bpp::AlphabetTools::DNA_ALPHABET);
-    BOOST_CHECK(kid.toString() == kid_should_be.toString());
+    const dna kid = create_offspring(p, q, inherit_from_p);
+    const dna kid_should_be("GTGT");
+    BOOST_CHECK(kid == kid_should_be);
   }
 }
 

@@ -24,6 +24,29 @@ boost::dynamic_bitset<> create_offspring(
   return (inherit_from_p & p) | (~inherit_from_p & q);
 }
 
+dna create_offspring(
+  const dna& p,
+  const dna& q,
+  const boost::dynamic_bitset<>& inherit_from_p
+)
+{
+  assert(p.size() == q.size());
+  assert(p.size() == inherit_from_p.size());
+  const auto sz = p.size();
+  dna r{q};
+  for (size_t i = 0; i!=sz; ++i)
+  {
+    if ( (1 << (sz - 1 - i)) //Use little-endian
+      & inherit_from_p.to_ulong() )
+    {
+      r[i] = p[i];
+    }
+  }
+  return r;
+}
+
+
+#ifdef REALLY_USE_BPP
 bpp::BasicSequence create_offspring(
   const bpp::BasicSequence& p,
   const bpp::BasicSequence& q,
@@ -44,6 +67,7 @@ bpp::BasicSequence create_offspring(
   }
   return r;
 }
+#endif //REALLY_USE_BPP
 
 std::vector<int> create_tally(const std::vector<int>& v) noexcept
 {

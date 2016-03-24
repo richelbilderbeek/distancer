@@ -14,8 +14,8 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
   const size_t n_pin_loci{4};
   const size_t n_sil_loci{1};
   const individual::sil_t sil(1, 0b0);
-  const individual::pin_t pin_a("", std::string(n_pin_loci, 'A'), &bpp::AlphabetTools::DNA_ALPHABET);
-  const individual::pin_t pin_b("", std::string(n_pin_loci, 'C'), &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin_a(std::string(n_pin_loci, 'A'));
+  const individual::pin_t pin_b(std::string(n_pin_loci, 'C'));
   {
     const individual p(pin_a, sil);
     const individual q(pin_b, sil);
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
     const boost::dynamic_bitset<> inherit_sil_from_p(n_sil_loci, 0b0);
     const individual kid = create_offspring(p, q, inherit_pin_from_p, inherit_sil_from_p);
     const individual kid_should_be(
-      individual::pin_t("", "CCCC", &bpp::AlphabetTools::DNA_ALPHABET), sil
+      individual::pin_t("CCCC"), sil
     );
     BOOST_CHECK(kid == kid_should_be);
   }
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
     const boost::dynamic_bitset<> inherit_sil_from_p(n_sil_loci, 0b0);
     const individual kid = create_offspring(p, q, inherit_pin_from_p, inherit_sil_from_p);
     const individual kid_should_be(
-      individual::pin_t("", "CACA", &bpp::AlphabetTools::DNA_ALPHABET), sil
+      individual::pin_t("CACA"), sil
     );
     BOOST_CHECK(kid == kid_should_be);
   }
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
     const boost::dynamic_bitset<> inherit_sil_from_p(n_sil_loci, 0b0);
     const individual kid = create_offspring(p, q, inherit_pin_from_p, inherit_sil_from_p);
     const individual kid_should_be(
-      individual::pin_t("", "ACAC", &bpp::AlphabetTools::DNA_ALPHABET), sil
+      individual::pin_t("ACAC"), sil
     );
     BOOST_CHECK(kid == kid_should_be);
   }
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
 BOOST_AUTO_TEST_CASE(test_create_offsping_individual_sil_only)
 {
   const size_t n_pin_loci{2};
-  const individual::pin_t pin("", std::string(n_pin_loci, 'A'), &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin(std::string(n_pin_loci, 'A'));
   {
     const size_t n_sil_loci{3};
     const individual p(pin, individual::sil_t(n_sil_loci, 0b001));
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_sil_only)
 
 BOOST_AUTO_TEST_CASE(test_individual_default_construction_n_loci_and_sil_value)
 {
-  const individual::pin_t pin("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("AAAA");
   const size_t n_loci{8};
   const individual i(
     pin,
@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE(test_individual_construction_n_loci_and_sil_value)
   const size_t n_loci{8};
   const size_t sil_value{0b00101010};
   BOOST_CHECK(sil_value == 42); //What did you expect? :-)
-  const individual::pin_t pin("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("AAAA");
   const individual i(
     pin, individual::sil_t(n_loci, sil_value)
   );
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE(test_individual_construction_from_sil_t)
   const size_t sil_value{0b00101010};
   const individual::sil_t sil(n_sil_loci, sil_value);
   BOOST_CHECK(sil_value == 42); //What did you expect? :-)
-  const individual::pin_t pin("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("AAAA");
   const individual i(pin, sil);
   BOOST_CHECK(i.get_sil().size() == n_sil_loci);
   BOOST_CHECK(i.get_sil().to_ulong() == sil_value);
@@ -128,8 +128,8 @@ BOOST_AUTO_TEST_CASE(test_individual_construction_from_sil_t)
 BOOST_AUTO_TEST_CASE(test_individual_operator_equals)
 {
   const size_t n_sil_loci{8};
-  const individual::pin_t pin_a("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
-  const individual::pin_t pin_b("B","CCCC", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin_a("AAAA");
+  const individual::pin_t pin_b("CCCC");
   const individual::sil_t sil_a(n_sil_loci, 0b01);
   const individual::sil_t sil_b(n_sil_loci, 0b10);
   const individual a(pin_a, sil_a);
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE(test_individual_operator_equals)
 
 BOOST_AUTO_TEST_CASE(test_individual_operator_stream_out)
 {
-  const individual::pin_t pin("B","CCCC", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("CCCC");
   const individual::sil_t sil(8, 0b00000000);
   const individual a(pin, sil);
   std::stringstream s;
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE(test_individual_operator_stream_out)
 
 BOOST_AUTO_TEST_CASE(test_count_abundances)
 {
-  const individual::pin_t pin("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("AAAA");
   {
     const individual::sil_t sil(3, 0b000);
     std::vector<individual> p {
@@ -220,7 +220,7 @@ BOOST_AUTO_TEST_CASE(test_count_abundances)
 
 BOOST_AUTO_TEST_CASE(count_species_boost)
 {
-  const individual::pin_t pin("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("AAAA");
   {
     std::vector<individual> p {
       individual(pin, individual::sil_t(3, 0b000))
@@ -263,7 +263,7 @@ BOOST_AUTO_TEST_CASE(count_species_boost)
 
 BOOST_AUTO_TEST_CASE(test_get_genetic_distance)
 {
-  const individual::pin_t pin("A","AAAA", &bpp::AlphabetTools::DNA_ALPHABET);
+  const individual::pin_t pin("AAAA");
   individual a(pin, individual::sil_t(3, 0b000));
   individual b(pin, individual::sil_t(3, 0b001));
   individual c(pin, individual::sil_t(3, 0b011));
