@@ -6,6 +6,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/connected_components.hpp>
 #include <boost/dynamic_bitset.hpp>
+#include <Bpp/Seq/Sequence.h>
 
 ///Counts the number of components in a graph
 ///For example: A-B C-D would a graph of two edges, four vertices and two connected components
@@ -38,6 +39,16 @@ int count_different_bits(
 boost::dynamic_bitset<> create_offspring(
   const boost::dynamic_bitset<>& p,
   const boost::dynamic_bitset<>& q,
+  const boost::dynamic_bitset<>& inherit_from_p
+);
+
+///Create a sequence that has its nucleotides inherited from its
+///ancestors p and q.
+///The 'inherit_from_p' determines per site if that nucleotide is inherited
+///from ancestor p.
+bpp::BasicSequence create_offspring(
+  const bpp::BasicSequence& p,
+  const bpp::BasicSequence& q,
   const boost::dynamic_bitset<>& inherit_from_p
 );
 

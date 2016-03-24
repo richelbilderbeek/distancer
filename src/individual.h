@@ -3,19 +3,40 @@
 
 #include <iosfwd>
 #include <boost/dynamic_bitset.hpp>
+#include <Bpp/Seq/Sequence.h>
 
 struct individual
 {
+  /// Species Identity Loci
   using sil_t = boost::dynamic_bitset<>;
-  individual(const size_t n_loci, const size_t sil_value = 0);
-  individual(const sil_t& sil);
+  /// Phylogeny Inference Nucleotides
+  using pin_t = bpp::BasicSequence;
+
+  individual(
+    const std::string& pin_sequence,
+    const size_t n_loci,
+    const size_t sil_value
+  );
+  individual(
+    const pin_t& pin,
+    const sil_t& sil
+  );
+
+  const pin_t& get_pin() const noexcept { return m_pin; }
+        pin_t& get_pin()       noexcept { return m_pin; }
 
   const sil_t& get_sil() const noexcept { return m_sil; }
         sil_t& get_sil()       noexcept { return m_sil; }
 
+  private:
+  ///Phylogeny Inference Nucleotides: the neutral DNA
+  ///use to infer phylogenies
+  pin_t m_pin;
+
   ///Species Identity Loci: determines if an individual
   ///can produce viable offspring with others
   sil_t m_sil;
+
 };
 
 
@@ -33,7 +54,8 @@ int count_species(std::vector<individual> p, const int max_genetic_distance) noe
 individual create_offspring(
   const individual& p,
   const individual& q,
-  const boost::dynamic_bitset<>& inherit_from_p
+  const boost::dynamic_bitset<>& inherit_pin_from_p,
+  const boost::dynamic_bitset<>& inherit_sil_from_p
 );
 
 ///Counts the number of loci that are different

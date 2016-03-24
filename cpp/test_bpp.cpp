@@ -2,8 +2,6 @@
 #include <fstream>
 //#include "simulation.h"
 
-#ifdef USE_BPP
-
 #include <Bpp/Seq/Alphabet.all>
 #include <Bpp/Seq/Sequence.h>
 
@@ -27,28 +25,6 @@ BOOST_AUTO_TEST_CASE(test_bpp_1)
   BOOST_CHECK(dna == sequence.toString());
   BOOST_CHECK(dna.size() == sequence.size());
 }
-
-BOOST_AUTO_TEST_CASE(test_bpp_2)
-{
-  /*
-  const bpp::JCnuc jc(&bpp::AlphabetTools::DNA_ALPHABET);
-  const std::string name{"test"};
-  const std::string dna{"AAAAAAAAAA"};
-  bpp::BasicSequence sequence(
-    name, dna, &bpp::AlphabetTools::DNA_ALPHABET
-  );
-  bpp::HomogeneousSequenceSimulator sim(
-    &sequence
-    &jc,
-    0.001, //Mutation rate per nucleotide per DNA replication
-    100000 //Number of DNA replications
-  );
-
-  BOOST_CHECK("AAAAAAAAAA" != sequence.toString()); //Sequence should have changed
-  */
-}
-
-#endif
 
 #pragma GCC diagnostic pop
 

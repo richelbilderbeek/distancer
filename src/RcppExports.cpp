@@ -6,18 +6,20 @@
 using namespace Rcpp;
 
 // do_simulation_cpp
-void do_simulation_cpp(const int max_genetic_distance, const double mutation_rate, const int n_generations, const int n_loci, const int population_size, const int rng_seed, const int sampling_interval);
-RcppExport SEXP distancer_do_simulation_cpp(SEXP max_genetic_distanceSEXP, SEXP mutation_rateSEXP, SEXP n_generationsSEXP, SEXP n_lociSEXP, SEXP population_sizeSEXP, SEXP rng_seedSEXP, SEXP sampling_intervalSEXP) {
+void do_simulation_cpp(const int max_genetic_distance, const double mutation_rate, const int n_generations, const int n_pin, const int n_sil, const int population_size, const std::string& results_filename, const int rng_seed, const int sampling_interval);
+RcppExport SEXP distancer_do_simulation_cpp(SEXP max_genetic_distanceSEXP, SEXP mutation_rateSEXP, SEXP n_generationsSEXP, SEXP n_pinSEXP, SEXP n_silSEXP, SEXP population_sizeSEXP, SEXP results_filenameSEXP, SEXP rng_seedSEXP, SEXP sampling_intervalSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const int >::type max_genetic_distance(max_genetic_distanceSEXP);
     Rcpp::traits::input_parameter< const double >::type mutation_rate(mutation_rateSEXP);
     Rcpp::traits::input_parameter< const int >::type n_generations(n_generationsSEXP);
-    Rcpp::traits::input_parameter< const int >::type n_loci(n_lociSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_pin(n_pinSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_sil(n_silSEXP);
     Rcpp::traits::input_parameter< const int >::type population_size(population_sizeSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type results_filename(results_filenameSEXP);
     Rcpp::traits::input_parameter< const int >::type rng_seed(rng_seedSEXP);
     Rcpp::traits::input_parameter< const int >::type sampling_interval(sampling_intervalSEXP);
-    do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci, population_size, rng_seed, sampling_interval);
+    do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_pin, n_sil, population_size, results_filename, rng_seed, sampling_interval);
     return R_NilValue;
 END_RCPP
 }

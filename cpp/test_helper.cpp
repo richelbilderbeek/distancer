@@ -3,6 +3,8 @@
 #include <fstream>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/test/unit_test.hpp>
+#include <Bpp/Seq/Sequence.h>
+#include <Bpp/Seq/Alphabet.all>
 
 // Boost.Test does not play well with -Weffc++
 #pragma GCC diagnostic push
@@ -96,6 +98,37 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_boost_dynamic_bitset)
     const boost::dynamic_bitset<> kid = create_offspring(p, q, inherit_from_p);
     const boost::dynamic_bitset<> kid_should_be(n_loci, 0b0101);
     BOOST_CHECK(kid == kid_should_be);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(test_create_offsping_bpp_basic_sequence)
+{
+  {
+    const size_t n_loci{3};
+    const bpp::BasicSequence p("mom", "AAA", &bpp::AlphabetTools::DNA_ALPHABET);
+    const bpp::BasicSequence q("dad", "CCC", &bpp::AlphabetTools::DNA_ALPHABET);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b001);
+    const bpp::BasicSequence kid = create_offspring(p, q, inherit_from_p);
+    const bpp::BasicSequence kid_should_be("","CCA", &bpp::AlphabetTools::DNA_ALPHABET);
+    BOOST_CHECK(kid.toString() == kid_should_be.toString());
+  }
+  {
+    const size_t n_loci{4};
+    const bpp::BasicSequence p("mom", "GGGG", &bpp::AlphabetTools::DNA_ALPHABET);
+    const bpp::BasicSequence q("dad", "TTTT", &bpp::AlphabetTools::DNA_ALPHABET);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b0101);
+    const bpp::BasicSequence kid = create_offspring(p, q, inherit_from_p);
+    const bpp::BasicSequence kid_should_be("","TGTG", &bpp::AlphabetTools::DNA_ALPHABET);
+    BOOST_CHECK(kid.toString() == kid_should_be.toString());
+  }
+  {
+    const size_t n_loci{4};
+    const bpp::BasicSequence p("mom", "GGGG", &bpp::AlphabetTools::DNA_ALPHABET);
+    const bpp::BasicSequence q("dad", "TTTT", &bpp::AlphabetTools::DNA_ALPHABET);
+    const boost::dynamic_bitset<> inherit_from_p(n_loci, 0b1010);
+    const bpp::BasicSequence kid = create_offspring(p, q, inherit_from_p);
+    const bpp::BasicSequence kid_should_be("","GTGT", &bpp::AlphabetTools::DNA_ALPHABET);
+    BOOST_CHECK(kid.toString() == kid_should_be.toString());
   }
 }
 
@@ -202,8 +235,4 @@ BOOST_AUTO_TEST_CASE(test_count_different_bits)
   BOOST_CHECK(::count_different_bits(a,c) == 2);
 }
 
-
-//BOOST_AUTO_TEST_SUITE_END()
-
-//Your code
 #pragma GCC diagnostic pop

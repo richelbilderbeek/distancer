@@ -1,16 +1,25 @@
 #include "individual.h"
 
+#include <sstream>
 #include <boost/graph/adjacency_list.hpp>
+#include <Bpp/Seq/Alphabet.all>
 #include "helper.h"
 
-individual::individual(const size_t n_loci, const size_t sil_value)
-  : m_sil{sil_t(n_loci, sil_value)}
+individual::individual(
+  const std::string& pin_sequence,
+  const size_t n_loci,
+  const size_t sil_value
+) : m_pin{"", pin_sequence, &bpp::AlphabetTools::DNA_ALPHABET},
+    m_sil{sil_t(n_loci, sil_value)}
 {
 
 }
 
-individual::individual(const sil_t& sil)
-  : m_sil{sil}
+individual::individual(
+  const pin_t& pin,
+  const sil_t& sil
+) : m_pin{pin},
+    m_sil{sil}
 {
 
 }
@@ -86,11 +95,17 @@ int count_species(std::vector<individual> p, const int max_genetic_distance) noe
 individual create_offspring(
   const individual& p,
   const individual& q,
-  const boost::dynamic_bitset<>& inherit_from_p
+  const boost::dynamic_bitset<>& inherit_pin_from_p,
+  const boost::dynamic_bitset<>& inherit_sil_from_p
 )
 {
-  const auto sil = create_offspring(p.get_sil(), q.get_sil(), inherit_from_p);
-  return individual(sil);
+  assert(p.get_pin().size() == q.get_pin().size());
+  assert(p.get_pin().size() == inherit_pin_from_p.size());
+  assert(p.get_sil().size() == q.get_sil().size());
+  assert(p.get_sil().size() == inherit_sil_from_p.size());
+  const auto pin = create_offspring(p.get_pin(), q.get_pin(), inherit_pin_from_p);
+  const auto sil = create_offspring(p.get_sil(), q.get_sil(), inherit_sil_from_p);
+  return individual(pin, sil);
 }
 
 int get_genetic_distance(
@@ -98,13 +113,17 @@ int get_genetic_distance(
   const individual& b
 ) noexcept
 {
+  assert(a.get_sil().size() == b.get_sil().size());
   const individual::sil_t d = a.get_sil() ^ b.get_sil();
   return d.count();
 }
 
 bool operator==(const individual& lhs, const individual& rhs) noexcept
 {
-  return lhs.get_sil() == rhs.get_sil();
+  return
+       lhs.get_pin().toString() == rhs.get_pin().toString()
+    && lhs.get_sil() == rhs.get_sil()
+  ;
 }
 
 bool operator!=(const individual& lhs, const individual& rhs) noexcept
