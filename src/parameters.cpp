@@ -4,24 +4,26 @@
 
 parameters::parameters(
   const int max_genetic_distance,
-  const double mutation_rate,
   const int n_generations,
   const std::size_t n_pin_loci,
   const std::size_t n_sil_loci,
+  const double pin_mutation_rate,
   const int population_size,
   const std::string& results_filename,
   const int rng_seed,
-  const int sampling_interval
+  const int sampling_interval,
+  const double sil_mutation_rate
 )
   : m_max_genetic_distance{max_genetic_distance},
-    m_mutation_rate{mutation_rate},
     m_n_generations{n_generations},
     m_n_pin_loci{n_pin_loci},
     m_n_sil_loci{n_sil_loci},
+    m_pin_mutation_rate{pin_mutation_rate},
     m_population_size{population_size},
     m_results_filename{results_filename},
     m_rng_seed{rng_seed},
-    m_sampling_interval{sampling_interval}
+    m_sampling_interval{sampling_interval},
+    m_sil_mutation_rate{sil_mutation_rate}
 {
   if (m_max_genetic_distance < 0)
   {
@@ -29,24 +31,6 @@ parameters::parameters(
     msg << __func__ << ": "
       << "max_genetic_distance must be >= 1, "
       << "supplied value was " << m_max_genetic_distance
-    ;
-    throw std::invalid_argument(msg.str());
-  }
-  if (m_mutation_rate < 0.0)
-  {
-    std::stringstream msg;
-    msg << __func__ << ": "
-      << "mutation rate must be >= 0.0, "
-      << "supplied value was " << m_mutation_rate
-    ;
-    throw std::invalid_argument(msg.str());
-  }
-  if (m_mutation_rate > 1.0)
-  {
-    std::stringstream msg;
-    msg << __func__ << ": "
-      << "mutation rate must be <= 1.0, "
-      << "supplied value was " << m_mutation_rate
     ;
     throw std::invalid_argument(msg.str());
   }
@@ -59,6 +43,26 @@ parameters::parameters(
     ;
     throw std::invalid_argument(msg.str());
   }
+  if (m_pin_mutation_rate < 0.0)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "PIN mutation rate must be >= 0.0, "
+      << "supplied value was " << m_pin_mutation_rate
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  if (m_pin_mutation_rate > 1.0)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "PIN mutation rate must be <= 1.0, "
+      << "supplied value was " << m_pin_mutation_rate
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+
+
   if (m_population_size < 0)
   {
     std::stringstream msg;
@@ -95,6 +99,25 @@ parameters::parameters(
       << "(otherwise only a measurement would be taken at the start), "
       << "sampling_interval: " << m_sampling_interval
       << "n_generations: " << m_n_generations
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+
+  if (m_sil_mutation_rate < 0.0)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "SIL mutation rate must be >= 0.0, "
+      << "supplied value was " << m_sil_mutation_rate
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  if (m_sil_mutation_rate > 1.0)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "SIL mutation rate must be <= 1.0, "
+      << "supplied value was " << m_sil_mutation_rate
     ;
     throw std::invalid_argument(msg.str());
   }

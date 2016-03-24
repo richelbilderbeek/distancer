@@ -88,10 +88,36 @@ individual create_offspring(
   const boost::dynamic_bitset<>& inherit_sil_from_p
 )
 {
-  assert(p.get_pin().size() == q.get_pin().size());
-  assert(p.get_pin().size() == inherit_pin_from_p.size());
-  assert(p.get_sil().size() == q.get_sil().size());
-  assert(p.get_sil().size() == inherit_sil_from_p.size());
+  if (p.get_pin().size() != q.get_pin().size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": PIN lengths differ: '"
+      << p.get_pin() << "' and '"
+      << q.get_pin() << "''"
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  if (p.get_pin().size() != inherit_pin_from_p.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": PIN and inheritance lengths differ";
+    throw std::invalid_argument(msg.str());
+  }
+  if (p.get_sil().size() != q.get_sil().size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": SIL lengths differ: '"
+      << p.get_sil() << "' and '"
+      << q.get_sil() << "''"
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  if (p.get_sil().size() != inherit_sil_from_p.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": SIL and inheritance lengths differ";
+    throw std::invalid_argument(msg.str());
+  }
   const auto pin = create_offspring(p.get_pin(), q.get_pin(), inherit_pin_from_p);
   const auto sil = create_offspring(p.get_sil(), q.get_sil(), inherit_sil_from_p);
   return individual(pin, sil);

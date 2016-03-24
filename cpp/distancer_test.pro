@@ -10,7 +10,6 @@ CONFIG(release, debug|release) {
 include(distancer.pri)
 SOURCES += \
     test_helper.cpp \
-    test_bpp.cpp \
     main_test.cpp \
     test_simulation.cpp \
     test_individual.cpp \

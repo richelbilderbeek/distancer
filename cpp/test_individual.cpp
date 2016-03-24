@@ -9,7 +9,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 
-BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
+BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin)
 {
   const size_t n_pin_loci{4};
   const size_t n_sil_loci{1};
@@ -49,9 +49,31 @@ BOOST_AUTO_TEST_CASE(test_create_offsping_individual_pin_only)
     );
     BOOST_CHECK(kid == kid_should_be);
   }
+  // Different PIN lengths
+  {
+    const individual p(individual::pin_t("AA"), sil);            //2
+    const individual q(individual::pin_t("AAA"), sil);           //3
+    const boost::dynamic_bitset<> inherit_pin_from_p(2, 0b1010); //2
+    const boost::dynamic_bitset<> inherit_sil_from_p(n_sil_loci, 0b0);
+    BOOST_CHECK_THROW(
+      create_offspring(p, q, inherit_pin_from_p, inherit_sil_from_p),
+      std::invalid_argument
+    );
+  }
+  // PIN lengths do not match inherit_from_p length
+  {
+    const individual p(individual::pin_t("AAA"), sil);           //3
+    const individual q(individual::pin_t("AAA"), sil);           //3
+    const boost::dynamic_bitset<> inherit_pin_from_p(2, 0b1010); //2
+    const boost::dynamic_bitset<> inherit_sil_from_p(n_sil_loci, 0b0);
+    BOOST_CHECK_THROW(
+      create_offspring(p, q, inherit_pin_from_p, inherit_sil_from_p),
+      std::invalid_argument
+    );
+  }
 }
 
-BOOST_AUTO_TEST_CASE(test_create_offsping_individual_sil_only)
+BOOST_AUTO_TEST_CASE(test_create_offsping_individual_sil)
 {
   const size_t n_pin_loci{2};
   const individual::pin_t pin(std::string(n_pin_loci, 'A'));
