@@ -1,6 +1,7 @@
 #include "dna.h"
 #include <cassert>
 #include <sstream>
+#include <stdexcept>
 
 dna::dna(const std::string& sequence)
   : m_sequence{sequence}

@@ -33,9 +33,6 @@ script:
  # R wants all hidden files gone...
  - rm .gitignore
  - rm src/.gitignore
- - rm .travis_cpp_and_r.yml
- - rm .travis_lyx.yml
- - rm .travis_r.yml
  - rm .travis.yml
  - rm -rf .git
  - rm -rf ..Rcheck
