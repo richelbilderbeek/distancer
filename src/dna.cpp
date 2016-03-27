@@ -34,7 +34,7 @@ void dna::change(const size_t i, std::mt19937& rng_engine) noexcept
     std::end(v)
   );
   */
-  std::uniform_int_distribution<size_t> nucleotide_index(0, 3);
+  std::uniform_int_distribution<size_t> nucleotide_index(0, 2); //[0,2]
   const size_t j = nucleotide_index(rng_engine);
   assert(j < v.size());
   m_sequence[i] = v[j];
