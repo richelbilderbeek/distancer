@@ -52,21 +52,6 @@ dna create_offspring(
   const boost::dynamic_bitset<>& inherit_from_p
 );
 
-
-#ifdef REALLY_USE_BPP
-#include <Bpp/Seq/Sequence.h>
-
-///Create a sequence that has its nucleotides inherited from its
-///ancestors p and q.
-///The 'inherit_from_p' determines per site if that nucleotide is inherited
-///from ancestor p.
-bpp::BasicSequence create_offspring(
-  const bpp::BasicSequence& p,
-  const bpp::BasicSequence& q,
-  const boost::dynamic_bitset<>& inherit_from_p
-);
-#endif //REALLY_USE_BPP
-
 ///Create a tally of value occurrances
 ///For example {0,1,1,2,2,2} would result in {1,2,3}
 ///The sum of the tally will be equal to the length of the input vector

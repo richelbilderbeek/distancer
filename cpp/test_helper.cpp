@@ -3,8 +3,6 @@
 #include <fstream>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/test/unit_test.hpp>
-#include <Bpp/Seq/Sequence.h>
-#include <Bpp/Seq/Alphabet.all>
 
 // Boost.Test does not play well with -Weffc++
 #pragma GCC diagnostic push

@@ -4,7 +4,6 @@
 #include <fstream>
 #include <random>
 #include <boost/graph/isomorphism.hpp>
-#include <Bpp/Seq/Alphabet.all>
 #include "individual.h"
 #include "results.h"
 //#include "helper.h"

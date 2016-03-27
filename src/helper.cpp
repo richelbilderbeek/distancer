@@ -45,30 +45,6 @@ dna create_offspring(
   return r;
 }
 
-
-#ifdef REALLY_USE_BPP
-bpp::BasicSequence create_offspring(
-  const bpp::BasicSequence& p,
-  const bpp::BasicSequence& q,
-  const boost::dynamic_bitset<>& inherit_from_p
-)
-{
-  assert(p.size() == q.size());
-  assert(p.size() == inherit_from_p.size());
-  const auto sz = p.size();
-  bpp::BasicSequence r{q};
-  for (size_t i = 0; i!=sz; ++i)
-  {
-    if ( (1 << (sz - 1 - i)) //Use little-endian
-      & inherit_from_p.to_ulong() )
-    {
-      r.setElement(i, p.getChar(i));
-    }
-  }
-  return r;
-}
-#endif //REALLY_USE_BPP
-
 std::vector<int> create_tally(const std::vector<int>& v) noexcept
 {
   std::map<int, int> m;

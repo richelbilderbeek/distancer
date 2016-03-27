@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <boost/test/unit_test.hpp>
-#include <Bpp/Seq/Alphabet.all>
 #include "helper.h"
 
 // Boost.Test does not play well with -Weffc++

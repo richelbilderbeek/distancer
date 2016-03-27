@@ -2,7 +2,6 @@
 
 #include <sstream>
 #include <boost/graph/adjacency_list.hpp>
-#include <Bpp/Seq/Alphabet.all>
 #include "helper.h"
 
 individual::individual(
