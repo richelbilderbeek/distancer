@@ -4,26 +4,33 @@
 \alias{do_simulation_cpp}
 \title{The function that does a simulation.}
 \usage{
-do_simulation_cpp(max_genetic_distance, mutation_rate, n_generations, n_loci,
-  population_size, rng_seed, sampling_interval)
+do_simulation_cpp(max_genetic_distance, n_generations, n_pin, n_sil,
+  pin_mutation_rate, population_size, results_filename, rng_seed,
+  sampling_interval, sil_mutation_rate)
 }
 \arguments{
 \item{max_genetic_distance}{the maximum number of different loci that two individuals can still produce viable offspring with}
 
-\item{mutation_rate}{DNA mutation rate}
-
 \item{n_generations}{number of generations}
 
-\item{n_loci}{number of loci}
+\item{n_pin}{number of Phylogeny Inferring Nucleotides}
+
+\item{n_sil}{number of Species Identity Loci}
+
+\item{pin_mutation_rate}{PIN mutation rate}
 
 \item{population_size}{population size}
+
+\item{results_filename}{the name of the file the results will be written to}
 
 \item{rng_seed}{random number generator seed}
 
 \item{sampling_interval}{after how many generations is the population sampled for species abundances}
+
+\item{sil_mutation_rate}{SIL mutation rate}
 }
 \value{
-Nothing
+nothing. A file with name 'results_filename' will be created
 }
 \description{
 The function that does a simulation.

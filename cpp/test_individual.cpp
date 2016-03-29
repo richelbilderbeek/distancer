@@ -282,6 +282,49 @@ BOOST_AUTO_TEST_CASE(count_species_boost)
   }
 }
 
+BOOST_AUTO_TEST_CASE(count_possible_species_test)
+{
+  const individual::pin_t pin("AAAA");
+  {
+    std::vector<individual> p {
+      individual(pin, individual::sil_t(3, 0b000))
+    };
+    BOOST_CHECK(::count_possible_species(p,1) == 1);
+  }
+  {
+    std::vector<individual> p {
+      individual(pin, individual::sil_t(3, 0b001)),
+      individual(pin, individual::sil_t(3, 0b011))
+    };
+    BOOST_CHECK(::count_possible_species(p,1) == 1);
+  }
+  {
+    std::vector<individual> p {
+      individual(pin, individual::sil_t(3, 0b001)),
+      individual(pin, individual::sil_t(3, 0b011)),
+      individual(pin, individual::sil_t(3, 0b010))
+    };
+    BOOST_CHECK(::count_possible_species(p,1) == 2);
+  }
+  {
+    std::vector<individual> p {
+      individual(pin, individual::sil_t(3, 0b100)),
+      individual(pin, individual::sil_t(3, 0b110)),
+      individual(pin, individual::sil_t(3, 0b010)),
+      individual(pin, individual::sil_t(3, 0b011)),
+      individual(pin, individual::sil_t(3, 0b001))
+    };
+    BOOST_CHECK(::count_possible_species(p,1) == 3);
+  }
+  {
+    std::vector<individual> p {
+      individual(pin, individual::sil_t(3,0b100)),
+      individual(pin, individual::sil_t(3,0b001))
+    };
+    BOOST_CHECK(::count_possible_species(p,1) == 2);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(test_get_genetic_distance)
 {
   const individual::pin_t pin("AAAA");

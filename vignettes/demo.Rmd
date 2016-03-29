@@ -24,14 +24,15 @@ Here is a run that temporarily has four species:
 ```{r}
 df <- do_simulation_r(
   max_genetic_distance = 1,
-  mutation_rate = 0.1,
   n_generations = 2650,
   n_pin = 4,
   n_sil = 4,
+  pin_mutation_rate = 0.1,
   population_size = 10,
   results_filename = "results.csv",
   rng_seed = 30,
-  sampling_interval = 1
+  sampling_interval = 1,
+  sil_mutation_rate = 0.1
 )
 m <- melt(data = df, id = c("t"))
 colnames(m) <- c("t", "id", "f")
@@ -70,14 +71,15 @@ where the action is:
 ```{r}
 df <- do_simulation_r(
   max_genetic_distance = 1,
-  mutation_rate = 0.1,
   n_generations = 1200,
   n_pin = 4,
   n_sil = 4,
+  pin_mutation_rate = 0.1,
   population_size = 20,
   results_filename = "results.csv",
   rng_seed = 40,
-  sampling_interval = 1
+  sampling_interval = 1,
+  sil_mutation_rate = 0.1
 )
 m <- melt(data = df, id = c("t"))
 colnames(m) <- c("t", "id", "f")

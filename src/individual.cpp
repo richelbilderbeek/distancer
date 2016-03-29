@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/math/special_functions/factorials.hpp>
 #include "helper.h"
 
 individual::individual(
@@ -41,6 +42,67 @@ std::vector<int> count_abundances(
   }
   const auto ids = get_connected_components_ids(g);
   return create_tally(ids);
+}
+
+int count_possible_species(std::vector<individual> p, const int max_genetic_distance) noexcept
+{
+  //const bool debug{false};
+  if (p.empty()) return 0;
+
+  //Ditch the duplicates to speed up the calculation
+  std::sort(
+    std::begin(p),std::end(p), [](const individual& lhs, const individual& rhs)
+    {
+      return lhs.get_sil().to_ulong() < rhs.get_sil().to_ulong();
+    }
+  );
+  typename std::vector<individual>::iterator new_end = std::unique(std::begin(p),std::end(p));
+  p.erase(new_end,std::end(p));
+
+  const int sz{static_cast<int>(p.size())};
+  if (sz == 1) return 1;
+
+  //Connect all species
+  boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> g(sz);
+  for (int i=0; i!=sz; ++i)
+  {
+    for (int j=i+1; j!=sz; ++j)
+    {
+      const int genetic_distance{get_genetic_distance(p[i],p[j])};
+      if (genetic_distance <= max_genetic_distance)
+      {
+        const auto vip = vertices(g);
+        auto from_iter = vip.first + i;
+        auto to_iter = vip.first + j;
+        boost::add_edge(*from_iter, *to_iter, g);
+      }
+    }
+  }
+
+  int max_connected_components{1};
+  //Brute force starts here
+  const int n_combinations{1 << sz};
+  for (int i=0; i!=n_combinations; ++i)
+  {
+    //Copy the original graph
+    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> h{g};
+
+    //Delete vertices according to combinator
+    std::vector<int> bits = get_bits(i);
+    std::reverse(std::begin(bits), std::end(bits));
+    assert(bits.size() < 2 || bits[0] > bits[1]); //Indices must be big first
+    for (const int index: bits)
+    {
+      remove_nth_vertex(index, h);
+    }
+
+    //Count the number of connected components
+    max_connected_components = std::max(
+      max_connected_components,
+      count_connected_components(h)
+    );
+  }
+  return max_connected_components;
 }
 
 int count_species(std::vector<individual> p, const int max_genetic_distance) noexcept

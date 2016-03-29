@@ -62,6 +62,17 @@ std::vector<int> create_tally(const std::vector<int>& v) noexcept;
 ///From http://www.richelbilderbeek.nl/CppFileToVector.htm
 std::vector<std::string> file_to_vector(const std::string& filename);
 
+///Get the indices of the value that have a 1 bit
+/// get_bits(0) == { }
+/// get_bits(1) == { 0 }
+/// get_bits(2) == { 1 }
+/// get_bits(3) == { 0, 1 }
+/// get_bits(4) == { 2 }
+/// get_bits(5) == { 0, 2 }
+/// get_bits(6) == { 1, 2 }
+/// get_bits(7) == { 0, 1, 2 }
+std::vector<int> get_bits(const int value);
+
 ///Get the ID of each node in a graph, which differs per connected component
 ///For example: A-B C-D would a graph of two edges, four vertices and two connected component
 ///The IDs returned would be {0,0,1,1}
@@ -83,5 +94,31 @@ std::vector<int> get_connected_components_ids(
 ///Determines if a filename is a regular file
 ///From http://www.richelbilderbeek.nl/CppIsRegularFile.htm
 bool is_regular_file(const std::string& filename) noexcept;
+
+///Copied from the BoostGraphTutorial
+template <typename graph>
+void remove_nth_vertex(
+  const size_t i,
+  graph& g
+)
+{
+  static_assert(!std::is_const<graph>::value,
+    "graph cannot be const"
+  );
+  if (i >= boost::num_vertices(g))
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "cannot delete nth (n == " << i
+      << ") vertex for graph with "
+      << boost::num_vertices(g) << " vertices"
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  const auto vds = vertices(g);
+  const auto vd = vds.first + i;
+  boost::clear_vertex(*vd, g);
+  boost::remove_vertex(*vd, g);
+}
 
 #endif // HELPER_H

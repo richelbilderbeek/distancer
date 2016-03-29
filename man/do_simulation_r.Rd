@@ -4,23 +4,28 @@
 \alias{do_simulation_r}
 \title{The function that does a simulation.}
 \usage{
-do_simulation_r(max_genetic_distance, mutation_rate, n_generations, n_loci,
-  population_size, rng_seed, sampling_interval)
+do_simulation_r(max_genetic_distance, n_generations, n_pin, n_sil,
+  pin_mutation_rate, population_size, results_filename, rng_seed,
+  sampling_interval, sil_mutation_rate)
 }
 \arguments{
 \item{max_genetic_distance}{the maximum number of different loci that two individuals can still produce viable offspring with}
 
-\item{mutation_rate}{DNA mutation rate}
-
 \item{n_generations}{number of generations}
 
-\item{n_loci}{number of loci}
+\item{n_pin}{number of Phylogeny Inference Nucleotides}
+
+\item{n_sil}{number of Species Identity Loci}
 
 \item{population_size}{population size}
 
 \item{rng_seed}{random number generator seed}
 
 \item{sampling_interval}{how often is the species abundances measured?}
+
+\item{mutation_rate}{DNA mutation rate}
+
+\item{result_filename}{name of the file the results will be written to}
 }
 \value{
 Timepoints when there were new species

@@ -27,8 +27,3 @@ std::string normalize_test_case_name(const_string name)
 } //~namespace unit_test
 } //~namespace boost
 */
-
-
-/*
-
-*/

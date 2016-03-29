@@ -16,26 +16,28 @@ NULL
 #' @export
 do_simulation_r <- function(
   max_genetic_distance,
-  mutation_rate,
   n_generations,
   n_pin,
   n_sil,
+  pin_mutation_rate,
   population_size,
   results_filename,
   rng_seed,
-  sampling_interval
+  sampling_interval,
+  sil_mutation_rate
   ) {
 
   do_simulation_cpp(
     max_genetic_distance,
-    mutation_rate,
     n_generations,
     n_pin,
     n_sil,
+    pin_mutation_rate,
     population_size,
     results_filename,
     rng_seed,
-    sampling_interval
+    sampling_interval,
+    sil_mutation_rate
 )
   df <- read.table(results_filename, header = TRUE, sep = ",")
   #df <- read.table("~/GitHubs/distancer/vignettes/results.csv", header = TRUE, sep = ",")
