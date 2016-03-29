@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^*.o$
 .git
 .gitignore
 .Rhistory
@@ -28,3 +27,12 @@ distancer.bib
 distancer.lyx
 distancer.pdf
 src/.gitignore
+Codecov.png
+Whitespace.png
+build_cpp_exe_debug.sh
+build_cpp_exe_release.sh
+build_cpp_test_debug.sh
+build_cpp_test_release.sh
+get_code_cov.sh
+install_r_packages.R
+results.csv

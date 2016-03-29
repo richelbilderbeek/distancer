@@ -17,13 +17,15 @@ do_simulation_r(max_genetic_distance, n_generations, n_pin, n_sil,
 
 \item{n_sil}{number of Species Identity Loci}
 
+\item{pin_mutation_rate}{PIN mutation rate}
+
 \item{population_size}{population size}
 
 \item{rng_seed}{random number generator seed}
 
 \item{sampling_interval}{how often is the species abundances measured?}
 
-\item{mutation_rate}{DNA mutation rate}
+\item{sil_mutation_rate}{SIL mutation rate}
 
 \item{result_filename}{name of the file the results will be written to}
 }

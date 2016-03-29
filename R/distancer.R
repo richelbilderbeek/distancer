@@ -4,14 +4,15 @@ NULL
 
 #' The function that does a simulation.
 #' @param max_genetic_distance the maximum number of different loci that two individuals can still produce viable offspring with
-#' @param mutation_rate DNA mutation rate
 #' @param n_generations number of generations
 #' @param n_pin number of Phylogeny Inference Nucleotides
 #' @param n_sil number of Species Identity Loci
+#' @param pin_mutation_rate PIN mutation rate
 #' @param population_size population size
 #' @param result_filename name of the file the results will be written to
 #' @param rng_seed random number generator seed
 #' @param sampling_interval how often is the species abundances measured?
+#' @param sil_mutation_rate SIL mutation rate
 #' @return Timepoints when there were new species
 #' @export
 do_simulation_r <- function(
