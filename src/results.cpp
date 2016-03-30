@@ -4,15 +4,23 @@
 
 results::results()
   : m_max_n_species{0},
-    m_rows{}
+    m_measurements{}
 {
 
 }
 
-void results::add_abundances(const int t, const abundances& row) noexcept
+void results::add_measurement(
+  const int t,
+  const std::vector<individual>& population,
+  const int max_genetic_distance
+) noexcept
 {
-  m_max_n_species = std::max(m_max_n_species, row.get_n_species());
-  m_rows.push_back(std::make_pair(t, row));
+  m_measurements.push_back(
+    std::make_pair(
+      t,
+      measurement(t, population, max_genetic_distance)
+    )
+  );
 }
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept

@@ -3,19 +3,23 @@
 
 #include <iosfwd>
 #include <vector>
-#include "abundances.h"
+#include "individual.h"
+#include "measurement.h"
 
 class results
 {
 public:
   results();
 
-  ///Add the species abundances (in number of individuals) at time t (in generations)
-  void add_abundances(const int t, const abundances& row) noexcept;
+  ///Measure the population at time t
+  void add_measurement(
+    const int t,
+    const std::vector<individual>& population,
+    const int max_genetic_distance
+  ) noexcept;
 
 private:
-  int m_max_n_species;
-  std::vector<std::pair<int,abundances>> m_rows;
+  std::vector<std::pair<int,measurement>> m_measurements;
 
   friend std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
 };

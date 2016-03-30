@@ -42,12 +42,8 @@ void do_simulation(const parameters& my_parameters)
   {
     if (t % sampling_interval == 0)
     {
-      my_results.add_abundances(
-        t,
-        abundances(
-          count_abundances(population, max_genetic_distance),
-          t
-        )
+      my_results.add_measurement(
+        t, population, max_genetic_distance
       );
     }
     const int random_father_index{population_indices(rng_engine)};
