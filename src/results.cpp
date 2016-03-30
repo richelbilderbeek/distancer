@@ -9,13 +9,21 @@ results::results()
 }
 
 void results::add_measurement(
-  const int t,
+  const int t ,
   const std::vector<individual>& population,
   const int max_genetic_distance
 ) noexcept
 {
+  if (t < 0)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": generation 't' cannot be "
+      << "negative, value supplied is " << t
+    ;
+    throw std::invalid_argument(msg.str());
+  }
   m_measurements.push_back(
-    measurement(t, population, max_genetic_distance)
+    measurement(population, max_genetic_distance)
   );
 }
 

@@ -4,26 +4,21 @@
 #include <sstream>
 
 measurement::measurement(
-  const int t,
-  const std::vector<individual>& /* population */,
-  const int /* max_genetic_distance */
-) : m_t{t}
+  const std::vector<individual>& population,
+  const int max_genetic_distance
+)
+  : m_n_possible_species{count_possible_species(population, max_genetic_distance)},
+    m_n_species{count_species(population, max_genetic_distance)}
 {
-  if (m_t < 0)
-  {
-    std::stringstream msg;
-    msg << __func__ << ": generation 't' cannot be "
-      << "negative, value supplied is " << m_t
-    ;
-    throw std::invalid_argument(msg.str());
-  }
+  //TODO: do upper calculations at the same time
 }
 
 
-std::ostream& operator<<(std::ostream& os, const measurement& r) noexcept
+std::ostream& operator<<(std::ostream& os, const measurement& /* r */) noexcept
 {
+  /*
   std::stringstream s;
-  s << r.m_t << ", ";
+  //s << r.m_t << ", ";
   //for (const auto n: r.m_individuals_per_species)
   //{
   //  s << n << ", ";
@@ -41,5 +36,6 @@ std::ostream& operator<<(std::ostream& os, const measurement& r) noexcept
     t.resize(t.size() - 1);
   }
   os << t;
+  */
   return os;
 }

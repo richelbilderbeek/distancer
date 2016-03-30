@@ -8,6 +8,10 @@ CONFIG(release, debug|release) {
 }
 
 include(distancer.pri)
+
+HEADERS += \
+    population_factory.h
+
 SOURCES += \
     test_helper.cpp \
     main_test.cpp \
@@ -16,7 +20,9 @@ SOURCES += \
     test_individual.cpp \
     test_parameters.cpp \
     test_dna.cpp \
-    test_measurement.cpp
+    test_measurement.cpp \
+    population_factory.cpp \
+    test_results.cpp
 
 
 # Must use g++-4.8 and C++0x due to compatibility with R

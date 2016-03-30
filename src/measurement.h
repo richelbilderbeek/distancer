@@ -10,13 +10,16 @@ class measurement
 {
 public:
   measurement(
-    const int t,
     const std::vector<individual>& population,
     const int max_genetic_distance
   );
 
+  int get_n_possible_species() const noexcept { return m_n_possible_species; }
+  int get_n_species() const noexcept { return m_n_species; }
+
 private:
-  int m_t;
+  int m_n_possible_species;
+  int m_n_species;
 
   friend std::ostream& operator<<(std::ostream& os, const measurement& r) noexcept;
 };
