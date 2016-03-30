@@ -19,7 +19,7 @@ public:
   ) noexcept;
 
 private:
-  std::vector<std::pair<int,measurement>> m_measurements;
+  std::vector<measurement> m_measurements;
 
   friend std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
 };

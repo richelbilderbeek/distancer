@@ -11,11 +11,12 @@ include(distancer.pri)
 SOURCES += \
     test_helper.cpp \
     main_test.cpp \
+    test_species_id.cpp \
     test_simulation.cpp \
     test_individual.cpp \
-    test_abundances.cpp \
     test_parameters.cpp \
-    test_dna.cpp
+    test_dna.cpp \
+    test_measurement.cpp
 
 
 # Must use g++-4.8 and C++0x due to compatibility with R

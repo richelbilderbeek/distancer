@@ -5,10 +5,9 @@
 
 measurement::measurement(
   const int t,
-  const std::vector<individual>& population,
-  const int max_genetic_distance
-) : m_individuals_per_species{individuals_per_species},
-    m_t{t}
+  const std::vector<individual>& /* population */,
+  const int /* max_genetic_distance */
+) : m_t{t}
 {
   if (m_t < 0)
   {
@@ -18,7 +17,6 @@ measurement::measurement(
     ;
     throw std::invalid_argument(msg.str());
   }
-  count_
 }
 
 
@@ -26,10 +24,10 @@ std::ostream& operator<<(std::ostream& os, const measurement& r) noexcept
 {
   std::stringstream s;
   s << r.m_t << ", ";
-  for (const auto n: r.m_individuals_per_species)
-  {
-    s << n << ", ";
-  }
+  //for (const auto n: r.m_individuals_per_species)
+  //{
+  //  s << n << ", ";
+  //}
   std::string t{s.str()};
   //Remove trailing comma and space
   if (!t.empty())

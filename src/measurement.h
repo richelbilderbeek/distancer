@@ -16,7 +16,6 @@ public:
   );
 
 private:
-  std::vector<int> m_individuals_per_species;
   int m_t;
 
   friend std::ostream& operator<<(std::ostream& os, const measurement& r) noexcept;
