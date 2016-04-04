@@ -1,9 +1,9 @@
-#include "measurement.h"
+#include "distancer_measurement.h"
 #include <cassert>
 #include <boost/test/unit_test.hpp>
 
-#include "individual.h"
-#include "population_factory.h"
+#include "distancer_individual.h"
+#include "distancer_population_factory.h"
 
 
 

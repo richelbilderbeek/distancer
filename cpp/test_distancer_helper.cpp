@@ -1,13 +1,9 @@
-#include "helper.h"
+#include "distancer_helper.h"
 
 #include <iostream>
 #include <fstream>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/test/unit_test.hpp>
-
-// Boost.Test does not play well with -Weffc++
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
 
 BOOST_AUTO_TEST_CASE(test_boost_dynamic_bitset)
 {
@@ -301,5 +297,3 @@ BOOST_AUTO_TEST_CASE(test_count_different_bits)
   BOOST_CHECK(::count_different_bits(c,a) == 2);
   BOOST_CHECK(::count_different_bits(a,c) == 2);
 }
-
-#pragma GCC diagnostic pop

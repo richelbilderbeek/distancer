@@ -3,8 +3,8 @@
 
 #include <iosfwd>
 #include <string>
-#include "individual.h"
 #include <vector>
+#include "distancer_individual.h"
 
 class measurement
 {

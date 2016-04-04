@@ -1,7 +1,7 @@
 #ifndef POPULATION_FACTORY_H
 #define POPULATION_FACTORY_H
 
-#include "individual.h"
+#include "distancer_individual.h"
 
 class population_factory
 {

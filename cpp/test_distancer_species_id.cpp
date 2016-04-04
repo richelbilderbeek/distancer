@@ -1,4 +1,4 @@
-#include "species_id.h"
+#include "distancer_species_id.h"
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_species_id)

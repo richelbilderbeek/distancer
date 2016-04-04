@@ -1,4 +1,4 @@
-#include "parameters.h"
+#include "distancer_parameters.h"
 #include <sstream>
 #include <stdexcept>
 

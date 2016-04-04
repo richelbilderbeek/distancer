@@ -1,4 +1,4 @@
-#include "results.h"
+#include "distancer_results.h"
 #include <iostream>
 #include <sstream>
 

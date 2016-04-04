@@ -1,4 +1,4 @@
-#include "dna.h"
+#include "distancer_dna.h"
 #include <cassert>
 #include <sstream>
 #include <stdexcept>

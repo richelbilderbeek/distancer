@@ -8,24 +8,20 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/connected_components.hpp>
 #include <boost/dynamic_bitset.hpp>
-#include "dna.h"
+#include "distancer_dna.h"
+#include "count_undirected_graph_connected_components.h"
+#include "remove_nth_vertex.h"
 
 ///Counts the number of components in a graph
 ///For example: A-B C-D would a graph of two edges, four vertices and two connected components
 ///The value returned would be 2
+///
 template <typename graph>
 int count_connected_components(
   const graph& g
 ) noexcept
 {
-  std::vector<int> c(boost::num_vertices(g));
-  const int n = boost::connected_components(g,
-    boost::make_iterator_property_map(
-      std::begin(c),
-      get(boost::vertex_index, g)
-    )
-  );
-  return n;
+  return count_undirected_graph_connected_components(g);
 }
 
 ///Counts the number of bits that are different
@@ -91,36 +87,6 @@ std::vector<int> get_connected_components_ids(
     )
   );
   return c;
-}
-
-///Determines if a filename is a regular file
-///From http://www.richelbilderbeek.nl/CppIsRegularFile.htm
-bool is_regular_file(const std::string& filename) noexcept;
-
-///Copied from the BoostGraphTutorial
-template <typename graph>
-void remove_nth_vertex(
-  const size_t i,
-  graph& g
-)
-{
-  static_assert(!std::is_const<graph>::value,
-    "graph cannot be const"
-  );
-  if (i >= boost::num_vertices(g))
-  {
-    std::stringstream msg;
-    msg << __func__ << ": "
-      << "cannot delete nth (n == " << i
-      << ") vertex for graph with "
-      << boost::num_vertices(g) << " vertices"
-    ;
-    throw std::invalid_argument(msg.str());
-  }
-  const auto vds = vertices(g);
-  const auto vd = vds.first + i;
-  boost::clear_vertex(*vd, g);
-  boost::remove_vertex(*vd, g);
 }
 
 #endif // HELPER_H

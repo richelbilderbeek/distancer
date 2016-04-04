@@ -1,12 +1,8 @@
-#include "parameters.h"
+#include "distancer_parameters.h"
 #include <fstream>
 #include <iostream>
 #include <boost/test/unit_test.hpp>
-#include "helper.h"
-
-// Boost.Test does not play well with -Weffc++
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
+#include "distancer_helper.h"
 
 BOOST_AUTO_TEST_CASE(test_parameters)
 {
@@ -175,8 +171,3 @@ BOOST_AUTO_TEST_CASE(test_parameters)
     std::invalid_argument
   );
 }
-
-#pragma GCC diagnostic pop
-
-
-

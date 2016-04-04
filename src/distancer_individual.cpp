@@ -1,9 +1,9 @@
-#include "individual.h"
+#include "distancer_individual.h"
 
 #include <sstream>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/math/special_functions/factorials.hpp>
-#include "helper.h"
+#include "distancer_helper.h"
 
 individual::individual(
   const pin_t& pin,

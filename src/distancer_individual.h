@@ -3,7 +3,7 @@
 
 #include <iosfwd>
 #include <boost/dynamic_bitset.hpp>
-#include "dna.h"
+#include "distancer_dna.h"
 
 struct individual
 {

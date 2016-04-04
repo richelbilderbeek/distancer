@@ -1,8 +1,9 @@
-#include "helper.h"
+#include "distancer_helper.h"
 #include <cassert>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include "is_regular_file.h"
 
 ///Counts the number of bits that are different
 int count_different_bits(
@@ -102,11 +103,3 @@ std::vector<int> get_bits(int value)
   assert(std::is_sorted(std::begin(v), std::end(v)));
   return v;
 }
-
-bool is_regular_file(const std::string& filename) noexcept
-{
-  std::fstream f;
-  f.open(filename.c_str(),std::ios::in);
-  return f.is_open();
-}
-

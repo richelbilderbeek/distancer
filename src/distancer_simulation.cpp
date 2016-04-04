@@ -1,12 +1,12 @@
-#include "simulation.h"
+#include "distancer_simulation.h"
 
 #include <algorithm>
 #include <fstream>
 #include <random>
 #include <boost/graph/isomorphism.hpp>
-#include "individual.h"
-#include "results.h"
-//#include "helper.h"
+#include "distancer_individual.h"
+#include "distancer_results.h"
+//#include "distancer_helper.h"
 
 
 void do_simulation(const parameters& my_parameters)

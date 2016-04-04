@@ -8,21 +8,24 @@ CONFIG(release, debug|release) {
 }
 
 include(distancer.pri)
+include(../../BoostGraphTutorial/BoostGraphTutorial/boost_graph_tutorial.pri)
 
 HEADERS += \
-    population_factory.h
+    distancer_population_factory.h
 
 SOURCES += \
-    test_helper.cpp \
     main_test.cpp \
-    test_species_id.cpp \
-    test_simulation.cpp \
-    test_individual.cpp \
-    test_parameters.cpp \
-    test_dna.cpp \
-    test_measurement.cpp \
-    population_factory.cpp \
-    test_results.cpp
+    distancer_population_factory.cpp \
+    test_distancer_dna.cpp \
+    test_distancer_species_id.cpp \
+    test_distancer_simulation.cpp \
+    test_distancer_results.cpp \
+    test_distancer_parameters.cpp \
+    test_distancer_measurement.cpp \
+    test_distancer_individual.cpp \
+    test_distancer_helper.cpp \
+    test_distancer_results_vertex.cpp \
+    test_distancer_results_graph.cpp
 
 
 # Must use g++-4.8 and C++0x due to compatibility with R
@@ -46,3 +49,6 @@ LIBS += -lboost_unit_test_framework
 # gcov
 QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
 LIBS += -lgcov
+
+# Boost.Graph and GraphViz, only needed in tests
+LIBS += -lboost_graph

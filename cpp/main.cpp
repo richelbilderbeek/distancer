@@ -1,8 +1,9 @@
-#include "simulation.h"
+#include "distancer_simulation.h"
 #include <exception>
 #include <iostream>
 #include <fstream>
-#include "helper.h"
+#include "distancer_helper.h"
+#include "is_regular_file.h"
 
 int main() {
   try

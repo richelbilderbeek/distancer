@@ -1,4 +1,4 @@
-#include "simulation.h"
+#include "distancer_simulation.h"
 //#include <fstream>
 //#include "helper.h"
 #include <boost/test/unit_test.hpp>
