@@ -6,7 +6,7 @@
 // From a population, create a single node phylogeny:
 //
 // +----+
-// | 00 | <- genotype
+// | 00 | <- SIL
 // | 02 | <- frequency
 // +----+
 BOOST_AUTO_TEST_CASE(test_results_create_single_node_phylogeny)
@@ -25,7 +25,6 @@ BOOST_AUTO_TEST_CASE(test_results_create_single_node_phylogeny)
   BOOST_CHECK_EQUAL(boost::num_vertices(g), 1);
   BOOST_CHECK_EQUAL(get_vertex_frequency(*vertices(g).first, g), 1);
   BOOST_CHECK_EQUAL(get_vertex_sil(*vertices(g).first, g), my_sil);
-  BOOST_CHECK_EQUAL(get_vertex_pin(*vertices(g).first, g), my_pin);
 }
 
 

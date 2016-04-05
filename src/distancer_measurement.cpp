@@ -1,4 +1,7 @@
 #include "distancer_measurement.h"
+
+#ifdef KEEP_THIS
+
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
@@ -39,3 +42,6 @@ std::ostream& operator<<(std::ostream& os, const measurement& /* r */) noexcept
   */
   return os;
 }
+
+
+#endif // KEEP_THIS

@@ -1,15 +1,12 @@
-#include "distancer_results_vertex.h"
+#include "distancer_sil_frequency_vertex.h"
 #include <sstream>
 #include <stdexcept>
 
-results_vertex::results_vertex(
+sil_frequency_vertex::sil_frequency_vertex(
   const int frequency,
-  const dna& any_pin,
   const sil& any_sil
-
 )
   : m_frequency{frequency},
-    m_pin{any_pin},
     m_sil{any_sil}
 {
   if (m_frequency < 0)

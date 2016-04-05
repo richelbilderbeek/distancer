@@ -1,6 +1,7 @@
 #ifndef ABUNDANCES_H
 #define ABUNDANCES_H
 
+/*
 #include <iosfwd>
 #include <string>
 #include <vector>
@@ -25,5 +26,7 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& os, const measurement& r) noexcept;
+
+*/
 
 #endif // ABUNDANCES_H

@@ -5,7 +5,8 @@
 #include <vector>
 #include "distancer_individual.h"
 #include "distancer_measurement.h"
-#include "distancer_results_graph.h"
+#include "distancer_sil_frequency_phylogeny.h"
+#include "distancer_population.h"
 
 class results
 {
@@ -15,14 +16,14 @@ public:
   ///Measure the population at time t
   void add_measurement(
     const int t,
-    const std::vector<individual>& population,
+    const population& any_population,
     const int max_genetic_distance
   ) noexcept;
 
-  results_graph get_sil_frequency_phylogeny() const { return {}; }
+  sil_frequency_phylogeny get_sil_frequency_phylogeny() const { return m_sil_frequency_phylogeny; }
 
 private:
-  std::vector<measurement> m_measurements;
+  sil_frequency_phylogeny m_sil_frequency_phylogeny;
 
   friend std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
 };

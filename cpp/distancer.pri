@@ -9,9 +9,10 @@ SOURCES += \
     $$PWD/../src/distancer_results.cpp \
     $$PWD/../src/distancer_simulation.cpp \
     $$PWD/../src/distancer_species_id.cpp \
-    $$PWD/../src/distancer_results_vertex.cpp \
-    $$PWD/../src/distancer_results_graph.cpp \
+    $$PWD/../src/distancer_sil_frequency_vertex.cpp \
+    $$PWD/../src/distancer_sil_frequency_phylogeny.cpp \
     $$PWD/../src/distancer_sil.cpp \
+    $$PWD/../src/distancer_population.cpp \
     $$PWD/../src/distancer_pin.cpp
 
 HEADERS += \
@@ -23,7 +24,8 @@ HEADERS += \
     $$PWD/../src/distancer_results.h \
     $$PWD/../src/distancer_simulation.h \
     $$PWD/../src/distancer_species_id.h \
-    $$PWD/../src/distancer_results_vertex.h \
-    $$PWD/../src/distancer_results_graph.h \
+    $$PWD/../src/distancer_sil_frequency_vertex.h \
+    $$PWD/../src/distancer_sil_frequency_phylogeny.h \
     $$PWD/../src/distancer_sil.h \
+    $$PWD/../src/distancer_population.h \
     $$PWD/../src/distancer_pin.h

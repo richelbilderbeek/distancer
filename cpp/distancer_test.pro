@@ -24,8 +24,9 @@ SOURCES += \
     test_distancer_measurement.cpp \
     test_distancer_individual.cpp \
     test_distancer_helper.cpp \
-    test_distancer_results_vertex.cpp \
-    test_distancer_results_graph.cpp
+    test_distancer_population.cpp \
+    test_distancer_sil_frequency_vertex.cpp \
+    test_distancer_sil_frequency_phylogeny.cpp
 
 
 # Must use g++-4.8 and C++0x due to compatibility with R

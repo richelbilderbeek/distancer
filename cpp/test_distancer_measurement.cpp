@@ -1,3 +1,4 @@
+/*
 #include "distancer_measurement.h"
 #include <cassert>
 #include <boost/test/unit_test.hpp>
@@ -43,3 +44,4 @@ BOOST_AUTO_TEST_CASE(test_measurement_population_two_individuals_two_species)
   BOOST_CHECK_EQUAL(m.get_n_species(), 2);
   BOOST_CHECK_EQUAL(m.get_n_possible_species(), 2);
 }
+*/
