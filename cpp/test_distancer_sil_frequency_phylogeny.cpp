@@ -4,7 +4,7 @@
 #include "distancer_sil_frequency_vertex.h"
 #include "distancer_individual.h"
 
-BOOST_AUTO_TEST_CASE(test_results_graph)
+BOOST_AUTO_TEST_CASE(test_sil_frequency_phylogeny_one_vertex)
 {
   sil_frequency_phylogeny g;
   BOOST_CHECK_EQUAL(boost::num_vertices(g), 0);
@@ -26,6 +26,3 @@ BOOST_AUTO_TEST_CASE(test_results_graph)
   BOOST_CHECK_EQUAL(get_vertex_sil(*vertices(g).first, g), my_sil);
   BOOST_CHECK_EQUAL(get_vertex_time(*vertices(g).first, g), time);
 }
-
-
-

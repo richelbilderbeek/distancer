@@ -5,6 +5,7 @@
 #include "distancer_sil.h"
 #include "save_bundled_vertices_graph_to_dot.h"
 #include "distancer_helper.h"
+#include "add_bundled_edge.h"
 
 results::results()
   : m_sil_frequency_phylogeny{},
@@ -60,7 +61,12 @@ void results::add_measurement(
       const auto b = m_sil_frequency_phylogeny[ vds[j] ].get_sil();
       if (count_different_bits(a, b) <= max_genetic_distance)
       {
-        boost::add_edge(vds[i], vds[j], m_sil_frequency_phylogeny);
+        add_bundled_edge(
+          vds[i],
+          vds[j],
+          sil_frequency_edge(1),
+          m_sil_frequency_phylogeny
+        );
       }
     }
   }
@@ -82,7 +88,12 @@ void results::add_measurement(
       assert(a.size() == b.size());
       if (count_different_bits(a, b) <= max_genetic_distance)
       {
-        boost::add_edge(vd_now, vd_prev, m_sil_frequency_phylogeny);
+        add_bundled_edge(
+          vd_now,
+          vd_prev,
+          sil_frequency_edge(0),
+          m_sil_frequency_phylogeny
+        );
       }
     }
   }
@@ -95,7 +106,8 @@ std::ostream& operator<<(std::ostream& os, const results& r) noexcept
 {
   const auto g = r.get_sil_frequency_phylogeny();
   boost::write_graphviz(os, g,
-    sil_frequency_vertex_writer<sil_frequency_phylogeny>(g)
+    sil_frequency_vertex_writer<sil_frequency_phylogeny>(g),
+    sil_frequency_edge_writer<sil_frequency_phylogeny>(g)
   );
   //?Newline is required by R's read.table function
   return os;
