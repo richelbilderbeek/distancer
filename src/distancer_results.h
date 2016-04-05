@@ -5,6 +5,7 @@
 #include <vector>
 #include "distancer_individual.h"
 #include "distancer_measurement.h"
+#include "distancer_results_graph.h"
 
 class results
 {
@@ -17,6 +18,8 @@ public:
     const std::vector<individual>& population,
     const int max_genetic_distance
   ) noexcept;
+
+  results_graph get_sil_frequency_phylogeny() const { return {}; }
 
 private:
   std::vector<measurement> m_measurements;

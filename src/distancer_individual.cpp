@@ -6,10 +6,10 @@
 #include "distancer_helper.h"
 
 individual::individual(
-  const pin_t& pin,
-  const sil_t& sil
-) : m_pin{pin},
-    m_sil{sil}
+  const pin_t& any_pin,
+  const sil_t& any_sil
+) : m_pin{any_pin},
+    m_sil{any_sil}
 {
 
 }

@@ -2,19 +2,19 @@
 #define INDIVIDUAL_H
 
 #include <iosfwd>
-#include <boost/dynamic_bitset.hpp>
-#include "distancer_dna.h"
+#include "distancer_pin.h"
+#include "distancer_sil.h"
 
 struct individual
 {
   /// Species Identity Loci
-  using sil_t = boost::dynamic_bitset<>;
+  using sil_t = sil;
   /// Phylogeny Inference Nucleotides
-  using pin_t = dna;
+  using pin_t = pin;
 
   individual(
-    const pin_t& pin,
-    const sil_t& sil
+    const pin_t& any_pin,
+    const sil_t& any_sil
   );
 
   const pin_t& get_pin() const noexcept { return m_pin; }
