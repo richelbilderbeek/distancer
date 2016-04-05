@@ -1,4 +1,4 @@
-sudo: true
+sudo: require
 language: cpp
 compiler: gcc
 
@@ -14,7 +14,7 @@ before_install:
 install: 
   - sudo apt-get install -qq g++-4.8 
   - sudo apt-get install -qq g++-5
-  - sudo apt-get install r-base r-base-dev 
+  - sudo apt-get install -qq r-base r-base-dev 
   - sudo apt-get install -qq lyx
   - sudo apt-get install -qq texlive
   - sudo pip install codecov  # Codecov
