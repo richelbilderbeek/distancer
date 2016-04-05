@@ -3,7 +3,6 @@
 #include <sstream>
 #include "add_bundled_vertex.h"
 #include "distancer_sil.h"
-#include "save_bundled_vertices_graph_to_dot.h"
 #include "distancer_helper.h"
 #include "add_bundled_edge.h"
 
@@ -64,7 +63,7 @@ void results::add_measurement(
         add_bundled_edge(
           vds[i],
           vds[j],
-          sil_frequency_edge(1),
+          sil_frequency_edge(0),
           m_sil_frequency_phylogeny
         );
       }
@@ -91,7 +90,7 @@ void results::add_measurement(
         add_bundled_edge(
           vd_now,
           vd_prev,
-          sil_frequency_edge(0),
+          sil_frequency_edge(1),
           m_sil_frequency_phylogeny
         );
       }
@@ -104,11 +103,7 @@ void results::add_measurement(
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept
 {
-  const auto g = r.get_sil_frequency_phylogeny();
-  boost::write_graphviz(os, g,
-    sil_frequency_vertex_writer<sil_frequency_phylogeny>(g),
-    sil_frequency_edge_writer<sil_frequency_phylogeny>(g)
-  );
+  os << r.get_sil_frequency_phylogeny();
   //?Newline is required by R's read.table function
   return os;
 }
