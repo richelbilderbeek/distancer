@@ -28,7 +28,7 @@ int count_connected_components(
 int count_different_bits(
   const boost::dynamic_bitset<>& a,
   const boost::dynamic_bitset<>& b
-) noexcept;
+);
 
 ///Create a bitset that has its bits inherited from its
 ///ancestors p and q.

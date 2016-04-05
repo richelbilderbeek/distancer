@@ -7,7 +7,8 @@
 #include "distancer_helper.h"
 
 results::results()
-  : m_sil_frequency_phylogeny{}
+  : m_sil_frequency_phylogeny{},
+    m_vds_prev{}
 {
 
 }
@@ -15,7 +16,7 @@ results::results()
 void results::add_measurement(
   const int t ,
   const population& any_population,
-  const int /* max_genetic_distance */
+  const int max_genetic_distance
 ) noexcept
 {
   if (t < 0)
@@ -27,20 +28,67 @@ void results::add_measurement(
     throw std::invalid_argument(msg.str());
   }
   //Tally SILs
-  const auto m = tally_sils(any_population);
+  const std::map<sil,int> m = tally_sils(any_population);
 
-  //Add vertex
+  std::vector<sil_frequency_vertex_descriptor> vds;
+
+  //Add vertices, collect vertex descriptors
   for (const auto p: m)
   {
-    add_bundled_vertex(
+    const auto vd = add_bundled_vertex(
       sil_frequency_vertex(
         p.second,
-        p.first
+        p.first,
+        t
       ),
       m_sil_frequency_phylogeny
     );
+    vds.push_back(vd);
   }
-  //Connect species vertex
+
+  //Connect vertices of same species in this timestep
+  const int n_vds{static_cast<int>(vds.size())};
+  for (int i=0; i!=n_vds; ++i)
+  {
+    for (int j=i+1; j!=n_vds; ++j)
+    {
+      assert(i >= 0);
+      assert(i < n_vds);
+      assert(j >= 0);
+      assert(j < n_vds);
+      const auto a = m_sil_frequency_phylogeny[ vds[i] ].get_sil();
+      const auto b = m_sil_frequency_phylogeny[ vds[j] ].get_sil();
+      if (count_different_bits(a, b) <= max_genetic_distance)
+      {
+        boost::add_edge(vds[i], vds[j], m_sil_frequency_phylogeny);
+      }
+    }
+  }
+
+  //Connect vertices with the same and close SILs
+  const int n_vds_prev{static_cast<int>(m_vds_prev.size())};
+  for (int i=0; i!=n_vds; ++i)
+  {
+    for (int j=0; j!=n_vds_prev; ++j)
+    {
+      assert(i >= 0);
+      assert(i < n_vds);
+      const auto vd_now = vds[i];
+      assert(j >= 0);
+      assert(j < n_vds_prev);
+      const auto vd_prev = m_vds_prev[j];
+      const auto a = m_sil_frequency_phylogeny[ vd_now ].get_sil();
+      const auto b = m_sil_frequency_phylogeny[ vd_prev ].get_sil();
+      assert(a.size() == b.size());
+      if (count_different_bits(a, b) <= max_genetic_distance)
+      {
+        boost::add_edge(vd_now, vd_prev, m_sil_frequency_phylogeny);
+      }
+    }
+  }
+
+  //Keep the newest vds
+  m_vds_prev = vds;
 }
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept

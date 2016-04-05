@@ -1,106 +1,55 @@
 #include "distancer_simulation.h"
-//#include <fstream>
-//#include "helper.h"
 #include <boost/test/unit_test.hpp>
 
-/*
-BOOST_AUTO_TEST_CASE(test_do_simulation_zero_generations_zero_rows)
+#include "distancer_simulation.h"
+#include <exception>
+#include <iostream>
+#include <fstream>
+#include "distancer_helper.h"
+#include "is_regular_file.h"
+#include "convert_dot_to_svg.h"
+#include "convert_svg_to_png.h"
+
+BOOST_AUTO_TEST_CASE(test_do_simulation_run_example_sim)
 {
-  const int max_genetic_distance{1};
-  const int n_generations{0};
-  const std::size_t n_pin{1};
-  const std::size_t n_sil{1};
-  const double pin_mutation_rate{0.1};
-  const int population_size{1};
-  const std::string results_filename{"tmp.txt"};
-  const int rng_seed{42};
-  const int sampling_interval{1};
-  const double sil_mutation_rate{0.1};
-  const parameters p(
-    max_genetic_distance,
-    n_generations,
-    n_pin,
-    n_sil,
-    pin_mutation_rate,
-    population_size,
-    results_filename,
-    rng_seed,
-    sampling_interval,
-    sil_mutation_rate
-  );
-  do_simulation(p);
-  BOOST_CHECK(is_regular_file(results_filename));
-  const auto v = file_to_vector(results_filename);
-  std::remove(results_filename.c_str());
-
-  // first line is header, last line must be empty for R
-  BOOST_CHECK(v.size() == n_generations + 2);
+  //Copy the main function here
+  try
+  {
+    const int max_genetic_distance{1};
+    const int n_generations{3000};
+    const int n_pin_loci{5};
+    const int n_sil_loci{4};
+    const double pin_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
+    const int population_size{8};
+    const std::string results_filename{"results.dot"};
+    const int rng_seed{30};
+    const int sampling_interval{150};
+    const double sil_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
+    const parameters p(
+      max_genetic_distance,
+      n_generations,
+      n_pin_loci,
+      n_sil_loci,
+      pin_mutation_rate,
+      population_size,
+      results_filename,
+      rng_seed,
+      sampling_interval,
+      sil_mutation_rate
+    );
+    do_simulation(p);
+    BOOST_CHECK(is_regular_file(results_filename));
+    convert_dot_to_svg(results_filename, "results.svg");
+    convert_svg_to_png("results.svg", "results.png");
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Error: " << e.what() << '\n';
+    BOOST_CHECK(!"Should not get here");
+  }
+  catch (...)
+  {
+    std::cerr << "Error: Unknown\n";
+    BOOST_CHECK(!"Should not get here");
+  }
 }
-
-BOOST_AUTO_TEST_CASE(test_do_simulation_one_generations_one_rows)
-{
-  const int max_genetic_distance{1};
-  const int n_generations{1};
-  const std::size_t n_pin{1};
-  const std::size_t n_sil{1};
-  const double pin_mutation_rate{0.1};
-  const int population_size{1};
-  const int rng_seed{42};
-  const std::string results_filename{"tmp.txt"};
-  const int sampling_interval{1};
-  const double sil_mutation_rate{0.1};
-  const parameters p(
-    max_genetic_distance,
-    n_generations,
-    n_pin,
-    n_sil,
-    pin_mutation_rate,
-    population_size,
-    results_filename,
-    rng_seed,
-    sampling_interval,
-    sil_mutation_rate
-  );
-  do_simulation(p);
-  BOOST_CHECK(is_regular_file(results_filename));
-  const auto v = file_to_vector(results_filename);
-  std::remove(results_filename.c_str());
-
-  // first line is header, last line must be empty for R
-  BOOST_CHECK(v.size() == n_generations + 2);
-}
-
-BOOST_AUTO_TEST_CASE(test_do_simulation_ten_generations_ten_rows)
-{
-  const int max_genetic_distance{1};
-  const int n_generations{10};
-  const std::size_t n_pin{1};
-  const std::size_t n_sil{1};
-  const double pin_mutation_rate{0.1};
-  const int population_size{1};
-  const std::string results_filename{"tmp.txt"};
-  const int rng_seed{42};
-  const int sampling_interval{1};
-  const double sil_mutation_rate{0.1};
-  const parameters p(
-    max_genetic_distance,
-    n_generations,
-    n_pin,
-    n_sil,
-    pin_mutation_rate,
-    population_size,
-    results_filename,
-    rng_seed,
-    sampling_interval,
-    sil_mutation_rate
-  );
-  do_simulation(p);
-  BOOST_CHECK(is_regular_file(results_filename));
-  const auto v = file_to_vector(results_filename);
-  std::remove(results_filename.c_str());
-
-  // first line is header, last line must be empty for R
-  BOOST_CHECK(v.size() == n_generations + 2);
-}
-
-*/

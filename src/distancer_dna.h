@@ -8,7 +8,7 @@
 class dna
 {
 public:
-  dna(const std::string& sequence = "");
+  dna(const std::string& sequence);
 
   void change(const size_t i, std::mt19937& rng_engine) noexcept;
 

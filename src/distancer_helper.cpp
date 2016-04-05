@@ -5,12 +5,18 @@
 #include <stdexcept>
 #include "is_regular_file.h"
 
-///Counts the number of bits that are different
 int count_different_bits(
   const boost::dynamic_bitset<>& a,
   const boost::dynamic_bitset<>& b
-) noexcept
+)
 {
+  if (a.size() != b.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "size differs (" << a.size() << " versus " << b.size() << ")";
+    throw std::invalid_argument(msg.str());
+  }
   return (a ^ b).count();
 }
 
@@ -20,8 +26,20 @@ boost::dynamic_bitset<> create_offspring(
   const boost::dynamic_bitset<>& inherit_from_p
 )
 {
-  assert(p.size() == q.size());
-  assert(p.size() == inherit_from_p.size());
+  if (p.size() != q.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "SIL size differs (" << p.size() << " versus " << q.size() << ")";
+    throw std::invalid_argument(msg.str());
+  }
+  if (p.size() != inherit_from_p.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "SIL size differs (" << p.size() << ") from inheritance bits size (" << inherit_from_p.size() << ")";
+    throw std::invalid_argument(msg.str());
+  }
   return (inherit_from_p & p) | (~inherit_from_p & q);
 }
 
@@ -31,8 +49,21 @@ dna create_offspring(
   const boost::dynamic_bitset<>& inherit_from_p
 )
 {
-  assert(p.size() == q.size());
-  assert(p.size() == inherit_from_p.size());
+  if (p.size() != q.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "DNA size differs (" << p.size() << " versus " << q.size() << ")";
+    throw std::invalid_argument(msg.str());
+  }
+  if (p.size() != inherit_from_p.size())
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "DNA size differs (" << p.size() << ") from inheritance bits size (" << inherit_from_p.size() << ")";
+    throw std::invalid_argument(msg.str());
+  }
+
   const auto sz = p.size();
   dna r{q};
   for (size_t i = 0; i!=sz; ++i)

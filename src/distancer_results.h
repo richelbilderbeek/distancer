@@ -4,7 +4,6 @@
 #include <iosfwd>
 #include <vector>
 #include "distancer_individual.h"
-#include "distancer_measurement.h"
 #include "distancer_sil_frequency_phylogeny.h"
 #include "distancer_population.h"
 
@@ -24,6 +23,10 @@ public:
 
 private:
   sil_frequency_phylogeny m_sil_frequency_phylogeny;
+
+  //The vertex descriptors of the previous generation
+  std::vector<sil_frequency_vertex_descriptor> m_vds_prev;
+
 
   friend std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
 };

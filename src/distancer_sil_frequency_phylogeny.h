@@ -11,4 +11,7 @@ using sil_frequency_phylogeny = boost::adjacency_list<
   sil_frequency_vertex
 >;
 
+using sil_frequency_vertex_descriptor
+  = boost::graph_traits<sil_frequency_phylogeny>::vertex_descriptor;
+
 #endif // DISTANCER_RESULTS_GRAPH_H

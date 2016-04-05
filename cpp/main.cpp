@@ -4,19 +4,21 @@
 #include <fstream>
 #include "distancer_helper.h"
 #include "is_regular_file.h"
+#include "convert_dot_to_svg.h"
+#include "convert_svg_to_png.h"
 
 int main() {
   try
   {
     const int max_genetic_distance{1};
-    const int n_generations{3000};
+    const int n_generations{80};
     const int n_pin_loci{5};
     const int n_sil_loci{4};
     const double pin_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
     const int population_size{8};
-    const std::string results_filename{"results.csv"};
+    const std::string results_filename{"results.dot"};
     const int rng_seed{30};
-    const int sampling_interval{150};
+    const int sampling_interval{8};
     const double sil_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
     const parameters p(
       max_genetic_distance,
@@ -37,12 +39,9 @@ int main() {
         << "' not found" <<'\n';
       return 1;
     }
-    const auto v = file_to_vector(results_filename);
-    std::copy(
-      std::begin(v),
-      std::end(v),
-      std::ostream_iterator<std::string>(std::cout, "\n")
-    );
+    convert_dot_to_svg(results_filename, "results.svg");
+    convert_svg_to_png("results.svg", "results.png");
+    //std::system("display results.png");
   }
   catch (std::exception& e)
   {
