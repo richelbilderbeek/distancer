@@ -2,11 +2,21 @@
 #include <sstream>
 #include <stdexcept>
 
+#ifndef NDEBUG
+int sil_frequency_vertex::s_m_next_id = 0;
+#endif // NDEBUG
+
 sil_frequency_vertex::sil_frequency_vertex()
-  : m_sil_frequencies{},
+  :
+    #ifndef NDEBUG
+    m_id{s_m_next_id},
+    #endif
+    m_sil_frequencies{},
     m_time{}
 {
-
+  #ifndef NDEBUG
+  ++s_m_next_id;
+  #endif // NDEBUG
 }
 
 
@@ -14,9 +24,14 @@ sil_frequency_vertex::sil_frequency_vertex(
   const std::map<sil,int>& sil_frequencies,
   const int time
 )
-  : m_sil_frequencies{sil_frequencies},
+  :
+    #ifndef NDEBUG
+    m_id{s_m_next_id},
+    #endif // NDEBUG
+    m_sil_frequencies{sil_frequencies},
     m_time{time}
 {
+
   for (const auto p: m_sil_frequencies)
   {
     if (p.second < 0)
@@ -38,6 +53,9 @@ sil_frequency_vertex::sil_frequency_vertex(
     ;
     throw std::invalid_argument(msg.str());
   }
+  #ifndef NDEBUG
+  ++s_m_next_id;
+  #endif //NDEBUG
 
 }
 
@@ -95,4 +113,14 @@ void move_sil_frequencies(sil_frequency_vertex& from, sil_frequency_vertex& to)
   }
   to.m_sil_frequencies = fs;
   from.m_sil_frequencies.clear();
+}
+
+std::ostream& operator<<(std::ostream& os, const sil_frequency_vertex& v) noexcept
+{
+  os
+  #ifndef NDEBUG
+    << "#" << v.get_id() << ", "
+  #endif // NDEBUG
+    << "t=" << v.get_time() << ", sfs=" << get_sil_frequencies_str(v);
+  return os;
 }

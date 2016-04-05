@@ -14,7 +14,7 @@ public:
     const std::size_t n_sil_loci,
     const double pin_mutation_rate,
     const int population_size,
-    const std::string& results_filename,
+    const std::string& results_genotype_frequency_graph_filename,
     const int rng_seed,
     const int sampling_interval,
     const double sil_mutation_rate
@@ -42,8 +42,8 @@ public:
   ///Chance to have 1 PIN changed in a genome
   double get_pin_mutation_rate() const noexcept { return m_pin_mutation_rate; }
 
-  ///The filename of the file the results will be written to
-  const std::string& get_results_filename() const noexcept { return m_results_filename; }
+  ///The filename of the file the genotype frequency graph will be written to
+  const std::string& get_filename_genotype_frequency_graph() const noexcept { return m_results_genotype_frequency_graph_filename; }
 
   ///After how many generations is the population sampled for species abundances
   int get_sampling_interval() const noexcept { return m_sampling_interval; }
@@ -74,7 +74,7 @@ private:
   int m_population_size;
 
   ///The filename of the file the results will be written to
-  std::string m_results_filename;
+  std::string m_results_genotype_frequency_graph_filename;
 
   ///RNG seed
   int m_rng_seed;

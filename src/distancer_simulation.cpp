@@ -71,8 +71,9 @@ void do_simulation(const parameters& my_parameters)
     population[random_kid_index] = kid;
   }
 
-  std::ofstream f(my_parameters.get_results_filename());
-  //my_results.summarize(); //Unless you want the genoty
+  //Save the results to file
+  std::ofstream f(my_parameters.get_filename_genotype_frequency_graph());
+  //my_results.summarize_genotypes(); //Unless you want the genotypes
   f << my_results;
 }
 
@@ -83,7 +84,7 @@ void do_simulation_cpp(
   const int n_pin, //Use int over std::size_t for r
   const double pin_mutation_rate,
   const int population_size,
-  const std::string& results_filename,
+  const std::string& results_genotype_frequency_graph_filename,
   const int rng_seed,
   const int sampling_interval,
   const double sil_mutation_rate
@@ -96,7 +97,7 @@ void do_simulation_cpp(
     n_sil,
     pin_mutation_rate,
     population_size,
-    results_filename,
+    results_genotype_frequency_graph_filename,
     rng_seed,
     sampling_interval,
     sil_mutation_rate

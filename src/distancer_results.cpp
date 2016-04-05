@@ -115,7 +115,7 @@ void results::add_measurement(
   m_vds_prev = vds;
 }
 
-void results::summarize()
+void results::summarize_genotypes()
 {
   if (boost::num_vertices(m_sil_frequency_phylogeny) == 0) return;
 
@@ -131,7 +131,19 @@ void results::summarize()
       const auto t_neighbor = m_sil_frequency_phylogeny[*neighbor].get_time();
       if (t != t_neighbor) continue; //Nope
       //Move genotypes
-      move_sil_frequencies(m_sil_frequency_phylogeny[*vd], m_sil_frequency_phylogeny[*neighbor]);
+      try
+      {
+        assert(*vd != *neighbor);
+        move_sil_frequencies(m_sil_frequency_phylogeny[*vd], m_sil_frequency_phylogeny[*neighbor]);
+      }
+      catch (std::invalid_argument& e)
+      {
+        std::cerr
+          << "Focal vertex: " << m_sil_frequency_phylogeny[*vd] << '\n'
+          << "Neighbor vertex: " << m_sil_frequency_phylogeny[*neighbor] << '\n'
+        ;
+        throw e;
+      }
       assert(m_sil_frequency_phylogeny[*vd].get_sil_frequencies().empty());
       assert(m_sil_frequency_phylogeny[*neighbor].get_sil_frequencies().size() >= 2);
       //Move edges

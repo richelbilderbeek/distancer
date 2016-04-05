@@ -13,11 +13,11 @@ void do_simulation(const parameters& p);
 //' @param n_sil number of Species Identity Loci
 //' @param pin_mutation_rate PIN mutation rate
 //' @param population_size population size
-//' @param results_filename the name of the file the results will be written to
+//' @param results_genotype_frequency_graph_filename the name of the file the results will be written to
 //' @param rng_seed random number generator seed
 //' @param sampling_interval after how many generations is the population sampled for species abundances
 //' @param sil_mutation_rate SIL mutation rate
-//' @return nothing. A file with name 'results_filename' will be created
+//' @return nothing. A file with name 'results_genotype_frequency_graph_filename' will be created
 //' @export
 // [[Rcpp::export]]
 void do_simulation_cpp(
@@ -27,7 +27,7 @@ void do_simulation_cpp(
   const int n_sil, //Use int over std::size_t for r
   const double pin_mutation_rate,
   const int population_size,
-  const std::string& results_filename,
+  const std::string& results_genotype_frequency_graph_filename,
   const int rng_seed,
   const int sampling_interval,
   const double sil_mutation_rate

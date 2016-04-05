@@ -12,7 +12,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
   const std::size_t n_sil_loci{2};
   const double pin_mutation_rate{0.1};
   const int population_size{10};
-  const std::string results_filename{"tmp.txt"};
+  const std::string results_genotype_frequency_graph_filename{"tmp.txt"};
   const int rng_seed{42};
   const int sampling_interval{1};
   const double sil_mutation_rate{0.1};
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       -1, //same here
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       -0.1, //pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       1.1, //pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       -1, //population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      "", //results_filename,
+      "", //results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       -1, //sampling_interval
       sil_mutation_rate
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE(test_parameters)
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       1000, //sampling_interval
       sil_mutation_rate

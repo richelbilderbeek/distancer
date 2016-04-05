@@ -173,9 +173,7 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
     //const std::string cmd{"display " + filename_png};
     //std::system(cmd.c_str());
   }
-  BOOST_TEST_PASSPOINT();
-  r.summarize();
-  BOOST_TEST_PASSPOINT();
+  r.summarize_genotypes();
   {
     const std::string filename_base{"test_results_example_complete_speciation_2"};
     const std::string filename_dot{filename_base + ".dot"};
