@@ -6,6 +6,6 @@
 BOOST_AUTO_TEST_CASE(test_results_vertex_default_construction)
 {
   sil_frequency_vertex v;
-  BOOST_CHECK_EQUAL(v.get_sil(), sil());
-  BOOST_CHECK_EQUAL(v.get_frequency(), 0);
+  BOOST_CHECK(v.get_sil_frequencies().empty());
+  BOOST_CHECK_EQUAL(v.get_time(), 0);
 }

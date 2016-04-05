@@ -41,7 +41,7 @@ int main() {
     }
     convert_dot_to_svg(results_filename, "results.svg");
     convert_svg_to_png("results.svg", "results.png");
-    //std::system("display results.png");
+    std::system("display results.png");
   }
   catch (std::exception& e)
   {

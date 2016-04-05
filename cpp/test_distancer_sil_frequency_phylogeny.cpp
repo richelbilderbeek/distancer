@@ -11,18 +11,18 @@ BOOST_AUTO_TEST_CASE(test_sil_frequency_phylogeny_one_vertex)
 
   const int frequency{42};
   const sil my_sil(2, 0b00);
+  std::map<sil,int> sil_frequencies;
+  sil_frequencies.insert(std::make_pair(my_sil, frequency));
+
   const int time{123};
   add_bundled_vertex(
     sil_frequency_vertex(
-      frequency,
-      my_sil,
+      sil_frequencies,
       time
     )
     , g
   );
 
   BOOST_CHECK_EQUAL(boost::num_vertices(g), 1);
-  BOOST_CHECK_EQUAL(get_vertex_frequency(*vertices(g).first, g), frequency);
-  BOOST_CHECK_EQUAL(get_vertex_sil(*vertices(g).first, g), my_sil);
-  BOOST_CHECK_EQUAL(get_vertex_time(*vertices(g).first, g), time);
+  BOOST_CHECK(g[*vertices(g).first].get_sil_frequencies() == sil_frequencies);
 }

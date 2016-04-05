@@ -35,10 +35,12 @@ void results::add_measurement(
   //Add vertices, collect vertex descriptors
   for (const auto p: m)
   {
+    std::map<sil,int> sil_frequencies;
+    sil_frequencies.insert(std::make_pair(p.first, p.second));
+
     const auto vd = add_bundled_vertex(
       sil_frequency_vertex(
-        p.second,
-        p.first,
+        sil_frequencies,
         t
       ),
       m_sil_frequency_phylogeny
@@ -56,9 +58,15 @@ void results::add_measurement(
       assert(i < n_vds);
       assert(j >= 0);
       assert(j < n_vds);
-      const auto a = m_sil_frequency_phylogeny[ vds[i] ].get_sil();
-      const auto b = m_sil_frequency_phylogeny[ vds[j] ].get_sil();
-      if (count_different_bits(a, b) <= max_genetic_distance)
+      const auto v_a = m_sil_frequency_phylogeny[ vds[i] ];
+      const auto v_b = m_sil_frequency_phylogeny[ vds[j] ];
+      const auto silfs_a = v_a.get_sil_frequencies();
+      const auto silfs_b = v_b.get_sil_frequencies();
+      assert(silfs_a.size() == 1);
+      assert(silfs_b.size() == 1);
+      const auto sil_a = (*silfs_a.begin()).first;
+      const auto sil_b = (*silfs_b.begin()).first;
+      if (count_different_bits(sil_a, sil_b) <= max_genetic_distance)
       {
         add_bundled_edge(
           vds[i],
@@ -82,10 +90,18 @@ void results::add_measurement(
       assert(j >= 0);
       assert(j < n_vds_prev);
       const auto vd_prev = m_vds_prev[j];
-      const auto a = m_sil_frequency_phylogeny[ vd_now ].get_sil();
-      const auto b = m_sil_frequency_phylogeny[ vd_prev ].get_sil();
-      assert(a.size() == b.size());
-      if (count_different_bits(a, b) <= max_genetic_distance)
+
+
+      const auto v_a = m_sil_frequency_phylogeny[ vd_now ];
+      const auto v_b = m_sil_frequency_phylogeny[ vd_prev ];
+      const auto silfs_a = v_a.get_sil_frequencies();
+      const auto silfs_b = v_b.get_sil_frequencies();
+      assert(silfs_a.size() == 1);
+      assert(silfs_b.size() == 1);
+      const auto sil_a = (*silfs_a.begin()).first;
+      const auto sil_b = (*silfs_b.begin()).first;
+      assert(sil_a.size() == sil_b.size());
+      if (count_different_bits(sil_a, sil_b) <= max_genetic_distance)
       {
         add_bundled_edge(
           vd_now,

@@ -1,6 +1,7 @@
 #ifndef DISTANCER_RESULTS_VERTEX_H
 #define DISTANCER_RESULTS_VERTEX_H
 
+#include <map>
 #include <boost/graph/graph_traits.hpp>
 #include "distancer_sil.h"
 
@@ -10,42 +11,30 @@ public:
   sil_frequency_vertex();
 
   explicit sil_frequency_vertex(
-    const int frequency,
-    const sil& s,
+    const std::map<sil,int>& sil_frequencies,
     const int time
   );
 
-  ///The number of individuals with this SIL
-  int get_frequency() const noexcept { return m_frequency; }
-
-  ///The Species Identification Loci
-  const sil& get_sil() const noexcept { return m_sil; }
+  std::map<sil,int> get_sil_frequencies() const noexcept { return m_sil_frequencies; }
 
   ///The timepoint
   int get_time() const noexcept { return m_time; }
 
 private:
-  int m_frequency;
-  sil m_sil;
+  std::map<sil,int> m_sil_frequencies;
+  //int m_frequency;
+  //sil m_sil;
   int m_time;
 };
 
+/*
 template <typename graph>
-int get_vertex_frequency(
+std::map<sil,int> get_sil_frequencies(
   const typename boost::graph_traits<graph>::vertex_descriptor& vd,
   const graph& g
 ) noexcept
 {
-  return g[vd].get_frequency();
-}
-
-template <typename graph>
-sil get_vertex_sil(
-  const typename boost::graph_traits<graph>::vertex_descriptor& vd,
-  const graph& g
-) noexcept
-{
-  return g[vd].get_sil();
+  return g[vd].get_sil_frequencies();
 }
 
 template <typename graph>
@@ -56,6 +45,7 @@ int get_vertex_time(
 {
   return g[vd].get_time();
 }
+*/
 
 #include <ostream>
 #include "graphviz_encode.h"
@@ -76,13 +66,22 @@ public:
   void operator()(
     std::ostream& out,
     const vertex_descriptor& vd
-  ) const noexcept {
+  ) const noexcept
+  {
+
+    std::stringstream str;
+    const auto fs = m_g[vd].get_sil_frequencies();
+    for (const auto p: fs) {
+      str << p.first << "(" << p.second << "),";
+    }
+    std::string fss = str.str();
+    if (!fss.empty()) fss.pop_back(); //Get rid of trailing comma
+
     out
       << "[label=\""
       << m_g[vd].get_time()
       << ": "
-      << m_g[vd].get_sil()
-      << ", " << m_g[vd].get_frequency()
+      << fss
       << "\"]"
     ;
   }
