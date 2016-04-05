@@ -71,8 +71,8 @@ void do_simulation(const parameters& my_parameters)
     population[random_kid_index] = kid;
   }
 
-
   std::ofstream f(my_parameters.get_results_filename());
+  //my_results.summarize(); //Unless you want the genoty
   f << my_results;
 }
 

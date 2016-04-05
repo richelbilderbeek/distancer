@@ -21,6 +21,12 @@ public:
 
   sil_frequency_phylogeny get_sil_frequency_phylogeny() const { return m_sil_frequency_phylogeny; }
 
+  ///Will summarize the sil_frequency_phylogeny, to be run after a simulation,
+  ///as it used the last vertex descriptors
+  ///(?but perhaps it can be called during a sim?)
+  ///After 'summarize', call 'get_sil_frequency_phylogeny' again
+  void summarize();
+
 private:
   sil_frequency_phylogeny m_sil_frequency_phylogeny;
 

@@ -25,7 +25,15 @@ private:
   //int m_frequency;
   //sil m_sil;
   int m_time;
+
+  friend void move_sil_frequencies(sil_frequency_vertex& from, sil_frequency_vertex& to);
 };
+
+///Get the SIL frequencies as a std::string
+std::string get_sil_frequencies_str(const sil_frequency_vertex& v) noexcept;
+
+///Move all SIL frequences from 'from' to 'to'
+void move_sil_frequencies(sil_frequency_vertex& from, sil_frequency_vertex& to);
 
 /*
 template <typename graph>

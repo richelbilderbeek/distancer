@@ -90,8 +90,6 @@ void results::add_measurement(
       assert(j >= 0);
       assert(j < n_vds_prev);
       const auto vd_prev = m_vds_prev[j];
-
-
       const auto v_a = m_sil_frequency_phylogeny[ vd_now ];
       const auto v_b = m_sil_frequency_phylogeny[ vd_prev ];
       const auto silfs_a = v_a.get_sil_frequencies();
@@ -115,6 +113,57 @@ void results::add_measurement(
 
   //Keep the newest vds
   m_vds_prev = vds;
+}
+
+void results::summarize()
+{
+  if (boost::num_vertices(m_sil_frequency_phylogeny) == 0) return;
+
+  const auto vds = vertices(m_sil_frequency_phylogeny);
+  for (auto vd = vds.first; vd != vds.second; ++vd)
+  {
+    const auto t = m_sil_frequency_phylogeny[*vd].get_time();
+    //For all vertices, find the neighbors
+    const auto neighbors = boost::adjacent_vertices(*vd, m_sil_frequency_phylogeny);
+    for (auto neighbor = neighbors.first; neighbor != neighbors.second; ++neighbor)
+    {
+      //If a neighbor is of the same generation, move all connections and genotypes to it
+      const auto t_neighbor = m_sil_frequency_phylogeny[*neighbor].get_time();
+      if (t != t_neighbor) continue; //Nope
+      //Move genotypes
+      move_sil_frequencies(m_sil_frequency_phylogeny[*vd], m_sil_frequency_phylogeny[*neighbor]);
+      assert(m_sil_frequency_phylogeny[*vd].get_sil_frequencies().empty());
+      assert(m_sil_frequency_phylogeny[*neighbor].get_sil_frequencies().size() >= 2);
+      //Move edges
+      for (auto other_neighbor = neighbors.first; other_neighbor != neighbors.second; ++other_neighbor)
+      {
+        //No self loops
+        if (neighbor == other_neighbor) continue;
+        //No adding new edges
+        if (edge(*neighbor, *other_neighbor, m_sil_frequency_phylogeny).second) continue;
+        //Add it. Because all edges between species are already present, new edges
+        //will be between generations
+        add_bundled_edge(
+          *neighbor,
+          *other_neighbor,
+          sil_frequency_edge(1),
+          m_sil_frequency_phylogeny
+        );
+      }
+      //Delete this vertex its edges
+      boost::clear_vertex(*vd, m_sil_frequency_phylogeny);
+      break;
+    }
+  }
+
+  //Delete all genotypes without frequencies (nor connections)
+  for (int i = boost::num_vertices(m_sil_frequency_phylogeny) - 1; i!=-1; --i)
+  {
+    const auto vd = vds.first + i;
+    if (degree(*vd, m_sil_frequency_phylogeny) == 0) {
+      boost::remove_vertex(*vd, m_sil_frequency_phylogeny);
+    }
+  }
 }
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept

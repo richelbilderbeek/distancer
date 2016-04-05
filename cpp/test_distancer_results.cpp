@@ -173,7 +173,22 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
     //const std::string cmd{"display " + filename_png};
     //std::system(cmd.c_str());
   }
-
+  BOOST_TEST_PASSPOINT();
+  r.summarize();
+  BOOST_TEST_PASSPOINT();
+  {
+    const std::string filename_base{"test_results_example_complete_speciation_2"};
+    const std::string filename_dot{filename_base + ".dot"};
+    const std::string filename_svg{filename_base + ".svg"};
+    const std::string filename_png{filename_base + ".png"};
+    std::ofstream f(filename_dot);
+    f << r.get_sil_frequency_phylogeny();
+    BOOST_CHECK(is_regular_file(filename_dot));
+    convert_dot_to_svg(filename_dot, filename_svg);
+    convert_svg_to_png(filename_svg, filename_png);
+    //const std::string cmd{"display " + filename_png};
+    //std::system(cmd.c_str());
+  }
 }
 
 /*
