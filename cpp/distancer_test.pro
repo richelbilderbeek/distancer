@@ -21,7 +21,6 @@ SOURCES += \
     test_distancer_simulation.cpp \
     test_distancer_results.cpp \
     test_distancer_parameters.cpp \
-    test_distancer_measurement.cpp \
     test_distancer_individual.cpp \
     test_distancer_helper.cpp \
     test_distancer_population.cpp \

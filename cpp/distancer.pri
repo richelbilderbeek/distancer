@@ -1,7 +1,6 @@
 INCLUDEPATH += ../src
 
 SOURCES += \
-    $$PWD/../src/distancer_measurement.cpp \
     $$PWD/../src/distancer_dna.cpp \
     $$PWD/../src/distancer_helper.cpp \
     $$PWD/../src/distancer_individual.cpp \
@@ -16,7 +15,6 @@ SOURCES += \
     $$PWD/../src/distancer_pin.cpp
 
 HEADERS += \
-    $$PWD/../src/distancer_measurement.h \
     $$PWD/../src/distancer_dna.h \
     $$PWD/../src/distancer_helper.h \
     $$PWD/../src/distancer_individual.h \
