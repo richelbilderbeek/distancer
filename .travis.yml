@@ -47,7 +47,7 @@ script:
  - rm -rf .git
  - rm -rf ..Rcheck
  # Now R is ready to go
- - R CMD check .
+ # - R CMD check .
 
 after_failure:
  # Couldn't find any package by regex 'libboost*', where * is the package I chose
