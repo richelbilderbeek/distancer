@@ -16,5 +16,6 @@ std::map<sil,int> tally_sils(const population& any_population) noexcept
       ++(*iter).second;
     }
   }
+  assert(sum_tally(m) == static_cast<int>(any_population.size()));
   return m;
 }

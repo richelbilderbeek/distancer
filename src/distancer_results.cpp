@@ -10,7 +10,7 @@ results::results(
   const int max_genetic_distance
 )
   : m_max_genetic_distance{max_genetic_distance},
-    m_t_prev{-1}, //Nonsense value
+    //m_t_prev{-1}, //Nonsense value
     m_sil_frequency_phylogeny{},
     m_vds_prev{}
 {
@@ -26,7 +26,7 @@ results::results(
 }
 
 void results::add_measurement(
-  const int t ,
+  const int t,
   const population& any_population
 ) noexcept
 {
@@ -42,23 +42,28 @@ void results::add_measurement(
   //Tally SILs
   const std::map<sil,int> m = tally_sils(any_population);
 
-  //Add vertices, collect vertex descriptors
+  //Add SIL frequencies to graph, collect vertex descriptors
   const std::vector<sil_frequency_vertex_descriptor> vds = add_sils(m, t, m_sil_frequency_phylogeny);
   assert(all_vds_have_unique_sil(vds, m_sil_frequency_phylogeny));
+  assert(count_sils(vds, m_sil_frequency_phylogeny) == static_cast<int>(any_population.size()));
 
+  //Connect the vertices within this fresh cohort
   connect_species_within_cohort(vds, m_max_genetic_distance, m_sil_frequency_phylogeny);
-
+  assert(count_sils(vds, m_sil_frequency_phylogeny) == static_cast<int>(any_population.size()));
   assert(all_vds_have_same_time(m_vds_prev, m_sil_frequency_phylogeny));
+
+  //Connect the vertices from this fresh cohort to the previus one
   connect_species_between_cohorts(
     vds,
     m_vds_prev,
     m_max_genetic_distance,
     m_sil_frequency_phylogeny
   );
+  assert(count_sils(vds, m_sil_frequency_phylogeny) == static_cast<int>(any_population.size()));
 
   //Keep the newest vds
   m_vds_prev = vds;
-  m_t_prev = t;
+  assert(count_sils(m_vds_prev, m_sil_frequency_phylogeny) == static_cast<int>(any_population.size()));
 }
 
 std::vector<sil_frequency_vertex_descriptor> add_sils(
@@ -208,6 +213,24 @@ void connect_species_within_cohort(
     }
   }
 }
+
+int count_sils(
+  const std::vector<sil_frequency_vertex_descriptor>& vds,
+  const sil_frequency_phylogeny& g
+) noexcept
+{
+  return static_cast<int>(
+    std::accumulate(
+      std::begin(vds),std::end(vds),
+      0,
+      [g](const int sum, const sil_frequency_vertex_descriptor vd)
+      {
+        return sum + sum_tally(g[vd].get_sil_frequencies());
+      }
+    )
+  );
+}
+
 
 void results::summarize_genotypes()
 {

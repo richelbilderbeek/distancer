@@ -31,7 +31,6 @@ public:
 
 private:
   int m_max_genetic_distance;
-  int m_t_prev;
 
   sil_frequency_phylogeny m_sil_frequency_phylogeny;
 
@@ -78,6 +77,12 @@ void connect_species_between_cohorts(
   const std::vector<sil_frequency_vertex_descriptor>& vds_prev,
   const int max_genetic_distance,
   sil_frequency_phylogeny& g
+) noexcept;
+
+///Count the total number of SILs these vds point to
+int count_sils(
+  const std::vector<sil_frequency_vertex_descriptor>& vds,
+  const sil_frequency_phylogeny& g
 ) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
