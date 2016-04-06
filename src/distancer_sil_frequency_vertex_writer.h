@@ -4,21 +4,17 @@
 #include <cassert>
 #include <sstream>
 #include <ostream>
-//#include "graphviz_encode.h"
-//#include "is_graphviz_friendly.h"
+
+#include "distancer_sil_frequency_vertex.h"
 
 template <
   typename graph
 >
 class sil_frequency_vertex_writer {
 public:
-  sil_frequency_vertex_writer(
-    graph g,
-    const int max_genetic_distance
-  ) : m_g{g},
-      m_max_genetic_distance{max_genetic_distance}
+  sil_frequency_vertex_writer(graph g) : m_g{g}
   {
-    assert(m_max_genetic_distance > 0);
+
   }
   template <class vertex_descriptor>
   void operator()(
@@ -47,17 +43,16 @@ public:
       << fss
       << "\""
     ;
-    if (m_g[vd].count_n_possible_species(m_max_genetic_distance) > 1 )
+    switch (m_g[vd].get_style())
     {
-      out << " style=dotted";
+      case sil_frequency_vertex_style::unknown  : out << " style=dotted"; break;
+      case sil_frequency_vertex_style::incipient: out << " style=dashed"; break;
+      case sil_frequency_vertex_style::good     : out << " style=bold"  ; break;
     }
-    out
-      << "]"
-    ;
+    out << "]";
   }
 private:
   graph m_g;
-  int m_max_genetic_distance;
 };
 
 

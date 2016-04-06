@@ -31,32 +31,6 @@ int count_possible_species(std::vector<sil> p, const int max_genetic_distance) n
   }
 
   return count_max_number_of_pieces(g);
-  /*
-  int max_connected_components{1};
-  //Brute force starts here
-  const int n_combinations{1 << sz};
-  for (int i=0; i!=n_combinations; ++i)
-  {
-    //Copy the original graph
-    boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> h{g};
-
-    //Delete vertices according to combinator
-    std::vector<int> bits = get_bits(i);
-    std::reverse(std::begin(bits), std::end(bits));
-    assert(bits.size() < 2 || bits[0] > bits[1]); //Indices must be big first
-    for (const int index: bits)
-    {
-      remove_nth_vertex(index, h);
-    }
-
-    //Count the number of connected components
-    max_connected_components = std::max(
-      max_connected_components,
-      count_connected_components(h)
-    );
-  }
-  return max_connected_components;
-  */
 }
 
 int get_genetic_distance(

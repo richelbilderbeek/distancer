@@ -12,6 +12,7 @@ sil_frequency_vertex::sil_frequency_vertex()
     m_id{0},
     #endif
     m_sil_frequencies{},
+    m_style{sil_frequency_vertex_style::unknown},
     m_time{}
 {
   #ifndef NDEBUG
@@ -29,6 +30,7 @@ sil_frequency_vertex::sil_frequency_vertex(
     m_id{s_m_next_id},
     #endif // NDEBUG
     m_sil_frequencies{sil_frequencies},
+    m_style{sil_frequency_vertex_style::unknown},
     m_time{time}
 {
 
@@ -59,22 +61,25 @@ sil_frequency_vertex::sil_frequency_vertex(
 
 }
 
-int sil_frequency_vertex::count_n_possible_species(
+int count_n_possible_species(
+  const sil_frequency_vertex& vertex,
   const int max_genetic_distance
-) const noexcept
+) noexcept
 {
   //Collect the sils
+  const auto& sfs = vertex.get_sil_frequencies();
   std::vector<sil> sils;
-  sils.reserve(m_sil_frequencies.size());
+  sils.reserve(sfs.size());
   std::transform(
-    std::begin(m_sil_frequencies),
-    std::end(m_sil_frequencies),
+    std::begin(sfs),
+    std::end(sfs),
     std::back_inserter(sils),
     [](const std::pair<sil,int>& p)
     {
       return p.first;
     }
   );
+  //Count the possible species
   return count_possible_species(sils, max_genetic_distance);
 }
 

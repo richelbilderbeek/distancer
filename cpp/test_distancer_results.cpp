@@ -159,13 +159,14 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
     if (is_regular_file(filename_dot)) { std::remove(filename_dot.c_str()); }
     BOOST_CHECK(!is_regular_file(filename_dot));
     std::ofstream f(filename_dot);
-    to_stream(f, r.get_sil_frequency_phylogeny(), r.get_max_genetic_distance());
+    f << r.get_sil_frequency_phylogeny();
     BOOST_CHECK(is_regular_file(filename_dot));
     convert_dot_to_svg(filename_dot, filename_svg);
     convert_svg_to_png(filename_svg, filename_png);
     //const std::string cmd{"display " + filename_png};
     //std::system(cmd.c_str());
   }
+  r.summarize_sil_frequency_phylogeny();
   {
     const std::string filename_base{"test_results_example_complete_speciation_2"};
     const std::string filename_dot{filename_base + ".dot"};
@@ -175,7 +176,7 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
     BOOST_CHECK(!is_regular_file(filename_dot));
     std::ofstream f(filename_dot);
     BOOST_TEST_PASSPOINT();
-    to_stream(f, r.get_summarized_sil_frequency_phylogeny(), r.get_max_genetic_distance());
+    f << r.get_summarized_sil_frequency_phylogeny();
     BOOST_TEST_PASSPOINT();
     BOOST_CHECK(is_regular_file(filename_dot));
     convert_dot_to_svg(filename_dot, filename_svg);

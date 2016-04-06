@@ -239,11 +239,36 @@ int count_sils(
   );
 }
 
-sil_frequency_phylogeny results::get_summarized_sil_frequency_phylogeny() const
+void set_all_vertices_styles(
+  sil_frequency_phylogeny& g,
+  const int max_genetic_distance) noexcept
+{
+  const auto vip = vertices(g);
+  const auto j = vip.second;
+  for (auto i=vip.first; i!=j; ++i)
+  {
+    const int n_possible_species{
+      count_n_possible_species(g[*i], max_genetic_distance)
+    };
+    assert(n_possible_species != 0);
+    const sil_frequency_vertex_style style{
+      n_possible_species == 1
+      ? sil_frequency_vertex_style::good
+      : sil_frequency_vertex_style::incipient
+    };
+    g[*i].set_style(style);
+  }
+}
+
+void results::summarize_sil_frequency_phylogeny()
 {
   m_summarized_sil_frequency_phylogeny = summarize_genotypes(m_sil_frequency_phylogeny);
-  return m_summarized_sil_frequency_phylogeny;
+  set_all_vertices_styles(
+    m_summarized_sil_frequency_phylogeny,
+    m_max_genetic_distance
+  );
 }
+
 
 void results::save_all(const std::string& user_filename)
 {
@@ -260,13 +285,16 @@ void results::save_all(const std::string& user_filename)
   //Save before summary
   {
     std::ofstream f(filename_bs_dot);
-    to_stream(f, get_sil_frequency_phylogeny(), m_max_genetic_distance);
+    f << get_sil_frequency_phylogeny();
   }
   convert_dot_to_svg(filename_bs_dot, filename_bs_svg);
   convert_svg_to_png(filename_bs_svg, filename_bs_png);
+
+  summarize_sil_frequency_phylogeny(); //Must summarize
+
   {
     std::ofstream f(filename_dot);
-    to_stream(f, get_summarized_sil_frequency_phylogeny(), m_max_genetic_distance);
+    f << get_summarized_sil_frequency_phylogeny();
   }
   convert_dot_to_svg(filename_dot, filename_svg);
   convert_svg_to_png(filename_svg, filename_png);
@@ -337,14 +365,4 @@ sil_frequency_phylogeny summarize_genotypes(sil_frequency_phylogeny g)
     }
   }
   return g;
-}
-
-std::ostream& operator<<(std::ostream& os, const results& r) noexcept
-{
-  to_stream(
-    os,
-    r.get_sil_frequency_phylogeny(),
-    r.get_max_genetic_distance()
-  );
-  return os;
 }

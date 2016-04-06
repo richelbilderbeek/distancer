@@ -25,7 +25,11 @@ public:
 
   sil_frequency_phylogeny get_sil_frequency_phylogeny() const noexcept { return m_sil_frequency_phylogeny; }
 
-  sil_frequency_phylogeny get_summarized_sil_frequency_phylogeny() const;
+  ///Call 'summarize_sil_frequency_phylogeny' first
+  sil_frequency_phylogeny get_summarized_sil_frequency_phylogeny() const noexcept { return m_summarized_sil_frequency_phylogeny; }
+
+  ///Creates the summarized SIL frequency phylogeny
+  void summarize_sil_frequency_phylogeny();
 
   ///Just save everything
   void save_all(const std::string& dot_filename);
@@ -35,8 +39,8 @@ private:
 
   sil_frequency_phylogeny m_sil_frequency_phylogeny;
 
-  ///mutable as it will be created by 'get_summarized_sil_frequency_phylogeny'
-  mutable sil_frequency_phylogeny m_summarized_sil_frequency_phylogeny;
+  ///will be created by 'get_summarized_sil_frequency_phylogeny'
+  sil_frequency_phylogeny m_summarized_sil_frequency_phylogeny;
 
   ///The vertex descriptors of the previous generation
   std::vector<sil_frequency_vertex_descriptor> m_vds_prev;
@@ -89,12 +93,16 @@ int count_sils(
   const sil_frequency_phylogeny& g
 ) noexcept;
 
+///Determine the style of the vertices: incipient or good?
+void set_all_vertices_styles(
+  sil_frequency_phylogeny& g,
+  const int max_genetic_distance
+) noexcept;
+
 ///Will summarize the sil_frequency_phylogeny, to be run after a simulation,
 ///as it used the last vertex descriptors
 ///(?but perhaps it can be called during a sim?)
 ///After 'summarize', call 'get_sil_frequency_phylogeny' again
 sil_frequency_phylogeny summarize_genotypes(sil_frequency_phylogeny g);
-
-std::ostream& operator<<(std::ostream& os, const results& r) noexcept;
 
 #endif // RESULTS_H
