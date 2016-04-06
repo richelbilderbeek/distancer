@@ -47,6 +47,9 @@ std::vector<int> count_abundances(
 int count_possible_species(std::vector<individual> p, const int max_genetic_distance) noexcept;
 
 
+
+
+
 ///Count the number of ring species, where two individuals must have at most 'max_genetic_distance'
 ///genetic difference to be called the same species
 int count_species(std::vector<individual> p, const int max_genetic_distance) noexcept;

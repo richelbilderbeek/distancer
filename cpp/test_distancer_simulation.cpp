@@ -45,47 +45,32 @@ BOOST_AUTO_TEST_CASE(test_do_simulation_simple_run)
 
 BOOST_AUTO_TEST_CASE(test_do_simulation_run_example_sim)
 {
-  return; //TODO
-  //Copy the main function here
-  try
-  {
-    const int max_genetic_distance{1};
-    const int n_generations{1650}; //BUG: set this to 1650 for giggles
-    const int n_pin_loci{5};
-    const int n_sil_loci{4};
-    const double pin_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
-    const int population_size{8};
-    const std::string results_genotype_frequency_graph_filename{"test_do_simulation_run_example_sim.dot"};
-    const int rng_seed{30};
-    const int sampling_interval{150};
-    const double sil_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
-    const parameters p(
-      max_genetic_distance,
-      n_generations,
-      n_pin_loci,
-      n_sil_loci,
-      pin_mutation_rate,
-      population_size,
-      results_genotype_frequency_graph_filename,
-      rng_seed,
-      sampling_interval,
-      sil_mutation_rate
-    );
-    BOOST_TEST_PASSPOINT();
-    do_simulation(p);
-    BOOST_TEST_PASSPOINT();
-    BOOST_CHECK(is_regular_file(results_genotype_frequency_graph_filename));
-    convert_dot_to_svg(results_genotype_frequency_graph_filename, "test_do_simulation_run_example_sim.svg");
-    convert_svg_to_png("test_do_simulation_run_example_sim.svg", "test_do_simulation_run_example_sim.png");
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error: " << e.what() << '\n';
-    BOOST_CHECK(!"Should not get here");
-  }
-  catch (...)
-  {
-    std::cerr << "Error: Unknown\n";
-    BOOST_CHECK(!"Should not get here");
-  }
+  const int max_genetic_distance{1};
+  const int n_generations{1650};
+  const int n_pin_loci{5};
+  const int n_sil_loci{4};
+  const double pin_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
+  const int population_size{8};
+  const std::string results_genotype_frequency_graph_filename{"test_do_simulation_run_example_sim.dot"};
+  const int rng_seed{30};
+  const int sampling_interval{150};
+  const double sil_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
+  const parameters p(
+    max_genetic_distance,
+    n_generations,
+    n_pin_loci,
+    n_sil_loci,
+    pin_mutation_rate,
+    population_size,
+    results_genotype_frequency_graph_filename,
+    rng_seed,
+    sampling_interval,
+    sil_mutation_rate
+  );
+  BOOST_TEST_PASSPOINT();
+  do_simulation(p);
+  BOOST_TEST_PASSPOINT();
+  BOOST_CHECK(is_regular_file(results_genotype_frequency_graph_filename));
+  convert_dot_to_svg(results_genotype_frequency_graph_filename, "test_do_simulation_run_example_sim.svg");
+  convert_svg_to_png("test_do_simulation_run_example_sim.svg", "test_do_simulation_run_example_sim.png");
 }

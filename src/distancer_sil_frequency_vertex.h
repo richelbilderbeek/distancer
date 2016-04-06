@@ -15,6 +15,10 @@ public:
     const int time
   );
 
+  int count_n_possible_species(
+    const int max_genetic_distance
+  ) const noexcept;
+
   #ifndef NDEBUG
   int get_id() const noexcept { return m_id; }
   #endif // NDEBUG

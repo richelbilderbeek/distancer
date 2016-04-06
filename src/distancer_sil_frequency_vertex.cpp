@@ -59,6 +59,25 @@ sil_frequency_vertex::sil_frequency_vertex(
 
 }
 
+int sil_frequency_vertex::count_n_possible_species(
+  const int max_genetic_distance
+) const noexcept
+{
+  //Collect the sils
+  std::vector<sil> sils;
+  sils.reserve(m_sil_frequencies.size());
+  std::transform(
+    std::begin(m_sil_frequencies),
+    std::end(m_sil_frequencies),
+    std::back_inserter(sils),
+    [](const std::pair<sil,int>& p)
+    {
+      return p.first;
+    }
+  );
+  return count_possible_species(sils, max_genetic_distance);
+}
+
 std::string get_sil_frequencies_str(const sil_frequency_vertex& v) noexcept
 {
 

@@ -45,27 +45,18 @@ The initial state in data collection looks as such:
 +--+--+--+--+--+--+--+--+--+--+
 ```
 
-Next step: create a graph from this:
+During measurements: create a graph from this, connecting the species:
 
 ```
      9--8--6--5--4--4--4--4--4
-        1--2--2--2--1
-           1--2--3--4--5--5--5
+      \ |  |  |  |  | /
+       -1--2--2--2--1
+         \ |  |  |  | \
+          -1--2--3--4--5--5--5
 
 ```
 
-Next step: connect the species:
-
-```
-     9--8--6--5--4--4--4--4--4
-        |  |  |  |  |
-        1--2--2--2--1
-           |  |  |  |
-           1--2--3--4--5--5--5
-
-```
-
-Next step: summarize species:
+Next step: summarize genotypes:
 
  * One species possible: keep solid line
  * More species possible: use dotted line

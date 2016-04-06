@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <boost/test/unit_test.hpp>
-#include "helper.h"
 
 // Boost.Test does not play well with -Weffc++
 #pragma GCC diagnostic push

@@ -55,16 +55,7 @@ dna create_offspring(
 ///The sum of the tally will be equal to the length of the input vector
 std::vector<int> create_tally(const std::vector<int>& v) noexcept;
 
-///Get the indices of the value that have a 1 bit
-/// get_bits(0) == { }
-/// get_bits(1) == { 0 }
-/// get_bits(2) == { 1 }
-/// get_bits(3) == { 0, 1 }
-/// get_bits(4) == { 2 }
-/// get_bits(5) == { 0, 2 }
-/// get_bits(6) == { 1, 2 }
-/// get_bits(7) == { 0, 1, 2 }
-std::vector<int> get_bits(const int value);
+
 
 ///Get the ID of each node in a graph, which differs per connected component
 ///For example: A-B C-D would a graph of two edges, four vertices and two connected component

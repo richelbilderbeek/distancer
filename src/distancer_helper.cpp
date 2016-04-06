@@ -98,19 +98,3 @@ std::vector<int> create_tally(const std::vector<int>& v) noexcept
   return t;
 }
 
-std::vector<int> get_bits(int value)
-{
-  std::vector<int> v;
-  int index = 0;
-  while (value > 0)
-  {
-    if (value % 2 == 1)
-    {
-      v.push_back(index);
-    }
-    value /= 2;
-    ++index;
-  }
-  assert(std::is_sorted(std::begin(v), std::end(v)));
-  return v;
-}
