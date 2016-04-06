@@ -98,26 +98,6 @@ std::vector<int> create_tally(const std::vector<int>& v) noexcept
   return t;
 }
 
-std::vector<std::string> file_to_vector(const std::string& filename)
-{
-  if (!is_regular_file(filename)) {
-    std::stringstream msg;
-    msg << __func__ << ": filename '"
-      << filename << "' not found"
-    ;
-    throw std::invalid_argument(msg.str());
-  }
-  std::vector<std::string> v;
-  std::ifstream in(filename.c_str());
-  for (int i=0; !in.eof(); ++i)
-  {
-    std::string s;
-    std::getline(in,s);
-    v.push_back(s);
-  }
-  return v;
-}
-
 std::vector<int> get_bits(int value)
 {
   std::vector<int> v;

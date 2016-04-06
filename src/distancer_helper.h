@@ -55,11 +55,6 @@ dna create_offspring(
 ///The sum of the tally will be equal to the length of the input vector
 std::vector<int> create_tally(const std::vector<int>& v) noexcept;
 
-
-///FileToVector reads a file and converts it to a std::vector<std::string>
-///From http://www.richelbilderbeek.nl/CppFileToVector.htm
-std::vector<std::string> file_to_vector(const std::string& filename);
-
 ///Get the indices of the value that have a 1 bit
 /// get_bits(0) == { }
 /// get_bits(1) == { 0 }

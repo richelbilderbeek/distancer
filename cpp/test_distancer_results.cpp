@@ -15,15 +15,15 @@
 // +----+
 BOOST_AUTO_TEST_CASE(test_results_create_single_node_phylogeny)
 {
-  results r;
   const int max_genetic_distance{1};
+  results r(max_genetic_distance);
   const pin my_pin("");
   const sil my_sil(2, 0b00);
   std::vector<individual> p{
     individual(my_pin, my_sil)
   };
 
-  r.add_measurement(0, p, max_genetic_distance);
+  r.add_measurement(0, p);
 
   const auto g = r.get_sil_frequency_phylogeny();
   BOOST_CHECK_EQUAL(boost::num_vertices(g), 1);
@@ -154,11 +154,11 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
   assert(populations.size() == 9);
   const int n_populations{static_cast<int>(populations.size())};
   const int max_genetic_distance{1};
-  results r;
+  results r(max_genetic_distance);
   for (int t=0; t!=n_populations; ++t)
   {
     assert(t >= 0 && t < static_cast<int>(populations.size()));
-    r.add_measurement(t, populations[t], max_genetic_distance);
+    r.add_measurement(t, populations[t]);
   }
   {
     const std::string filename_base{"test_results_example_complete_speciation_1"};

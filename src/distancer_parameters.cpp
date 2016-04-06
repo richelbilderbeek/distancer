@@ -1,7 +1,7 @@
 #include "distancer_parameters.h"
 #include <sstream>
 #include <stdexcept>
-
+#include <boost/algorithm/string/replace.hpp>
 parameters::parameters(
   const int max_genetic_distance,
   const int n_generations,
@@ -25,7 +25,7 @@ parameters::parameters(
     m_sampling_interval{sampling_interval},
     m_sil_mutation_rate{sil_mutation_rate}
 {
-  if (m_max_genetic_distance < 0)
+  if (m_max_genetic_distance < 1)
   {
     std::stringstream msg;
     msg << __func__ << ": "
@@ -121,4 +121,26 @@ parameters::parameters(
     ;
     throw std::invalid_argument(msg.str());
   }
+}
+
+
+std::string parameters::get_filename_genotype_frequency_graph_before_summary() const noexcept
+{
+  std::string f = get_filename_genotype_frequency_graph();
+  boost::replace_last(f, ".dot", "_before_summary.dot");
+  return f;
+}
+
+std::string parameters::get_filename_genotype_frequency_graph_before_summary_as_png() const noexcept
+{
+  std::string f = get_filename_genotype_frequency_graph_before_summary();
+  boost::replace_last(f, ".dot", ".png");
+  return f;
+}
+
+std::string parameters::get_filename_genotype_frequency_graph_before_summary_as_svg() const noexcept
+{
+  std::string f = get_filename_genotype_frequency_graph_before_summary();
+  boost::replace_last(f, ".dot", ".svg");
+  return f;
 }

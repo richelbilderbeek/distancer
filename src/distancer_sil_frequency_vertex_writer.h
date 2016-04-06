@@ -34,6 +34,9 @@ public:
 
     out
       << "[label=\""
+      #ifndef NDEBUG
+      << m_g[vd].get_id() << ": "
+      #endif
       << m_g[vd].get_time()
       << ": "
       << fss

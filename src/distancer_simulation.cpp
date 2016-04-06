@@ -7,11 +7,14 @@
 #include "distancer_individual.h"
 #include "distancer_results.h"
 //#include "distancer_helper.h"
-
+#include "convert_dot_to_svg.h"
+#include "convert_svg_to_png.h"
 
 void do_simulation(const parameters& my_parameters)
 {
-  results my_results;
+  results my_results(
+    my_parameters.get_max_genetic_distance()
+  );
   const size_t n_pin_loci{my_parameters.get_n_pin_loci()};
   const size_t n_sil_loci{my_parameters.get_n_sil_loci()};
   const int n_generations{my_parameters.get_n_generations()};
@@ -43,7 +46,7 @@ void do_simulation(const parameters& my_parameters)
     if (t % sampling_interval == 0)
     {
       my_results.add_measurement(
-        t, population, max_genetic_distance
+        t, population
       );
     }
     const int random_father_index{population_indices(rng_engine)};
@@ -65,16 +68,32 @@ void do_simulation(const parameters& my_parameters)
     if (chance(rng_engine) < sil_mutation_rate) {
       kid.get_sil().flip(sil_index(rng_engine));
     }
-    if (chance(rng_engine) < pin_mutation_rate) {
+    if (n_pin_loci && chance(rng_engine) < pin_mutation_rate) //Would freeze if no check for n_pin_loci > 0
+    {
       kid.get_pin().change(pin_index(rng_engine), rng_engine);
     }
     population[random_kid_index] = kid;
   }
 
   //Save the results to file
-  std::ofstream f(my_parameters.get_filename_genotype_frequency_graph());
-  //my_results.summarize_genotypes(); //Unless you want the genotypes
-  f << my_results;
+  {
+
+    std::ofstream f(my_parameters.get_filename_genotype_frequency_graph_before_summary());
+    f << my_results;
+  }
+  convert_dot_to_svg(
+    my_parameters.get_filename_genotype_frequency_graph_before_summary(),
+    my_parameters.get_filename_genotype_frequency_graph_before_summary_as_svg()
+  );
+  convert_svg_to_png(
+    my_parameters.get_filename_genotype_frequency_graph_before_summary_as_svg(),
+    my_parameters.get_filename_genotype_frequency_graph_before_summary_as_png()
+  );
+  my_results.summarize_genotypes();
+  {
+    std::ofstream f(my_parameters.get_filename_genotype_frequency_graph());
+    f << my_results;
+  }
 }
 
 void do_simulation_cpp(

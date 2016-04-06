@@ -11,14 +11,14 @@ int main() {
   try
   {
     const int max_genetic_distance{1};
-    const int n_generations{80};
-    const int n_pin_loci{5};
+    const int n_generations{10};
+    const int n_pin_loci{0};
     const int n_sil_loci{4};
     const double pin_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
     const int population_size{8};
-    const std::string results_filename{"results.dot"};
+    const std::string results_genotype_frequency_graph_filename{"results.dot"};
     const int rng_seed{30};
-    const int sampling_interval{8};
+    const int sampling_interval{1};
     const double sil_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome
     const parameters p(
       max_genetic_distance,
@@ -27,21 +27,21 @@ int main() {
       n_sil_loci,
       pin_mutation_rate,
       population_size,
-      results_filename,
+      results_genotype_frequency_graph_filename,
       rng_seed,
       sampling_interval,
       sil_mutation_rate
     );
     do_simulation(p);
-    if (!is_regular_file(results_filename))
+    if (!is_regular_file(results_genotype_frequency_graph_filename))
     {
-      std::cerr << "Error: file '" << results_filename
+      std::cerr << "Error: file '" << results_genotype_frequency_graph_filename
         << "' not found" <<'\n';
       return 1;
     }
-    convert_dot_to_svg(results_filename, "results.svg");
+    convert_dot_to_svg(results_genotype_frequency_graph_filename, "results.svg");
     convert_svg_to_png("results.svg", "results.png");
-    //std::system("display results.png");
+    std::system("display results.png");
   }
   catch (std::exception& e)
   {
