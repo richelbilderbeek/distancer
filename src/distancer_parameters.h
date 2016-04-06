@@ -46,9 +46,9 @@ public:
   const std::string& get_filename_genotype_frequency_graph() const noexcept { return m_results_genotype_frequency_graph_filename; }
 
   ///The filename of the file the genotype frequency graph before summarization will be written to
-  std::string get_filename_genotype_frequency_graph_before_summary() const noexcept;
-  std::string get_filename_genotype_frequency_graph_before_summary_as_png() const noexcept;
-  std::string get_filename_genotype_frequency_graph_before_summary_as_svg() const noexcept;
+  //std::string get_filename_genotype_frequency_graph_before_summary() const noexcept;
+  //std::string get_filename_genotype_frequency_graph_before_summary_as_png() const noexcept;
+  //std::string get_filename_genotype_frequency_graph_before_summary_as_svg() const noexcept;
 
   ///After how many generations is the population sampled for species abundances
   int get_sampling_interval() const noexcept { return m_sampling_interval; }

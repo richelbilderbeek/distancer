@@ -2,6 +2,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+
 parameters::parameters(
   const int max_genetic_distance,
   const int n_generations,
@@ -62,7 +64,6 @@ parameters::parameters(
     throw std::invalid_argument(msg.str());
   }
 
-
   if (m_population_size < 0)
   {
     std::stringstream msg;
@@ -72,14 +73,16 @@ parameters::parameters(
     ;
     throw std::invalid_argument(msg.str());
   }
-  if (results_genotype_frequency_graph_filename.empty())
+  if (!boost::ends_with(results_genotype_frequency_graph_filename, ".dot"))
   {
     std::stringstream msg;
     msg << __func__ << ": "
-      << "results_genotype_frequency_graph_filename must be non-empty"
+      << "results_genotype_frequency_graph_filename must end with '.dot'"
+      << ", filename given was '" << results_genotype_frequency_graph_filename << "'"
     ;
     throw std::invalid_argument(msg.str());
   }
+
   //Allow a population of zero generations
   if (m_n_generations > 0 && m_sampling_interval < 1)
   {
@@ -123,7 +126,7 @@ parameters::parameters(
   }
 }
 
-
+/*
 std::string parameters::get_filename_genotype_frequency_graph_before_summary() const noexcept
 {
   std::string f = get_filename_genotype_frequency_graph();
@@ -144,3 +147,4 @@ std::string parameters::get_filename_genotype_frequency_graph_before_summary_as_
   boost::replace_last(f, ".dot", ".svg");
   return f;
 }
+*/

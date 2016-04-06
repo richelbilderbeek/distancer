@@ -9,13 +9,13 @@ int sil_frequency_vertex::s_m_next_id = 0;
 sil_frequency_vertex::sil_frequency_vertex()
   :
     #ifndef NDEBUG
-    m_id{s_m_next_id},
+    m_id{0},
     #endif
     m_sil_frequencies{},
     m_time{}
 {
   #ifndef NDEBUG
-  ++s_m_next_id;
+  //++s_m_next_id;
   #endif // NDEBUG
 }
 

@@ -1,7 +1,11 @@
 #include "distancer_results.h"
 #include <iostream>
 #include <sstream>
+#include <fstream>
+#include <boost/algorithm/string/replace.hpp>
 #include "add_bundled_vertex.h"
+#include "convert_dot_to_svg.h"
+#include "convert_svg_to_png.h"
 #include "distancer_sil.h"
 #include "distancer_helper.h"
 #include "add_bundled_edge.h"
@@ -10,8 +14,8 @@ results::results(
   const int max_genetic_distance
 )
   : m_max_genetic_distance{max_genetic_distance},
-    //m_t_prev{-1}, //Nonsense value
     m_sil_frequency_phylogeny{},
+    m_summarized_sil_frequency_phylogeny{},
     m_vds_prev{}
 {
   if (m_max_genetic_distance < 1)
@@ -51,6 +55,7 @@ void results::add_measurement(
   connect_species_within_cohort(vds, m_max_genetic_distance, m_sil_frequency_phylogeny);
   assert(count_sils(vds, m_sil_frequency_phylogeny) == static_cast<int>(any_population.size()));
   assert(all_vds_have_same_time(m_vds_prev, m_sil_frequency_phylogeny));
+  assert(all_vds_have_unique_sil(vds, m_sil_frequency_phylogeny));
 
   //Connect the vertices from this fresh cohort to the previus one
   connect_species_between_cohorts(
@@ -60,6 +65,7 @@ void results::add_measurement(
     m_sil_frequency_phylogeny
   );
   assert(count_sils(vds, m_sil_frequency_phylogeny) == static_cast<int>(any_population.size()));
+  assert(all_vds_have_unique_sil(vds, m_sil_frequency_phylogeny));
 
   //Keep the newest vds
   m_vds_prev = vds;
@@ -87,6 +93,7 @@ std::vector<sil_frequency_vertex_descriptor> add_sils(
     );
     vds.push_back(vd);
   }
+  assert(count_sils(vds, g) == sum_tally(m));
   return vds;
 }
 
@@ -209,6 +216,7 @@ void connect_species_within_cohort(
           sil_frequency_edge(0),
           g
         );
+
       }
     }
   }
@@ -231,68 +239,104 @@ int count_sils(
   );
 }
 
-
-void results::summarize_genotypes()
+sil_frequency_phylogeny results::get_summarized_sil_frequency_phylogeny() const
 {
-  if (boost::num_vertices(m_sil_frequency_phylogeny) == 0) return;
+  m_summarized_sil_frequency_phylogeny = summarize_genotypes(m_sil_frequency_phylogeny);
+  return m_summarized_sil_frequency_phylogeny;
+}
 
-  const auto vds = vertices(m_sil_frequency_phylogeny);
+void results::save_all(const std::string& user_filename)
+{
+  const std::string base_filename = boost::replace_last_copy(user_filename, ".dot", "");
+  const std::string filename_dot = base_filename + ".dot";
+  const std::string filename_png = base_filename + ".png";
+  const std::string filename_svg = base_filename + ".svg";
+  // bs: before summary
+  const std::string base_filename_bs = base_filename + "_bs";
+  const std::string filename_bs_dot = base_filename_bs + ".dot";
+  const std::string filename_bs_png = base_filename_bs + ".png";
+  const std::string filename_bs_svg = base_filename_bs + ".svg";
+
+  //Save before summary
+  {
+    std::ofstream f(filename_bs_dot);
+    f << get_sil_frequency_phylogeny();
+  }
+  convert_dot_to_svg(filename_bs_dot, filename_bs_svg);
+  convert_svg_to_png(filename_bs_svg, filename_bs_png);
+  {
+    std::ofstream f(filename_dot);
+    f << get_summarized_sil_frequency_phylogeny();
+  }
+  convert_dot_to_svg(filename_dot, filename_svg);
+  convert_svg_to_png(filename_svg, filename_png);
+
+}
+
+sil_frequency_phylogeny summarize_genotypes(sil_frequency_phylogeny g)
+{
+  if (boost::num_vertices(g) == 0) return g;
+
+  const auto vds = vertices(g);
   for (auto vd = vds.first; vd != vds.second; ++vd)
   {
-    const auto t = m_sil_frequency_phylogeny[*vd].get_time();
+    const auto t = g[*vd].get_time();
     //For all vertices, find the neighbors
-    const auto neighbors = boost::adjacent_vertices(*vd, m_sil_frequency_phylogeny);
+    const auto neighbors = boost::adjacent_vertices(*vd, g);
     for (auto neighbor = neighbors.first; neighbor != neighbors.second; ++neighbor)
     {
       //If a neighbor is of the same generation, move all connections and genotypes to it
-      const auto t_neighbor = m_sil_frequency_phylogeny[*neighbor].get_time();
+      const auto t_neighbor = g[*neighbor].get_time();
       if (t != t_neighbor) continue; //Nope
       //Move genotypes
       try
       {
         assert(*vd != *neighbor);
-        move_sil_frequencies(m_sil_frequency_phylogeny[*vd], m_sil_frequency_phylogeny[*neighbor]);
+        move_sil_frequencies(g[*vd], g[*neighbor]);
       }
       catch (std::invalid_argument& e)
       {
-        std::cerr
-          << "Focal vertex: " << m_sil_frequency_phylogeny[*vd] << '\n'
-          << "Neighbor vertex: " << m_sil_frequency_phylogeny[*neighbor] << '\n'
+        std::stringstream msg;
+        msg << e.what() << ": "
+          << "Focal vertex: " << g[*vd] << '\n'
+          << "Neighbor vertex: " << g[*neighbor] << '\n'
         ;
-        throw e;
+        throw std::logic_error(msg.str());
       }
-      assert(m_sil_frequency_phylogeny[*vd].get_sil_frequencies().empty());
-      assert(m_sil_frequency_phylogeny[*neighbor].get_sil_frequencies().size() >= 2);
+      assert(g[*vd].get_sil_frequencies().empty());
+      assert(g[*neighbor].get_sil_frequencies().size() >= 2);
       //Move edges
       for (auto other_neighbor = neighbors.first; other_neighbor != neighbors.second; ++other_neighbor)
       {
         //No self loops
         if (neighbor == other_neighbor) continue;
         //No adding new edges
-        if (edge(*neighbor, *other_neighbor, m_sil_frequency_phylogeny).second) continue;
+        if (edge(*neighbor, *other_neighbor, g).second) continue;
         //Add it. Because all edges between species are already present, new edges
         //will be between generations
         add_bundled_edge(
           *neighbor,
           *other_neighbor,
           sil_frequency_edge(1),
-          m_sil_frequency_phylogeny
+          g
         );
       }
       //Delete this vertex its edges
-      boost::clear_vertex(*vd, m_sil_frequency_phylogeny);
+      boost::clear_vertex(*vd, g);
       break;
     }
   }
 
-  //Delete all genotypes without frequencies (nor connections)
-  for (int i = boost::num_vertices(m_sil_frequency_phylogeny) - 1; i!=-1; --i)
+  //Delete all empty (no genotypes, no connections)
+  for (int i = boost::num_vertices(g) - 1; i!=-1; --i)
   {
     const auto vd = vds.first + i;
-    if (degree(*vd, m_sil_frequency_phylogeny) == 0) {
-      boost::remove_vertex(*vd, m_sil_frequency_phylogeny);
+    if (g[*vd].get_sil_frequencies().empty() && degree(*vd, g) == 0)
+    {
+      boost::remove_vertex(*vd, g);
     }
   }
+  return g;
 }
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept

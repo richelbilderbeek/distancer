@@ -40,22 +40,24 @@ void do_simulation(const parameters& my_parameters)
     )
   );
 
-  //Overlapping generations
+  //Overlapping generations, a timestep is defined by the creation of a new kid
   for (int t{0}; t!=n_generations; ++t)
   {
+    const int random_father_index{population_indices(rng_engine)};
+    const int random_mother_index{population_indices(rng_engine)};
+    if (get_genetic_distance(population[random_mother_index], population[random_father_index]) > max_genetic_distance)
+    {
+      --t; //No kid, no next timestep
+      continue;
+    }
+    //Only sample when something will happen
     if (t % sampling_interval == 0)
     {
       my_results.add_measurement(
         t, population
       );
     }
-    const int random_father_index{population_indices(rng_engine)};
-    const int random_mother_index{population_indices(rng_engine)};
-    if (get_genetic_distance(population[random_mother_index], population[random_father_index]) > max_genetic_distance)
-    {
-      --t;
-      continue;
-    }
+
     const boost::dynamic_bitset<> pin_inheritance{n_pin_loci, inherits_pin_from_mother(rng_engine)};
     const boost::dynamic_bitset<> sil_inheritance{n_sil_loci, inherits_sil_from_mother(rng_engine)};
     const int random_kid_index{population_indices(rng_engine)};
@@ -75,25 +77,7 @@ void do_simulation(const parameters& my_parameters)
     population[random_kid_index] = kid;
   }
 
-  //Save the results to file
-  {
-
-    std::ofstream f(my_parameters.get_filename_genotype_frequency_graph_before_summary());
-    f << my_results;
-  }
-  convert_dot_to_svg(
-    my_parameters.get_filename_genotype_frequency_graph_before_summary(),
-    my_parameters.get_filename_genotype_frequency_graph_before_summary_as_svg()
-  );
-  convert_svg_to_png(
-    my_parameters.get_filename_genotype_frequency_graph_before_summary_as_svg(),
-    my_parameters.get_filename_genotype_frequency_graph_before_summary_as_png()
-  );
-  my_results.summarize_genotypes();
-  {
-    std::ofstream f(my_parameters.get_filename_genotype_frequency_graph());
-    f << my_results;
-  }
+  my_results.save_all(my_parameters.get_filename_genotype_frequency_graph());
 }
 
 void do_simulation_cpp(
