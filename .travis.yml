@@ -43,7 +43,10 @@ script:
  - R CMD check .
 
 after_failure:
+ # Couldn't find any package by regex 'libboost*', where * is the package I chose
+ - apt-cache search libboost
  # fatal error: Rcpp.h: No such file or directory
  - find / -name 'Rcpp.h'
  # R logs
  - cat /home/travis/build/richelbilderbeek/distancer/..Rcheck/00install.out
+
