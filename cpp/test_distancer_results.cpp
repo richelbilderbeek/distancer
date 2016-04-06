@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
     if (is_regular_file(filename_dot)) { std::remove(filename_dot.c_str()); }
     BOOST_CHECK(!is_regular_file(filename_dot));
     std::ofstream f(filename_dot);
-    f << r.get_sil_frequency_phylogeny();
+    to_stream(f, r.get_sil_frequency_phylogeny(), r.get_max_genetic_distance());
     BOOST_CHECK(is_regular_file(filename_dot));
     convert_dot_to_svg(filename_dot, filename_svg);
     convert_svg_to_png(filename_svg, filename_png);
@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_CASE(test_results_example_complete_speciation)
     BOOST_CHECK(!is_regular_file(filename_dot));
     std::ofstream f(filename_dot);
     BOOST_TEST_PASSPOINT();
-    f << r.get_summarized_sil_frequency_phylogeny(); //Summarize here
+    to_stream(f, r.get_summarized_sil_frequency_phylogeny(), r.get_max_genetic_distance());
     BOOST_TEST_PASSPOINT();
     BOOST_CHECK(is_regular_file(filename_dot));
     convert_dot_to_svg(filename_dot, filename_svg);

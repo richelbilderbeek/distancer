@@ -260,13 +260,13 @@ void results::save_all(const std::string& user_filename)
   //Save before summary
   {
     std::ofstream f(filename_bs_dot);
-    f << get_sil_frequency_phylogeny();
+    to_stream(f, get_sil_frequency_phylogeny(), m_max_genetic_distance);
   }
   convert_dot_to_svg(filename_bs_dot, filename_bs_svg);
   convert_svg_to_png(filename_bs_svg, filename_bs_png);
   {
     std::ofstream f(filename_dot);
-    f << get_summarized_sil_frequency_phylogeny();
+    to_stream(f, get_summarized_sil_frequency_phylogeny(), m_max_genetic_distance);
   }
   convert_dot_to_svg(filename_dot, filename_svg);
   convert_svg_to_png(filename_svg, filename_png);
@@ -341,7 +341,10 @@ sil_frequency_phylogeny summarize_genotypes(sil_frequency_phylogeny g)
 
 std::ostream& operator<<(std::ostream& os, const results& r) noexcept
 {
-  os << r.get_sil_frequency_phylogeny();
-  //?Newline is required by R's read.table function
+  to_stream(
+    os,
+    r.get_sil_frequency_phylogeny(),
+    r.get_max_genetic_distance()
+  );
   return os;
 }

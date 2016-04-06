@@ -21,6 +21,8 @@ public:
     const population& any_population
   ) noexcept;
 
+  int get_max_genetic_distance() const noexcept { return m_max_genetic_distance; }
+
   sil_frequency_phylogeny get_sil_frequency_phylogeny() const noexcept { return m_sil_frequency_phylogeny; }
 
   sil_frequency_phylogeny get_summarized_sil_frequency_phylogeny() const;

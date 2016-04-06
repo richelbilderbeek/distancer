@@ -11,7 +11,7 @@ int main() {
   try
   {
     const int max_genetic_distance{1};
-    const int n_generations{10};
+    const int n_generations{100};
     const int n_pin_loci{0};
     const int n_sil_loci{4};
     const double pin_mutation_rate{0.1}; //Chance to have 1 locus flipped in a genome

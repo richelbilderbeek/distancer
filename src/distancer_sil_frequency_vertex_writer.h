@@ -1,10 +1,11 @@
 #ifndef DISTANCER_sil_frequency_vertex_writer_H
 #define DISTANCER_sil_frequency_vertex_writer_H
 
+#include <cassert>
 #include <sstream>
 #include <ostream>
-#include "graphviz_encode.h"
-#include "is_graphviz_friendly.h"
+//#include "graphviz_encode.h"
+//#include "is_graphviz_friendly.h"
 
 template <
   typename graph
@@ -12,10 +13,12 @@ template <
 class sil_frequency_vertex_writer {
 public:
   sil_frequency_vertex_writer(
-    graph g
-  ) : m_g{g}
+    graph g,
+    const int max_genetic_distance
+  ) : m_g{g},
+      m_max_genetic_distance{max_genetic_distance}
   {
-
+    assert(m_max_genetic_distance > 0);
   }
   template <class vertex_descriptor>
   void operator()(
@@ -23,7 +26,7 @@ public:
     const vertex_descriptor& vd
   ) const noexcept
   {
-
+    //SIL frequencies
     std::stringstream str;
     const auto fs = m_g[vd].get_sil_frequencies();
     for (const auto p: fs) {
@@ -32,19 +35,29 @@ public:
     std::string fss = str.str();
     if (!fss.empty()) fss.pop_back(); //Get rid of trailing comma
 
+    //Style string
     out
-      << "[label=\""
+      << "["
+      << "label=\""
       #ifndef NDEBUG
       << m_g[vd].get_id() << ": "
       #endif
       << m_g[vd].get_time()
       << ": "
       << fss
-      << "\"]"
+      << "\""
+    ;
+    if (m_g[vd].count_n_possible_species(m_max_genetic_distance) > 1 )
+    {
+      out << " style=dotted";
+    }
+    out
+      << "]"
     ;
   }
 private:
   graph m_g;
+  int m_max_genetic_distance;
 };
 
 

@@ -17,6 +17,10 @@ using sil_frequency_phylogeny = boost::adjacency_list<
 using sil_frequency_vertex_descriptor
   = boost::graph_traits<sil_frequency_phylogeny>::vertex_descriptor;
 
-std::ostream& operator<<(std::ostream& os, const sil_frequency_phylogeny& r) noexcept;
+std::ostream& to_stream(
+  std::ostream& os,
+  const sil_frequency_phylogeny& r,
+  const int max_genetic_distance
+) noexcept;
 
 #endif // DISTANCER_RESULTS_GRAPH_H
