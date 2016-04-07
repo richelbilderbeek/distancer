@@ -1,3 +1,6 @@
 #!/bin/bash
 cd src
-ln -s ../../BoostGraphTutorial/BoostGraphTutorial/add_bundled_edge.cpp
+for filename in `ls ../../BoostGraphTutorial/BoostGraphTutorial/*`
+do
+  ln -s $filename
+done
