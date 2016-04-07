@@ -72,6 +72,11 @@ bool all_vds_have_unique_sil(
   const sil_frequency_phylogeny& g
 ) noexcept;
 
+///Clears all genotype frequencies
+void clear_all_sil_frequencies(
+  sil_frequency_phylogeny& g
+) noexcept;
+
 ///Connect the vertices of SILs that can create viable offspring together
 void connect_species_within_cohort(
   const std::vector<sil_frequency_vertex_descriptor>& vds,

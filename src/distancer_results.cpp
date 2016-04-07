@@ -136,6 +136,19 @@ bool all_vds_have_unique_sil(
   return sils.size() == vds.size();
 }
 
+void clear_all_sil_frequencies(
+  sil_frequency_phylogeny& g
+) noexcept
+{
+  const auto vip = vertices(g);
+  std::for_each(vip.first, vip.second,
+    [&g](const sil_frequency_vertex_descriptor vd)
+    {
+      g[vd].clear_sil_frequencies();
+    }
+  );
+}
+
 void connect_species_between_cohorts(
   const std::vector<sil_frequency_vertex_descriptor>& vds,
   const std::vector<sil_frequency_vertex_descriptor>& vds_prev,
@@ -437,9 +450,13 @@ void results::summarize_sil_frequency_phylogeny()
     m_summarized_sil_frequency_phylogeny,
     m_max_genetic_distance
   );
+  clear_all_sil_frequencies(
+    m_summarized_sil_frequency_phylogeny
+  );
   fuse_vertices_with_same_style(
     m_summarized_sil_frequency_phylogeny
   );
+
 }
 
 

@@ -41,7 +41,7 @@ int main() {
     }
     convert_dot_to_svg(results_genotype_frequency_graph_filename, "results.svg");
     convert_svg_to_png("results.svg", "results.png");
-    if (!"On local computer")
+    if ("On local computer")
     {
       const int error{std::system("display results.png")};
       if (error)
