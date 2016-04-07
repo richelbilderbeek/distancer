@@ -41,12 +41,15 @@ int main() {
     }
     convert_dot_to_svg(results_genotype_frequency_graph_filename, "results.svg");
     convert_svg_to_png("results.svg", "results.png");
-    //const int error{std::system("display results.png")};
-    //if (error)
-    //{
-    //  std::cerr << "System error: " << error << '\n';
-    //  return 1;
-    //}
+    if (!"On local computer")
+    {
+      const int error{std::system("display results.png")};
+      if (error)
+      {
+        std::cerr << "System error: " << error << '\n';
+        return 1;
+      }
+    }
   }
   catch (std::exception& e)
   {

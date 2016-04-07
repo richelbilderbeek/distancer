@@ -18,18 +18,21 @@ public:
     const int time
   );
 
+  void clear_sil_frequencies() noexcept { m_sil_frequencies.clear(); }
+
   style get_style() const noexcept { return m_style; }
-  void set_style(const style& s) noexcept { m_style = s; }
 
   #ifndef NDEBUG
   int get_id() const noexcept { return m_id; }
   #endif // NDEBUG
 
   ///The SIL frequencies
-  std::map<sil,int> get_sil_frequencies() const noexcept { return m_sil_frequencies; }
+  const std::map<sil,int>& get_sil_frequencies() const noexcept { return m_sil_frequencies; }
 
   ///The timepoint
   int get_time() const noexcept { return m_time; }
+
+  void set_style(const style& s) noexcept { m_style = s; }
 
 private:
   #ifndef NDEBUG

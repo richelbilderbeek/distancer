@@ -9,6 +9,8 @@
 #include "distancer_sil.h"
 #include "distancer_helper.h"
 #include "add_bundled_edge.h"
+#include "get_edge_between_vertices.h"
+#include "has_edge_between_vertices.h"
 
 results::results(
   const int max_genetic_distance
@@ -222,6 +224,46 @@ void connect_species_within_cohort(
   }
 }
 
+void connect_vertices_with_ids(
+  const int id_a, const int id_b,
+  const sil_frequency_edge& edge,
+  sil_frequency_phylogeny& g
+)
+{
+  const auto vip = vertices(g);
+  const auto vd_a = std::find_if(
+    vip.first, vip.second,
+    [g, id_a](const sil_frequency_vertex_descriptor vd) {
+      return g[vd].get_id() == id_a;
+    }
+  );
+  if (vd_a == vip.second)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "could not find vertex with id '"
+      << id_a << "'"
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  const auto vd_b = std::find_if(
+    vip.first, vip.second,
+    [g, id_b](const sil_frequency_vertex_descriptor vd) {
+      return g[vd].get_id() == id_b;
+    }
+  );
+  if (vd_b == vip.second)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "could not find vertex with id '"
+      << id_b << "'"
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  add_bundled_edge(*vd_a, *vd_b, edge, g);
+}
+
 int count_sils(
   const std::vector<sil_frequency_vertex_descriptor>& vds,
   const sil_frequency_phylogeny& g
@@ -237,6 +279,134 @@ int count_sils(
       }
     )
   );
+}
+
+void fuse_vertices_with_same_style(
+  sil_frequency_phylogeny& g
+) noexcept
+{
+  if (boost::num_vertices(g) == 0) return;
+
+  start_from_scratch: ;
+
+  const auto vds = vertices(g);
+  //Focal vertex
+  for (auto vd = vds.first; vd != vds.second; ++vd)
+  {
+    const auto focal_style = g[*vd].get_style();
+
+    //look_for_fresh_neighbors: ;
+
+    //Its neighbour
+    const auto neighbors = boost::adjacent_vertices(*vd, g);
+
+    for (auto neighbor = neighbors.first; neighbor != neighbors.second; ++neighbor)
+    {
+      assert(has_edge_between_vertices(*vd, *neighbor, g));
+      //Only neighbours same style
+      if (focal_style != g[*neighbor].get_style()) continue;
+      //Only neighbours with two neighbours count
+      if (degree(*neighbor, g) != 2) continue;
+      const auto next_neighbors = boost::adjacent_vertices(*neighbor, g);
+      for (auto next_neighbor = next_neighbors.first; next_neighbor != next_neighbors.second; ++next_neighbor)
+      {
+        assert(has_edge_between_vertices(*neighbor, *next_neighbor, g));
+        //Do not get back the focal vertex
+        //if (*next_neighbor == *vd) continue;
+        if (*next_neighbor == *vd) continue;
+        //Only next neighbours with same style
+        if (focal_style != g[*next_neighbor].get_style()) continue;
+        assert(*vd != *neighbor);
+        assert(*vd != *next_neighbor);
+        assert(*neighbor != *next_neighbor);
+        //Maybe we already did some havoc :-)
+        //if (!has_edge_between_vertices(*vd, *neighbor, g)) continue;
+        //if (!has_edge_between_vertices(*neighbor, *next_neighbor, g)) continue;
+        //What is the edge length from focal vertix to next neighbour?
+        const auto ed_a = get_edge_between_vertices(*vd, *neighbor, g);
+        const auto ed_b = get_edge_between_vertices(*neighbor, *next_neighbor, g);
+        const auto l_a = g[ed_a].get_n_timesteps();
+        const auto l_b = g[ed_b].get_n_timesteps();
+        const auto l_c = l_a + l_b;
+        assert(has_edge_between_vertices(*vd, *neighbor, g));
+        assert(has_edge_between_vertices(*neighbor, *next_neighbor, g));
+        assert(!has_edge_between_vertices(*vd, *next_neighbor, g));
+        assert(*vd != *next_neighbor);
+        const int vd_id = g[*vd].get_id();
+        const int neighbor_id = g[*neighbor].get_id();
+        const int next_neighbor_id = g[*next_neighbor].get_id();
+        assert(vd_id != neighbor_id);
+        assert(vd_id != next_neighbor_id);
+        assert(neighbor_id != next_neighbor_id);
+        remove_vertex_with_id(neighbor_id, g);
+        connect_vertices_with_ids(
+          vd_id, next_neighbor_id,
+          sil_frequency_edge(l_c),
+          g
+        );
+        #ifdef THESE_STEPS_WILL_INVALIDATE_THE_VERTEX_DESCRIPTORS_FOR_THE_OTHER_STEP
+        //There is an ordering in the steps???
+        //Step #1
+        assert(neighbor_id == g[*neighbor].get_id());
+        assert(has_edge_between_vertices(*vd, *neighbor, g));
+        assert(has_edge_between_vertices(*neighbor, *next_neighbor, g));
+        boost::clear_vertex(*neighbor, g);
+        g[*neighbor].clear_sil_frequencies();
+
+        //Step #2
+        assert(vd_id == g[*vd].get_id());
+        assert(neighbor_id == g[*neighbor].get_id());
+        assert(next_neighbor_id == g[*next_neighbor].get_id());
+        assert(!has_edge_between_vertices(*vd, *next_neighbor, g));
+        assert(*vd != *next_neighbor);
+        add_bundled_edge(*vd, *next_neighbor, sil_frequency_edge(l_c), g);
+        #endif
+        goto start_from_scratch;
+      }
+    }
+  }
+  remove_unconnected_empty_vertices(g);
+}
+
+
+void remove_unconnected_empty_vertices(
+  sil_frequency_phylogeny& g
+) noexcept
+{
+  const auto vds = vertices(g);
+  for (int i = boost::num_vertices(g) - 1; i!=-1; --i)
+  {
+    const auto vd = vds.first + i;
+    if (g[*vd].get_sil_frequencies().empty() && degree(*vd, g) == 0)
+    {
+      boost::remove_vertex(*vd, g);
+    }
+  }
+}
+
+void remove_vertex_with_id(
+  const int id,
+  sil_frequency_phylogeny& g
+)
+{
+  const auto vip = vertices(g);
+  const auto vd = std::find_if(
+    vip.first, vip.second,
+    [g, id](const sil_frequency_vertex_descriptor d) {
+      return g[d].get_id() == id;
+    }
+  );
+  if (vd == vip.second)
+  {
+    std::stringstream msg;
+    msg << __func__ << ": "
+      << "could not find vertex with id '"
+      << id << "'"
+    ;
+    throw std::invalid_argument(msg.str());
+  }
+  boost::clear_vertex(*vd,g);
+  boost::remove_vertex(*vd,g);
 }
 
 void set_all_vertices_styles(
@@ -266,6 +436,9 @@ void results::summarize_sil_frequency_phylogeny()
   set_all_vertices_styles(
     m_summarized_sil_frequency_phylogeny,
     m_max_genetic_distance
+  );
+  fuse_vertices_with_same_style(
+    m_summarized_sil_frequency_phylogeny
   );
 }
 
@@ -355,14 +528,6 @@ sil_frequency_phylogeny summarize_genotypes(sil_frequency_phylogeny g)
     }
   }
 
-  //Delete all empty (no genotypes, no connections)
-  for (int i = boost::num_vertices(g) - 1; i!=-1; --i)
-  {
-    const auto vd = vds.first + i;
-    if (g[*vd].get_sil_frequencies().empty() && degree(*vd, g) == 0)
-    {
-      boost::remove_vertex(*vd, g);
-    }
-  }
+  remove_unconnected_empty_vertices(g);
   return g;
 }

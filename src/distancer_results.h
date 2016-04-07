@@ -87,11 +87,37 @@ void connect_species_between_cohorts(
   sil_frequency_phylogeny& g
 ) noexcept;
 
+void connect_vertices_with_ids(
+  const int id_a, const int id_b,
+  const sil_frequency_edge& edge,
+  sil_frequency_phylogeny& g
+);
+
 ///Count the total number of SILs these vds point to
 int count_sils(
   const std::vector<sil_frequency_vertex_descriptor>& vds,
   const sil_frequency_phylogeny& g
 ) noexcept;
+
+///Fuse vertices with the same style
+///For example:
+///   1   1          2
+/// A---A---A  ->  A---A
+void fuse_vertices_with_same_style(
+  sil_frequency_phylogeny& g
+) noexcept;
+
+
+///Remove vertices with zero genotypes and no connections
+void remove_unconnected_empty_vertices(
+  sil_frequency_phylogeny& g
+) noexcept;
+
+
+void remove_vertex_with_id(
+  const int id,
+  sil_frequency_phylogeny& g
+);
 
 ///Determine the style of the vertices: incipient or good?
 void set_all_vertices_styles(
