@@ -423,25 +423,25 @@ BOOST_AUTO_TEST_CASE(test_results_example_problem_case)
   // |000|  |  |  | 2| 2| 2| 2|  |  |
   // |001|  | 3| 3| 2| 2| 2| 2| 3|  |
   // |011| 9| 3| 3|  |  |  | 1| 3| 9|
-  // |010|  | 3| 3| 3| 3| 3| 2| 3|  |
+  // |111|  | 3| 3| 3| 3| 3| 2| 3|  |
   // |110|  |  |  | 2| 2| 2| 2|  |  |
   // +---+--+--+--+--+--+--+--+--+--+
   const individual i000(dna(""), sil(3,0b000));
   const individual i001(dna(""), sil(3,0b001));
   const individual i011(dna(""), sil(3,0b011));
-  const individual i010(dna(""), sil(3,0b010));
+  const individual i111(dna(""), sil(3,0b111));
   const individual i110(dna(""), sil(3,0b110));
 
   std::vector<population> populations{
-    population_factory().create(0, i000, 0, i001, 9, i011, 0, i010, 0, i110),
-    population_factory().create(0, i000, 3, i001, 3, i011, 3, i010, 0, i110),
-    population_factory().create(0, i000, 3, i001, 3, i011, 3, i010, 0, i110),
-    population_factory().create(2, i000, 2, i001, 0, i011, 3, i010, 2, i110),
-    population_factory().create(2, i000, 2, i001, 0, i011, 3, i010, 2, i110),
-    population_factory().create(2, i000, 2, i001, 0, i011, 3, i010, 2, i110),
-    population_factory().create(2, i000, 2, i001, 1, i011, 2, i010, 2, i110),
-    population_factory().create(0, i000, 3, i001, 3, i011, 3, i010, 0, i110),
-    population_factory().create(0, i000, 0, i001, 9, i011, 0, i010, 0, i110)
+    population_factory().create(0, i000, 0, i001, 9, i011, 0, i111, 0, i110),
+    population_factory().create(0, i000, 3, i001, 3, i011, 3, i111, 0, i110),
+    population_factory().create(0, i000, 3, i001, 3, i011, 3, i111, 0, i110),
+    population_factory().create(2, i000, 2, i001, 0, i011, 3, i111, 2, i110),
+    population_factory().create(2, i000, 2, i001, 0, i011, 3, i111, 2, i110),
+    population_factory().create(2, i000, 2, i001, 0, i011, 3, i111, 2, i110),
+    population_factory().create(2, i000, 2, i001, 1, i011, 2, i111, 2, i110),
+    population_factory().create(0, i000, 3, i001, 3, i011, 3, i111, 0, i110),
+    population_factory().create(0, i000, 0, i001, 9, i011, 0, i111, 0, i110)
   };
   assert(populations.size() == 9);
   const int n_populations{static_cast<int>(populations.size())};
